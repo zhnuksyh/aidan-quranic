@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Modal, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { LESSON_CONTENT } from "../../data/lessonContent";
@@ -61,18 +62,25 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
 
         {/* Phase Content */}
         <View className="flex-1 px-5">
-          {phase === "immersion" && (
-            <ImmersionPhase content={content} onContinue={advancePhase} />
-          )}
-          {phase === "puzzle" && (
-            <PuzzlePhase content={content} onCorrect={advancePhase} />
-          )}
-          {phase === "reveal" && (
-            <RevealPhase content={content} onContinue={advancePhase} />
-          )}
-          {phase === "audio" && (
-            <AudioPhase content={content} onFinish={advancePhase} />
-          )}
+          <Animated.View
+            key={phase}
+            entering={FadeIn.duration(300)}
+            exiting={FadeOut.duration(200)}
+            className="flex-1"
+          >
+            {phase === "immersion" && (
+              <ImmersionPhase content={content} onContinue={advancePhase} />
+            )}
+            {phase === "puzzle" && (
+              <PuzzlePhase content={content} onCorrect={advancePhase} />
+            )}
+            {phase === "reveal" && (
+              <RevealPhase content={content} onContinue={advancePhase} />
+            )}
+            {phase === "audio" && (
+              <AudioPhase content={content} onFinish={advancePhase} />
+            )}
+          </Animated.View>
         </View>
       </SafeAreaView>
     </Modal>
