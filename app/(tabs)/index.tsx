@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../src/contexts/ThemeContext";
 import { AdventureMap } from "../../src/components/adventure/AdventureMap";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
+import { LessonModal } from "../../src/components/lesson/LessonModal";
 
 export default function AdventureScreen() {
   const { palette, avatarColor } = useTheme();
@@ -49,6 +50,13 @@ export default function AdventureScreen() {
       <WorldSelectionMenu
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
+      />
+
+      {/* Lesson Modal */}
+      <LessonModal
+        lessonId={selectedLessonId}
+        visible={selectedLessonId !== null}
+        onClose={() => setSelectedLessonId(null)}
       />
     </SafeAreaView>
   );
