@@ -1,5 +1,5 @@
 export type PuzzleType = "drag-drop" | "true-false";
-export type LessonPhase = "immersion" | "puzzle" | "reveal" | "audio";
+export type LessonPhase = "immersion" | "puzzle" | "reveal" | "audio" | "celebration";
 
 export interface LessonNode {
   id: string;

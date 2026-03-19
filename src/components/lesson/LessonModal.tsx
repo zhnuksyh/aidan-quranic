@@ -12,8 +12,9 @@ import { ImmersionPhase } from "./ImmersionPhase";
 import { PuzzlePhase } from "./PuzzlePhase";
 import { RevealPhase } from "./RevealPhase";
 import { AudioPhase } from "./AudioPhase";
+import { CelebrationOverlay } from "./CelebrationOverlay";
 
-const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio"];
+const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio", "celebration"];
 
 interface Props {
   lessonId: string | null;
@@ -23,7 +24,7 @@ interface Props {
 
 export function LessonModal({ lessonId, visible, onClose }: Props) {
   const { palette } = useTheme();
-  const { completeLesson } = useProgress();
+  const { completeLesson, progress } = useProgress();
   const [phase, setPhase] = useState<LessonPhase>("immersion");
 
   const content = lessonId ? LESSON_CONTENT[lessonId] : null;
@@ -31,12 +32,14 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
   const advancePhase = () => {
     const idx = PHASE_ORDER.indexOf(phase);
     if (idx < PHASE_ORDER.length - 1) {
-      setPhase(PHASE_ORDER[idx + 1]);
-    } else {
-      // Lesson complete
-      if (lessonId && content) {
+      const nextPhase = PHASE_ORDER[idx + 1];
+      // Complete lesson when entering celebration phase
+      if (nextPhase === "celebration" && lessonId && content) {
         completeLesson(lessonId, content.verseKey);
       }
+      setPhase(nextPhase);
+    } else {
+      // After celebration — close
       handleClose();
     }
   };
@@ -79,6 +82,13 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
             )}
             {phase === "audio" && (
               <AudioPhase content={content} onFinish={advancePhase} />
+            )}
+            {phase === "celebration" && (
+              <CelebrationOverlay
+                xpGained={25}
+                totalXP={progress.currentXP}
+                onContinue={advancePhase}
+              />
             )}
           </Animated.View>
         </View>
