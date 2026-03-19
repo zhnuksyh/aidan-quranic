@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../src/contexts/ThemeContext";
-import { TestNode } from "../../src/components/adventure/TestNode";
+import { AdventureMap } from "../../src/components/adventure/AdventureMap";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
 
 export default function AdventureScreen() {
   const { palette, avatarColor } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: palette.background }}>
@@ -41,12 +42,8 @@ export default function AdventureScreen() {
         </Pressable>
       </View>
 
-      {/* Node Map */}
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 24 }}>
-        {[0, 1, 2, 3, 4].map((i) => (
-          <TestNode key={i} index={i} />
-        ))}
-      </ScrollView>
+      {/* Lesson Node Map */}
+      <AdventureMap onLessonPress={setSelectedLessonId} />
 
       {/* World Selection Menu */}
       <WorldSelectionMenu
