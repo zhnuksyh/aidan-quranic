@@ -9,6 +9,7 @@ import {
   Fredoka_700Bold,
 } from "@expo-google-fonts/fredoka";
 import * as SplashScreen from "expo-splash-screen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack } from "expo-router";
 import { ThemeProvider } from "../src/contexts/ThemeContext";
 import { ProgressProvider } from "../src/contexts/ProgressContext";
@@ -31,10 +32,12 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <ThemeProvider>
-      <ProgressProvider>
-        <Stack screenOptions={{ headerShown: false }} />
-      </ProgressProvider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <ProgressProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </ProgressProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
