@@ -1,16 +1,19 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { useTheme } from "../../src/contexts/ThemeContext";
 
 export default function TabLayout() {
+  const { palette } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#6366F1",
-        tabBarInactiveTintColor: "#94A3B8",
+        tabBarActiveTintColor: palette.accent,
+        tabBarInactiveTintColor: palette.textOnBackground,
         tabBarStyle: {
-          backgroundColor: "#F8FAFC",
-          borderTopColor: "#E2E8F0",
+          backgroundColor: palette.background,
+          borderTopColor: palette.accentLight,
         },
         tabBarLabelStyle: {
           fontFamily: "Fredoka_500Medium",

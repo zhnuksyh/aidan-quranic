@@ -10,6 +10,7 @@ import {
 } from "@expo-google-fonts/fredoka";
 import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router";
+import { ThemeProvider } from "../src/contexts/ThemeContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -28,5 +29,9 @@ export default function RootLayout() {
 
   if (!fontsLoaded) return null;
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <ThemeProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </ThemeProvider>
+  );
 }
