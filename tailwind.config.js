@@ -7,7 +7,15 @@ module.exports = {
   ],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        fredoka: ["Fredoka_400Regular"],
+        "fredoka-light": ["Fredoka_300Light"],
+        "fredoka-medium": ["Fredoka_500Medium"],
+        "fredoka-semibold": ["Fredoka_600SemiBold"],
+        "fredoka-bold": ["Fredoka_700Bold"],
+      },
+    },
   },
   plugins: [],
 };
