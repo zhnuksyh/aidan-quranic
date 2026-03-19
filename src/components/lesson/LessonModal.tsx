@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, Modal, Pressable } from "react-native";
+import { View, Modal, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -10,6 +10,7 @@ import { PhaseIndicator } from "./PhaseIndicator";
 import { ImmersionPhase } from "./ImmersionPhase";
 import { PuzzlePhase } from "./PuzzlePhase";
 import { RevealPhase } from "./RevealPhase";
+import { AudioPhase } from "./AudioPhase";
 
 const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio"];
 
@@ -70,56 +71,10 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
             <RevealPhase content={content} onContinue={advancePhase} />
           )}
           {phase === "audio" && (
-            <PlaceholderPhase
-              title="Audio"
-              subtitle="Listen to the recitation"
-              onContinue={advancePhase}
-            />
+            <AudioPhase content={content} onFinish={advancePhase} />
           )}
         </View>
       </SafeAreaView>
     </Modal>
-  );
-}
-
-// Temporary placeholder for phases — will be replaced in subsequent commits
-function PlaceholderPhase({
-  title,
-  subtitle,
-  onContinue,
-}: {
-  title: string;
-  subtitle: string;
-  onContinue: () => void;
-}) {
-  const { palette } = useTheme();
-
-  return (
-    <View className="flex-1 justify-center items-center">
-      <Text
-        className="font-fredoka-bold text-2xl mb-2"
-        style={{ color: palette.textOnBackground }}
-      >
-        {title}
-      </Text>
-      <Text
-        className="font-fredoka text-base text-center mb-8 px-4"
-        style={{ color: palette.textOnBackground }}
-      >
-        {subtitle}
-      </Text>
-      <Pressable
-        className="rounded-2xl px-8 py-4"
-        style={{ backgroundColor: palette.accent }}
-        onPress={onContinue}
-      >
-        <Text
-          className="font-fredoka-semibold text-base"
-          style={{ color: palette.textOnAccent }}
-        >
-          Continue
-        </Text>
-      </Pressable>
-    </View>
   );
 }
