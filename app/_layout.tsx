@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack } from "expo-router";
 import { ThemeProvider } from "../src/contexts/ThemeContext";
 import { ProgressProvider } from "../src/contexts/ProgressContext";
+import { AuthProvider } from "../src/contexts/AuthContext";
 import { WelcomeScreen } from "../src/components/onboarding/WelcomeScreen";
 import { hasSeenOnboarding, markOnboardingSeen } from "../src/services/storage";
 
@@ -45,15 +46,17 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider>
-        <ProgressProvider>
-          {showOnboarding ? (
-            <WelcomeScreen onComplete={handleOnboardingComplete} />
-          ) : (
-            <Stack screenOptions={{ headerShown: false }} />
-          )}
-        </ProgressProvider>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <ProgressProvider>
+            {showOnboarding ? (
+              <WelcomeScreen onComplete={handleOnboardingComplete} />
+            ) : (
+              <Stack screenOptions={{ headerShown: false }} />
+            )}
+          </ProgressProvider>
+        </ThemeProvider>
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }
