@@ -6,6 +6,7 @@ import Animated, { FadeInUp } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 import { useTheme } from "../../contexts/ThemeContext";
 import { LessonContent } from "../../types/lesson";
+import { getAudioUrl } from "../../services/api/audio";
 
 interface Props {
   content: LessonContent;
@@ -17,20 +18,32 @@ export function AudioPhase({ content, onFinish }: Props) {
   const soundRef = useRef<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayed, setHasPlayed] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(content.audioUrl);
+  const [isLoading, setIsLoading] = useState(!content.audioUrl);
 
-  // Build audio URL from QF CDN using verse key
-  const audioUrl =
-    content.audioUrl ??
-    `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${content.verseKey.replace(":", "/")}`;
+  // Fetch audio URL from QF API on mount
+  useEffect(() => {
+    if (content.audioUrl) return;
+
+    let cancelled = false;
+    getAudioUrl(content.verseKey).then((url) => {
+      if (cancelled) return;
+      // Fallback to qurancdn if API returns null
+      setAudioUrl(url ?? `https://audio.qurancdn.com/Alafasy/mp3/${content.verseKey.replace(":", "_")}.mp3`);
+      setIsLoading(false);
+    });
+    return () => { cancelled = true; };
+  }, [content.verseKey, content.audioUrl]);
 
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
       soundRef.current?.unloadAsync();
     };
   }, []);
 
   const handlePlayPause = async () => {
+    if (!audioUrl || isLoading) return;
+
     try {
       if (isPlaying && soundRef.current) {
         await soundRef.current.pauseAsync();
@@ -104,7 +117,7 @@ export function AudioPhase({ content, onFinish }: Props) {
           className="font-fredoka text-sm mt-3 opacity-60"
           style={{ color: palette.textOnBackground }}
         >
-          {isPlaying ? "Playing..." : hasPlayed ? "Tap to replay" : "Tap to listen"}
+          {isLoading ? "Loading audio..." : isPlaying ? "Playing..." : hasPlayed ? "Tap to replay" : "Tap to listen"}
         </Text>
       </Animated.View>
 
