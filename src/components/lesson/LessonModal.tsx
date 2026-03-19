@@ -8,6 +8,7 @@ import { LESSON_CONTENT } from "../../data/lessonContent";
 import { LessonPhase } from "../../types/lesson";
 import { PhaseIndicator } from "./PhaseIndicator";
 import { ImmersionPhase } from "./ImmersionPhase";
+import { PuzzlePhase } from "./PuzzlePhase";
 
 const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio"];
 
@@ -62,11 +63,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
             <ImmersionPhase content={content} onContinue={advancePhase} />
           )}
           {phase === "puzzle" && (
-            <PlaceholderPhase
-              title="Puzzle"
-              subtitle="Test your understanding"
-              onContinue={advancePhase}
-            />
+            <PuzzlePhase content={content} onCorrect={advancePhase} />
           )}
           {phase === "reveal" && (
             <PlaceholderPhase
