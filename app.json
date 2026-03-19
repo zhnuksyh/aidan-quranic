@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "aidan-temp",
-    "slug": "aidan-temp",
+    "name": "Aidan",
+    "slug": "aidan-quranic",
+    "scheme": "aidan-quranic",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +26,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }
