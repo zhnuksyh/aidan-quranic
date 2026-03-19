@@ -11,6 +11,7 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router";
 import { ThemeProvider } from "../src/contexts/ThemeContext";
+import { ProgressProvider } from "../src/contexts/ProgressContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +32,9 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <ProgressProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </ProgressProvider>
     </ThemeProvider>
   );
 }
