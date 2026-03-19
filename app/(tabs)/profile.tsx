@@ -16,7 +16,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: palette.background }}>
       <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 32 }}>
-        <AvatarDisplay />
+        <AvatarDisplay xp={progress.currentXP} />
 
         {/* Stats Row */}
         <View className="flex-row mb-8">
