@@ -3,4 +3,5 @@ export interface UserProgress {
   currentXP: number;
   streakDays: number;
   unlockedVerses: string[];
+  lastActiveDate: string | null;
 }
