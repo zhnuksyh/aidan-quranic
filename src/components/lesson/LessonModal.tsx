@@ -7,6 +7,7 @@ import { useProgress } from "../../contexts/ProgressContext";
 import { LESSON_CONTENT } from "../../data/lessonContent";
 import { LessonPhase } from "../../types/lesson";
 import { PhaseIndicator } from "./PhaseIndicator";
+import { ImmersionPhase } from "./ImmersionPhase";
 
 const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio"];
 
@@ -58,11 +59,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
         {/* Phase Content */}
         <View className="flex-1 px-5">
           {phase === "immersion" && (
-            <PlaceholderPhase
-              title="Immersion"
-              subtitle={`Surah ${content.surahName}, Ayah ${content.ayahNumber}`}
-              onContinue={advancePhase}
-            />
+            <ImmersionPhase content={content} onContinue={advancePhase} />
           )}
           {phase === "puzzle" && (
             <PlaceholderPhase
