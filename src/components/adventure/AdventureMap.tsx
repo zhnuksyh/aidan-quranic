@@ -1,19 +1,18 @@
 import { View, ScrollView } from "react-native";
-import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { WORLD_LESSONS } from "../../data/lessons";
 import { LessonNodeComponent } from "./LessonNode";
 import { NodePath } from "./NodePath";
 
 interface Props {
+  worldId: string;
   onLessonPress: (lessonId: string) => void;
 }
 
-export function AdventureMap({ onLessonPress }: Props) {
-  const { currentWorldId } = useTheme();
+export function AdventureMap({ worldId, onLessonPress }: Props) {
   const { isLessonCompleted } = useProgress();
 
-  const lessons = WORLD_LESSONS[currentWorldId] ?? [];
+  const lessons = WORLD_LESSONS[worldId] ?? [];
 
   return (
     <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 32, paddingTop: 16 }}>

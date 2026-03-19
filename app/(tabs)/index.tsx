@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../src/contexts/ThemeContext";
-import { AdventureMap } from "../../src/components/adventure/AdventureMap";
+import { WorldSwiper } from "../../src/components/adventure/WorldSwiper";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
 import { LessonModal } from "../../src/components/lesson/LessonModal";
 
@@ -43,8 +43,8 @@ export default function AdventureScreen() {
         </Pressable>
       </View>
 
-      {/* Lesson Node Map */}
-      <AdventureMap onLessonPress={setSelectedLessonId} />
+      {/* Lesson Node Map — swipe L/R between worlds */}
+      <WorldSwiper onLessonPress={setSelectedLessonId} />
 
       {/* World Selection Menu */}
       <WorldSelectionMenu
