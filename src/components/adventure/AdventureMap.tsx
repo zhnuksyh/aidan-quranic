@@ -1,4 +1,5 @@
 import { View, ScrollView } from "react-native";
+import Animated, { FadeInUp } from "react-native-reanimated";
 import { useProgress } from "../../contexts/ProgressContext";
 import { WORLD_LESSONS } from "../../data/lessons";
 import { LessonNodeComponent } from "./LessonNode";
@@ -26,7 +27,10 @@ export function AdventureMap({ worldId, onLessonPress }: Props) {
         const marginHorizontal = 48;
 
         return (
-          <View key={lesson.id}>
+          <Animated.View
+            key={lesson.id}
+            entering={FadeInUp.delay(index * 120).springify()}
+          >
             {index > 0 && <NodePath />}
             <View style={{ alignSelf, marginHorizontal }}>
               <LessonNodeComponent
@@ -36,7 +40,7 @@ export function AdventureMap({ worldId, onLessonPress }: Props) {
                 onPress={onLessonPress}
               />
             </View>
-          </View>
+          </Animated.View>
         );
       })}
     </ScrollView>
