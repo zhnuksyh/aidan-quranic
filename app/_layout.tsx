@@ -1,5 +1,5 @@
 import "../global.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import {
   Fredoka_300Light,
@@ -13,6 +13,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack } from "expo-router";
 import { ThemeProvider } from "../src/contexts/ThemeContext";
 import { ProgressProvider } from "../src/contexts/ProgressContext";
+import { WelcomeScreen } from "../src/components/onboarding/WelcomeScreen";
+import { hasSeenOnboarding, markOnboardingSeen } from "../src/services/storage";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,18 +26,32 @@ export default function RootLayout() {
     Fredoka_600SemiBold,
     Fredoka_700Bold,
   });
+  const [showOnboarding, setShowOnboarding] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (fontsLoaded) SplashScreen.hideAsync();
+    if (!fontsLoaded) return;
+    hasSeenOnboarding().then((seen) => {
+      setShowOnboarding(!seen);
+      SplashScreen.hideAsync();
+    });
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded || showOnboarding === null) return null;
+
+  const handleOnboardingComplete = () => {
+    markOnboardingSeen();
+    setShowOnboarding(false);
+  };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
         <ProgressProvider>
-          <Stack screenOptions={{ headerShown: false }} />
+          {showOnboarding ? (
+            <WelcomeScreen onComplete={handleOnboardingComplete} />
+          ) : (
+            <Stack screenOptions={{ headerShown: false }} />
+          )}
         </ProgressProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
