@@ -38,17 +38,20 @@ export function CelebrationOverlay({ xpGained, totalXP, onContinue }: Props) {
         className="font-fredoka-bold text-2xl mb-2"
         style={{ color: palette.textOnBackground }}
       >
-        Lesson Complete!
+        {xpGained > 0 ? "Lesson Complete!" : "Practice Complete!"}
       </Animated.Text>
 
-      {/* XP Gained */}
-      <Animated.Text
-        entering={FadeInUp.duration(500).delay(500)}
-        className="font-fredoka-bold text-3xl mb-6"
-        style={{ color: palette.accent }}
-      >
-        +{xpGained} XP
-      </Animated.Text>
+      {/* XP Gained — hide when replaying */}
+      {xpGained > 0 && (
+        <Animated.Text
+          entering={FadeInUp.duration(500).delay(500)}
+          className="font-fredoka-bold text-3xl mb-6"
+          style={{ color: palette.accent }}
+        >
+          +{xpGained} XP
+        </Animated.Text>
+      )}
+      {xpGained === 0 && <View className="mb-6" />}
 
       {/* Level Info */}
       <Animated.View
