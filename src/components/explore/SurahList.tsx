@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, Text, View, ActivityIndicator } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { QFChapter } from "../../types/verse";
@@ -11,6 +11,7 @@ export function SurahList() {
   const { palette } = useTheme();
   const [chapters, setChapters] = useState<QFChapter[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [selectedChapter, setSelectedChapter] = useState<QFChapter | null>(null);
 
   useEffect(() => {
@@ -27,6 +28,18 @@ export function SurahList() {
       }
     })();
     return () => { mounted = false; };
+  }, []);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      const data = await getChapters();
+      setChapters(data);
+    } catch {
+      // Keep existing data
+    } finally {
+      setRefreshing(false);
+    }
   }, []);
 
   if (loading) {
@@ -46,6 +59,8 @@ export function SurahList() {
           <SurahCard chapter={item} onPress={() => setSelectedChapter(item)} />
         )}
         contentContainerStyle={{ paddingVertical: 8 }}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         ListHeaderComponent={
           <Text
             className="font-fredoka-bold text-xl mx-4 mb-4"
