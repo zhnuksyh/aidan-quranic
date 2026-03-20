@@ -21,11 +21,16 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The Arabic word 'Bismillah' means 'In the ___ of Allah'.",
-          options: ["name", "glory", "mercy", "light"],
-          correctAnswer: "name",
+          question: "Why is the Basmalah placed at the very beginning of the Quran?",
+          options: [
+            "To establish that everything begins with Allah's name and grace",
+            "To teach Arabic grammar to the reader",
+            "To separate the Quran from previous scriptures",
+            "To mark the start of Ramadan",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -56,18 +61,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "What is the deeper significance of calling Allah 'Rabb al-Alamin' (Lord of all worlds)?",
+          options: [
+            "His care and sovereignty extend to every being in existence, not just humans",
+            "He created multiple physical planets in the solar system",
+            "Only the human world matters in the grand scheme",
+            "It refers to Allah's power to destroy worlds",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
         puzzleType: "drag-drop",
         puzzleData: {
           sentence: "The word 'Rabb' means Lord, Sustainer, and ___.",
           options: ["Cherisher", "Destroyer", "Punisher", "Judge"],
           correctAnswer: "Cherisher",
-        },
-      },
-      {
-        puzzleType: "true-false",
-        puzzleData: {
-          statement: "Al-Hamd (praise) in this verse is directed exclusively to Allah, not to any creation.",
-          isTrue: true,
         },
       },
     ],
@@ -89,6 +100,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
           sentence: "Both Ar-Rahman and Ar-Raheem come from the root word ___, meaning mercy.",
           options: ["Rahma", "Salaam", "Noor", "Ilm"],
           correctAnswer: "Rahma",
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "What is the key difference between Ar-Rahman and Ar-Raheem?",
+          options: [
+            "Ar-Rahman covers all creation; Ar-Raheem is special mercy for believers in the Hereafter",
+            "Ar-Rahman is for believers only; Ar-Raheem is for all creation",
+            "They are identical in meaning with no difference",
+            "Ar-Rahman refers to punishment; Ar-Raheem refers to reward",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -119,11 +143,16 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The word 'Maalik' in this verse means ___ or Owner.",
-          options: ["Master", "Teacher", "Helper", "Friend"],
-          correctAnswer: "Master",
+          question: "Why does this verse instill both hope AND accountability?",
+          options: [
+            "Because Allah's perfect justice means the oppressed will be vindicated and wrongdoers held accountable",
+            "Because the Day of Judgment is very far away so there is nothing to worry about",
+            "Because only kings and rulers will be judged on that day",
+            "Because accountability only applies to major sins",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -152,6 +181,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
           sentence: "This verse is a declaration of ___, the oneness of God.",
           options: ["Tawheed", "Shukr", "Sabr", "Dhikr"],
           correctAnswer: "Tawheed",
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "You feel overwhelmed by exams and a friend suggests relying on a 'lucky charm.' Based on this verse, what should you do?",
+          options: [
+            "Turn to Allah alone for help, as only He truly controls outcomes",
+            "Use the lucky charm since it cannot hurt",
+            "Rely entirely on your own effort without any prayer",
+            "Ask your friend to pray for you instead",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -184,11 +226,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "'Sirat al-Mustaqim' means the ___ path.",
-          options: ["straight", "hidden", "difficult", "ancient"],
-          correctAnswer: "straight",
+          question: "Why do Muslims need to ask for guidance repeatedly, even if they are already Muslim?",
+          options: [
+            "Because guidance is an ongoing need — staying on the right path requires constant divine support",
+            "Because Allah forgets our previous prayers",
+            "Because the prayer only counts if said a certain number of times",
+            "Because guidance is only needed during Ramadan",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "A friend is going through a difficult time and asks for advice. Based on this verse, what is the most important thing you can do?",
+          options: [
+            "Pray for their guidance and encourage them to turn to Allah for direction",
+            "Tell them to solve the problem on their own",
+            "Ignore their problems since it is not your concern",
+            "Give them money to fix everything",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -214,18 +274,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "This verse teaches us to seek good ___ and follow righteous examples.",
-          options: ["company", "wealth", "fame", "power"],
-          correctAnswer: "company",
+          question: "What is the difference between those who 'earned anger' and those who 'went astray'?",
+          options: [
+            "Those who earned anger knowingly rejected truth; those who went astray did so through ignorance",
+            "There is no difference — both are the same group",
+            "Those who earned anger were poor; those astray were wealthy",
+            "Those who earned anger lived long ago; those astray are modern people",
+          ],
+          correctIndex: 0,
         },
       },
       {
-        puzzleType: "true-false",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          statement: "'Those who went astray' refers to people who reject truth out of ignorance, not arrogance.",
-          isTrue: true,
+          question: "You notice your social circle is pulling you away from good habits. Based on this verse, what should you prioritize?",
+          options: [
+            "Seek righteous company, as this verse teaches us to follow the path of the blessed",
+            "Stay with them since loyalty to friends is more important",
+            "Isolate yourself completely from everyone",
+            "Only change if someone directly tells you to",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -251,6 +322,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "What does the combination of mysterious letters and 'the clear Book' teach us?",
+          options: [
+            "The Quran has both depths beyond our understanding and a message made clear for those who reflect",
+            "The Quran is entirely impossible to understand",
+            "Only scholars can read the Quran properly",
+            "The letters are mistakes left in the text",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
         puzzleType: "drag-drop",
         puzzleData: {
           sentence: "The Quran is described as 'al-Kitab al-Mubeen', meaning the ___ Book.",
@@ -272,11 +356,16 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     translationText: "Indeed, We have sent it down as an Arabic Quran so that you may understand.",
     puzzles: [
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The Quran was revealed in ___ so that people may understand it.",
-          options: ["Arabic", "Hebrew", "Aramaic", "Persian"],
-          correctAnswer: "Arabic",
+          question: "What is the main teaching of this verse about how we should approach the Quran?",
+          options: [
+            "The Quran is meant to be understood and reflected upon, not just recited",
+            "Only Arabic speakers can benefit from the Quran",
+            "The Quran should be memorized but not interpreted",
+            "Arabic is the only language allowed in prayer",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -287,11 +376,16 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The phrase 'la'allakum ta'qiloon' means 'so that you may ___'.",
-          options: ["understand", "memorize", "fear", "celebrate"],
-          correctAnswer: "understand",
+          question: "Someone says 'I recite Quran daily but never try to understand the meaning.' Based on this verse, what advice would you give?",
+          options: [
+            "Encourage them to also study the meaning, as Allah sent it so we may understand",
+            "Tell them recitation alone is sufficient",
+            "Suggest they stop reciting until they learn Arabic fluently",
+            "It does not matter as long as the words are pronounced correctly",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -314,6 +408,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
           sentence: "The story of Yusuf is described by Allah as the ___ of stories.",
           options: ["best", "longest", "first", "last"],
           correctAnswer: "best",
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "Why is the story of Yusuf called 'the best of stories'?",
+          options: [
+            "Because it covers the full range of human experience: jealousy, patience, temptation, forgiveness, and divine planning",
+            "Because it is the shortest story in the Quran",
+            "Because it was the first story ever written",
+            "Because it only contains happy events",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -346,18 +453,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The sun and moon in Yusuf's dream represented his ___.",
-          options: ["parents", "teachers", "enemies", "friends"],
-          correctAnswer: "parents",
+          question: "What does Ya'qub's immediate reaction to the dream reveal about his character?",
+          options: [
+            "He was wise and protective — he understood the dream's significance and anticipated the danger of jealousy",
+            "He was dismissive and did not believe in dreams",
+            "He was jealous of his son's future",
+            "He wanted to tell the brothers himself",
+          ],
+          correctIndex: 0,
         },
       },
       {
-        puzzleType: "true-false",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          statement: "Ya'qub recognized the significance of the dream and warned Yusuf to keep it private.",
-          isTrue: true,
+          question: "You receive good news about a promotion. Based on Ya'qub's wisdom in this verse, what should you consider?",
+          options: [
+            "Be thoughtful about who you share blessings with, as not everyone will respond with joy",
+            "Share it with everyone immediately on social media",
+            "Never tell anyone about any good news ever",
+            "Only tell people who are more successful than you",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -382,6 +500,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
           sentence: "Ya'qub warned Yusuf not to share his dream to avoid his brothers' ___.",
           options: ["jealousy", "confusion", "laughter", "anger"],
           correctAnswer: "jealousy",
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "The verse draws a parallel between the brothers' potential jealousy and which historical event?",
+          options: [
+            "Iblis refusing to bow to Adam out of envy",
+            "The flood of Prophet Nuh",
+            "The migration to Madinah",
+            "The building of the Ka'bah",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -410,6 +541,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         puzzleData: {
           statement: "Ya'qub told Yusuf that Allah would teach him the interpretation of dreams.",
           isTrue: true,
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "What is the significance of connecting Yusuf to Ibrahim and Ishaq in this verse?",
+          options: [
+            "It shows that Allah's favor and guidance continue through a prophetic lineage across generations",
+            "It means Yusuf would visit the same places as Ibrahim",
+            "It implies all prophets had identical life stories",
+            "It is just a historical footnote with no deeper meaning",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -444,6 +588,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "Why does the entire Surah begin with the single word 'Ar-Rahman'?",
+          options: [
+            "To declare that everything that follows — creation, guidance, the universe — all flows from Allah's mercy",
+            "Because it is the shortest possible opening",
+            "To introduce a new name that was never mentioned before",
+            "It is a greeting to the angels",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
         puzzleType: "true-false",
         puzzleData: {
           statement: "Everything mentioned after this verse — creation, guidance, cosmic balance — all flows from Allah's mercy.",
@@ -468,6 +625,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         puzzleData: {
           statement: "In Surah Ar-Rahman, the creation of humans is mentioned before the teaching of the Quran.",
           isTrue: false,
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "Why does Allah mention teaching the Quran BEFORE creating humans in this Surah?",
+          options: [
+            "To signal that divine guidance is the greatest gift — even greater than existence itself",
+            "Because the Quran was created before the universe in a literal timeline",
+            "It is simply a poetic choice with no deeper meaning",
+            "Because humans were not important enough to mention first",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -500,10 +670,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "true-false",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          statement: "In this Surah, guidance is listed before creation, teaching that our purpose is more fundamental than our existence.",
-          isTrue: true,
+          question: "What does the order of blessings in Ar-Rahman (Quran → creation of humans) teach us?",
+          options: [
+            "Our purpose — to be guided — is more fundamental than our existence itself",
+            "The Quran is older than humanity in a literal sense",
+            "Creation is less important than destruction",
+            "Humans should not care about their physical needs",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "Someone says 'I'm too busy with work and life to study the Quran.' Based on this verse's teaching, how would you respond?",
+          options: [
+            "Guidance is the very purpose of our existence — it should be prioritized alongside life's demands",
+            "They are right, work always comes first",
+            "Tell them to quit their job and only study Quran",
+            "Suggest they wait until retirement to start learning",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -527,18 +716,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "Al-bayan encompasses speech, writing, understanding, and the ability to convey ___.",
-          options: ["thoughts", "commands", "warnings", "secrets"],
-          correctAnswer: "thoughts",
+          question: "Why is al-bayan (expression) listed as one of Allah's greatest favors?",
+          options: [
+            "Without it, no knowledge could be shared, no prayers uttered, and no relationships formed",
+            "Because speaking is the only thing humans can do that animals cannot",
+            "Because writing was invented before speech",
+            "It is only important for poets and writers",
+          ],
+          correctIndex: 0,
         },
       },
       {
-        puzzleType: "true-false",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          statement: "Without the gift of al-bayan, no prayers could be uttered and no relationships formed.",
-          isTrue: true,
+          question: "You have the ability to speak, write, and express your feelings. Based on this verse, how should you view this ability?",
+          options: [
+            "As a gift from Allah that carries responsibility — use it for truth, kindness, and worship",
+            "As a random evolutionary trait with no special significance",
+            "As something only useful for career advancement",
+            "As less important than physical strength",
+          ],
+          correctIndex: 0,
         },
       },
     ],
@@ -560,6 +760,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
           sentence: "The word 'husban' means exact ___, referring to celestial precision.",
           options: ["reckoning", "speed", "distance", "beauty"],
           correctAnswer: "reckoning",
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "How is the precise movement of the sun and moon connected to Allah's mercy?",
+          options: [
+            "Their reliable cycles enable agriculture, navigation, and timekeeping — all essential for human life",
+            "It has no connection to mercy; it is just a scientific fact",
+            "The sun and moon were created only for decoration",
+            "Precision only matters in mathematics, not in faith",
+          ],
+          correctIndex: 0,
         },
       },
       {
@@ -590,11 +803,29 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
         },
       },
       {
-        puzzleType: "drag-drop",
+        puzzleType: "multiple-choice",
         puzzleData: {
-          sentence: "The word 'Najm' can mean stars or stemless ___ that spread along the ground.",
-          options: ["plants", "rivers", "stones", "creatures"],
-          correctAnswer: "plants",
+          question: "What does it mean that stars and trees 'prostrate' to Allah?",
+          options: [
+            "All of creation naturally submits to the laws and order Allah has established",
+            "Trees and stars literally bend down like humans in prayer",
+            "Only living things worship Allah; non-living things do not",
+            "This is a metaphor with no real meaning",
+          ],
+          correctIndex: 0,
+        },
+      },
+      {
+        puzzleType: "multiple-choice",
+        puzzleData: {
+          question: "You are walking in nature and see the beauty of trees, mountains, and the sky. Based on this verse, what should this inspire in you?",
+          options: [
+            "Recognizing that all of nature glorifies Allah, which should motivate you to worship Him too",
+            "Taking photos for social media",
+            "Feeling that nature is separate from spirituality",
+            "Thinking that only mosques are places of worship",
+          ],
+          correctIndex: 0,
         },
       },
     ],
