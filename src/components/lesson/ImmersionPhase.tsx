@@ -1,10 +1,40 @@
 import { useEffect, useState } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import {
+  BookOpen,
+  Heart,
+  Sun,
+  Star,
+  Globe,
+  Shield,
+  Users,
+  Scale,
+  Compass,
+  Flame,
+  Leaf,
+  Eye,
+  Moon,
+} from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { LessonContent } from "../../types/lesson";
-import { LottieIcon } from "./LottieIcon";
 import { getChapter } from "../../services/api/chapters";
+
+const ICON_MAP: Record<string, any> = {
+  "book-outline": BookOpen,
+  "heart-outline": Heart,
+  "sunny-outline": Sun,
+  "star-outline": Star,
+  "globe-outline": Globe,
+  "shield-outline": Shield,
+  "people-outline": Users,
+  "scale-outline": Scale,
+  "compass-outline": Compass,
+  "flame-outline": Flame,
+  "leaf-outline": Leaf,
+  "eye-outline": Eye,
+  "moon-outline": Moon,
+};
 
 interface Props {
   content: LessonContent;
@@ -28,8 +58,8 @@ export function ImmersionPhase({ content, onContinue }: Props) {
   const cards = content.teachingCards;
 
   return (
-    <View className="flex-1">
-      {/* Header Badges */}
+    <View className="flex-1" style={{ backgroundColor: palette.background }}>
+      {/* Header Badges — same sizing */}
       <View className="flex-row items-center justify-center flex-wrap gap-2 mb-4">
         <View
           className="rounded-2xl px-4 py-2"
@@ -45,12 +75,12 @@ export function ImmersionPhase({ content, onContinue }: Props) {
         {revelationPlace && (
           <Animated.View
             entering={FadeInUp.duration(400)}
-            className="rounded-2xl px-3 py-2"
+            className="rounded-2xl px-4 py-2"
             style={{ backgroundColor: palette.accentLight }}
           >
             <Text
-              className="font-fredoka text-xs"
-              style={{ color: palette.accent }}
+              className="font-fredoka-medium text-sm"
+              style={{ color: palette.textOnBackground }}
             >
               Revealed in {revelationPlace}
             </Text>
@@ -58,66 +88,11 @@ export function ImmersionPhase({ content, onContinue }: Props) {
         )}
       </View>
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        {/* Teaching Cards */}
-        {cards.map((card, index) => (
-          <Animated.View
-            key={index}
-            entering={FadeInUp.duration(500).delay(index * 200)}
-            className="mx-2 rounded-2xl p-5 mb-4"
-            style={{ backgroundColor: palette.accent, opacity: 0.92 }}
-          >
-            {/* Lottie / Icon */}
-            <View className="items-center mb-3">
-              <LottieIcon
-                lottieAsset={card.lottieAsset}
-                fallbackIcon={card.icon}
-                size={80}
-                color={palette.textOnAccent}
-              />
-            </View>
-
-            {/* Card Title */}
-            <Text
-              className="font-fredoka-bold text-lg text-center mb-2"
-              style={{ color: palette.textOnAccent }}
-            >
-              {card.title}
-            </Text>
-
-            {/* Card Body */}
-            <Text
-              className="font-fredoka text-sm leading-6 text-center"
-              style={{ color: palette.textOnAccent, opacity: 0.9 }}
-            >
-              {card.body}
-            </Text>
-          </Animated.View>
-        ))}
-
-        {/* Avatar + Source Row */}
+      <ScrollView className="flex-1 px-2" showsVerticalScrollIndicator={false}>
+        {/* Verse Preview Card — at the TOP */}
         <Animated.View
-          entering={FadeInUp.duration(400).delay(cards.length * 200)}
-          className="flex-row items-center justify-center gap-3 mb-4"
-        >
-          <View
-            className="w-8 h-8 rounded-full items-center justify-center"
-            style={{ backgroundColor: "#FB923C" }}
-          >
-            <Text className="font-fredoka-bold text-sm text-white">A</Text>
-          </View>
-          <Text
-            className="font-fredoka text-xs"
-            style={{ color: palette.textOnBackground, opacity: 0.6 }}
-          >
-            Source: {content.tafsirSourceName}
-          </Text>
-        </Animated.View>
-
-        {/* Verse Preview Card */}
-        <Animated.View
-          entering={FadeInUp.duration(500).delay(cards.length * 200 + 200)}
-          className="mx-2 rounded-2xl p-5 mb-6"
+          entering={FadeInUp.duration(500)}
+          className="rounded-2xl p-5 mb-4"
           style={{ backgroundColor: palette.accentLight }}
         >
           <Text
@@ -137,21 +112,75 @@ export function ImmersionPhase({ content, onContinue }: Props) {
             {content.translationText}
           </Text>
         </Animated.View>
+
+        {/* Teaching Cards */}
+        {cards.map((card, index) => {
+          const IconComponent = ICON_MAP[card.icon] || BookOpen;
+          return (
+            <Animated.View
+              key={index}
+              entering={FadeInUp.duration(500).delay((index + 1) * 200)}
+              className="rounded-2xl p-5 mb-4"
+              style={{ backgroundColor: palette.accent, opacity: 0.92 }}
+            >
+              {/* Lucide Icon */}
+              <View className="items-center mb-3">
+                <IconComponent
+                  size={28}
+                  color={palette.textOnAccent}
+                  strokeWidth={2}
+                />
+              </View>
+
+              {/* Card Title */}
+              <Text
+                className="font-fredoka-bold text-lg text-center mb-2"
+                style={{ color: palette.textOnAccent }}
+              >
+                {card.title}
+              </Text>
+
+              {/* Card Body */}
+              <Text
+                className="font-fredoka text-sm leading-6 text-center"
+                style={{ color: palette.textOnAccent, opacity: 0.9 }}
+              >
+                {card.body}
+              </Text>
+            </Animated.View>
+          );
+        })}
+
+        {/* Source Attribution */}
+        <Animated.View
+          entering={FadeInUp.duration(400).delay((cards.length + 1) * 200)}
+          className="items-center mb-6"
+        >
+          <Text
+            className="font-fredoka text-xs text-center"
+            style={{ color: palette.textOnBackground, opacity: 0.5 }}
+          >
+            Source: {content.tafsirSourceName} — Surah {content.surahName}, Ayah{" "}
+            {content.ayahNumber}
+          </Text>
+        </Animated.View>
       </ScrollView>
 
       {/* Continue Button */}
-      <Pressable
-        className="rounded-2xl py-4 mx-2 mb-4 items-center"
-        style={{ backgroundColor: palette.accent }}
-        onPress={onContinue}
-      >
-        <Text
-          className="font-fredoka-bold text-base"
-          style={{ color: palette.textOnAccent }}
+      <View className="px-2 pb-8 pt-3">
+        <Pressable
+          className="rounded-2xl py-4 items-center"
+          style={{ backgroundColor: palette.accent }}
+          onPress={onContinue}
         >
-          Continue to Quiz
-        </Text>
-      </Pressable>
+          <Text
+            className="font-fredoka-bold text-base"
+            style={{ color: palette.textOnAccent }}
+          >
+            Continue to Quiz
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
