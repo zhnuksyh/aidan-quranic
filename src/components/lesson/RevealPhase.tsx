@@ -12,18 +12,28 @@ interface Props {
 
 export function RevealPhase({ content, onContinue }: Props) {
   const { palette } = useTheme();
-  const [showTranslation, setShowTranslation] = useState(false);
+  const [showReflection, setShowReflection] = useState(false);
 
   useEffect(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    const timer = setTimeout(() => setShowTranslation(true), 800);
+    const timer = setTimeout(() => setShowReflection(true), 800);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <View className="flex-1 justify-center">
+      {/* Reflection Prompt */}
+      <Animated.View entering={FadeInUp.duration(500)} className="items-center mb-6 mx-4">
+        <Text
+          className="font-fredoka-medium text-sm text-center"
+          style={{ color: palette.accent }}
+        >
+          Take a moment to reflect on this verse...
+        </Text>
+      </Animated.View>
+
       {/* Arabic Text */}
-      <Animated.View entering={FadeInUp.duration(600)} className="items-center mb-8">
+      <Animated.View entering={FadeInUp.duration(600).delay(200)} className="items-center mb-8">
         <Text
           className="text-3xl text-center leading-[56px]"
           style={{ color: palette.textOnBackground, writingDirection: "rtl" }}
@@ -33,7 +43,7 @@ export function RevealPhase({ content, onContinue }: Props) {
       </Animated.View>
 
       {/* Translation */}
-      {showTranslation && (
+      {showReflection && (
         <Animated.View entering={FadeInUp.duration(600).delay(200)} className="items-center mb-8 mx-4">
           <View
             className="rounded-2xl p-5"
@@ -56,7 +66,7 @@ export function RevealPhase({ content, onContinue }: Props) {
       )}
 
       {/* Continue Button */}
-      {showTranslation && (
+      {showReflection && (
         <Animated.View entering={FadeInUp.duration(400).delay(400)}>
           <Pressable
             className="rounded-2xl py-4 mx-2 items-center"
