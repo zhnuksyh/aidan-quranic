@@ -91,6 +91,44 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     audioUrl: null,
   },
 
+  "w1-l6": {
+    verseKey: "1:6",
+    surahName: "Al-Fatiha",
+    ayahNumber: 6,
+    tafsirText:
+      "After declaring servitude and seeking help from Allah, the servant now makes the most important supplication: 'Guide us to the straight path.' The 'Sirat al-Mustaqim' is the path of Islam, the path of truth and righteousness. Every Muslim recites this prayer at least 17 times daily in their obligatory prayers, making it the most repeated supplication in a Muslim's life.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+    translationText: "Guide us to the straight path.",
+    puzzleType: "drag-drop",
+    puzzleData: {
+      sentence:
+        "Muslims recite this supplication at least ___ times daily in prayers.",
+      options: ["17", "5", "10", "33"],
+      correctAnswer: "17",
+    },
+    audioUrl: null,
+  },
+  "w1-l7": {
+    verseKey: "1:7",
+    surahName: "Al-Fatiha",
+    ayahNumber: 7,
+    tafsirText:
+      "The final verse of Al-Fatiha clarifies what the 'straight path' is: it is the path of those whom Allah has blessed — the prophets, the truthful, the martyrs, and the righteous. It is NOT the path of those who earned Allah's anger through knowingly rejecting truth, nor of those who went astray through ignorance. This verse teaches us to seek good company and follow righteous examples.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText:
+      "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+    translationText:
+      "The path of those You have blessed, not of those who earned Your anger, nor of those who went astray.",
+    puzzleType: "true-false",
+    puzzleData: {
+      statement:
+        "The straight path refers to the path of prophets, truthful ones, martyrs, and the righteous.",
+      isTrue: true,
+    },
+    audioUrl: null,
+  },
+
   // ── World 2: Surah Yusuf ──────────────────────────────────
   "w2-l1": {
     verseKey: "12:1",
@@ -169,6 +207,46 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     audioUrl: null,
   },
 
+  "w2-l5": {
+    verseKey: "12:5",
+    surahName: "Yusuf",
+    ayahNumber: 5,
+    tafsirText:
+      "Ya'qub warns his son Yusuf not to tell his brothers about the dream, because they would plot against him out of jealousy. Ya'qub knew the nature of jealousy — it was through envy that Iblis (Satan) refused to bow to Adam. This verse teaches the wisdom of discretion: not every blessing should be shared openly, as it may provoke envy even among loved ones.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText:
+      "قَالَ يَا بُنَيَّ لَا تَقْصُصْ رُؤْيَاكَ عَلَىٰ إِخْوَتِكَ فَيَكِيدُوا لَكَ كَيْدًا",
+    translationText:
+      "He said, 'O my son, do not relate your vision to your brothers, lest they plan against you a plan.'",
+    puzzleType: "drag-drop",
+    puzzleData: {
+      sentence:
+        "Ya'qub warned Yusuf not to share his dream to avoid his brothers' ___.",
+      options: ["jealousy", "confusion", "laughter", "anger"],
+      correctAnswer: "jealousy",
+    },
+    audioUrl: null,
+  },
+  "w2-l6": {
+    verseKey: "12:6",
+    surahName: "Yusuf",
+    ayahNumber: 6,
+    tafsirText:
+      "Ya'qub then interprets the dream for Yusuf: Allah will choose him, teach him the interpretation of dreams, and complete His favor upon him and the family of Ya'qub — just as He completed it upon his forefathers Ibrahim (Abraham) and Ishaq (Isaac). This verse connects Yusuf to the great prophetic lineage and foreshadows his future rise to power in Egypt.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText:
+      "وَكَذَٰلِكَ يَجْتَبِيكَ رَبُّكَ وَيُعَلِّمُكَ مِن تَأْوِيلِ ٱلْأَحَادِيثِ",
+    translationText:
+      "And thus your Lord will choose you and teach you the interpretation of dreams.",
+    puzzleType: "true-false",
+    puzzleData: {
+      statement:
+        "Ya'qub told Yusuf that Allah would teach him the interpretation of dreams.",
+      isTrue: true,
+    },
+    audioUrl: null,
+  },
+
   // ── World 3: Surah Ar-Rahman ──────────────────────────────
   "w3-l1": {
     verseKey: "55:1",
@@ -237,6 +315,41 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       statement:
         "Al-bayan refers only to the ability of spoken language.",
       isTrue: false,
+    },
+    audioUrl: null,
+  },
+  "w3-l5": {
+    verseKey: "55:5",
+    surahName: "Ar-Rahman",
+    ayahNumber: 5,
+    tafsirText:
+      "After mentioning the gifts of the Quran, human creation, and speech, Allah draws attention to the cosmic order: the sun and moon follow precise calculations. The word 'husban' means exact reckoning — every orbit, every eclipse, every season is perfectly computed. This cosmic precision is itself a sign of Allah's mercy, providing reliable cycles for agriculture, navigation, and timekeeping.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText: "ٱلشَّمْسُ وَٱلْقَمَرُ بِحُسْبَانٍ",
+    translationText: "The sun and the moon move by precise calculation.",
+    puzzleType: "drag-drop",
+    puzzleData: {
+      sentence:
+        "The word 'husban' means exact ___, referring to celestial precision.",
+      options: ["reckoning", "speed", "distance", "beauty"],
+      correctAnswer: "reckoning",
+    },
+    audioUrl: null,
+  },
+  "w3-l6": {
+    verseKey: "55:6",
+    surahName: "Ar-Rahman",
+    ayahNumber: 6,
+    tafsirText:
+      "The stars and the trees prostrate to Allah. 'Najm' here can mean stars or stemless plants that spread along the ground, and 'shajar' means trees. Whether celestial or terrestrial, all of creation submits to Allah's will. This prostration is not like human prayer — it is the natural submission of all creation to the laws and order Allah has established. Even nature glorifies its Creator.",
+    tafsirSourceName: "Tafsir Ibn Kathir",
+    arabicText: "وَٱلنَّجْمُ وَٱلشَّجَرُ يَسْجُدَانِ",
+    translationText: "And the stars and the trees prostrate.",
+    puzzleType: "true-false",
+    puzzleData: {
+      statement:
+        "In this verse, prostration means the natural submission of creation to Allah's laws.",
+      isTrue: true,
     },
     audioUrl: null,
   },
