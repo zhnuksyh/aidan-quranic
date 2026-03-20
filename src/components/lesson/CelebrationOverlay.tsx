@@ -25,7 +25,7 @@ export function CelebrationOverlay({ xpGained, totalXP, onContinue }: Props) {
     <View className="flex-1 justify-center items-center">
       {/* Checkmark */}
       <Animated.View
-        entering={ZoomIn.springify().damping(12)}
+        entering={ZoomIn.springify().damping(20).stiffness(150)}
         className="w-24 h-24 rounded-full items-center justify-center mb-6"
         style={{ backgroundColor: palette.accent }}
       >
