@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { supabase } from "../services/supabase";
 
+// Set to false to enable Supabase anonymous auth (requires DB setup)
+const SKIP_AUTH = true;
+
 interface AuthContextValue {
   session: Session | null;
   user: User | null;
@@ -16,9 +19,11 @@ const AuthContext = createContext<AuthContextValue>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!SKIP_AUTH);
 
   useEffect(() => {
+    if (SKIP_AUTH) return;
+
     // Check existing session
     supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
       if (existingSession) {
