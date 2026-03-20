@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserProgress } from "../types/progress";
+import { supabase } from "./supabase";
 
 const PROGRESS_KEY = "@aidan_progress";
 const ONBOARDING_KEY = "@aidan_onboarding_seen";
@@ -52,5 +53,54 @@ export async function resetAllData(): Promise<void> {
     await AsyncStorage.multiRemove([PROGRESS_KEY, ONBOARDING_KEY]);
   } catch {
     // Best effort
+  }
+}
+
+/** Upsert progress to Supabase user_progress table */
+export async function syncProgressToCloud(progress: UserProgress): Promise<void> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    await supabase.from("user_progress").upsert(
+      {
+        user_id: user.id,
+        completed_lessons: progress.completedLessons,
+        current_xp: progress.currentXP,
+        streak_days: progress.streakDays,
+        unlocked_verses: progress.unlockedVerses,
+        last_active_date: progress.lastActiveDate,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: "user_id" }
+    );
+  } catch {
+    // Fire-and-forget — local is source of truth
+  }
+}
+
+/** Load progress from Supabase, returns null if unavailable */
+export async function loadProgressFromCloud(): Promise<UserProgress | null> {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from("user_progress")
+      .select("*")
+      .eq("user_id", user.id)
+      .single();
+
+    if (error || !data) return null;
+
+    return {
+      completedLessons: data.completed_lessons ?? [],
+      currentXP: data.current_xp ?? 0,
+      streakDays: data.streak_days ?? 0,
+      unlockedVerses: data.unlocked_verses ?? [],
+      lastActiveDate: data.last_active_date ?? null,
+    };
+  } catch {
+    return null;
   }
 }

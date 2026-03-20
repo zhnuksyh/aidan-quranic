@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { UserProgress } from "../types/progress";
-import { loadProgress, saveProgress } from "../services/storage";
+import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud } from "../services/storage";
 
 interface ProgressContextValue {
   progress: UserProgress;
@@ -27,24 +27,51 @@ function getYesterday(): string {
   return d.toISOString().split("T")[0];
 }
 
+/** Merge local + cloud: union of arrays, max of numbers */
+function mergeProgress(local: UserProgress, cloud: UserProgress): UserProgress {
+  return {
+    completedLessons: [...new Set([...local.completedLessons, ...cloud.completedLessons])],
+    currentXP: Math.max(local.currentXP, cloud.currentXP),
+    streakDays: Math.max(local.streakDays, cloud.streakDays),
+    unlockedVerses: [...new Set([...local.unlockedVerses, ...cloud.unlockedVerses])],
+    lastActiveDate:
+      local.lastActiveDate && cloud.lastActiveDate
+        ? local.lastActiveDate > cloud.lastActiveDate
+          ? local.lastActiveDate
+          : cloud.lastActiveDate
+        : local.lastActiveDate ?? cloud.lastActiveDate,
+  };
+}
+
 const ProgressContext = createContext<ProgressContextValue | undefined>(undefined);
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<UserProgress>(DEFAULT_PROGRESS);
   const isLoaded = useRef(false);
 
-  // Load from AsyncStorage on mount
+  // Load from AsyncStorage on mount, then merge with cloud
   useEffect(() => {
-    loadProgress().then((saved) => {
-      setProgress(saved);
+    loadProgress().then(async (local) => {
+      setProgress(local);
       isLoaded.current = true;
+
+      // Attempt cloud merge in background
+      try {
+        const cloud = await loadProgressFromCloud();
+        if (cloud) {
+          setProgress((prev) => mergeProgress(prev, cloud));
+        }
+      } catch {
+        // Cloud unavailable — local is fine
+      }
     });
   }, []);
 
-  // Save to AsyncStorage on every change (after initial load)
+  // Save to AsyncStorage + cloud on every change (after initial load)
   useEffect(() => {
     if (isLoaded.current) {
       saveProgress(progress);
+      syncProgressToCloud(progress); // fire-and-forget
     }
   }, [progress]);
 
