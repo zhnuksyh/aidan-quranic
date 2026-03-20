@@ -2,6 +2,7 @@ export interface WorldPalette {
   id: string;
   name: string;
   subtitle: string;
+  icon: string;
   background: string;
   accent: string;
   accentLight: string;

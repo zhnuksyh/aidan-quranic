@@ -2,15 +2,24 @@ import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { BookOpen, MoonStar, Heart } from "lucide-react-native";
 import { useTheme } from "../../src/contexts/ThemeContext";
 import { WorldSwiper } from "../../src/components/adventure/WorldSwiper";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
 import { LessonModal } from "../../src/components/lesson/LessonModal";
 
+const LUCIDE_ICONS: Record<string, any> = {
+  BookOpen,
+  MoonStar,
+  Heart,
+};
+
 export default function AdventureScreen() {
   const { palette, avatarColor } = useTheme();
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
+
+  const IconComponent = LUCIDE_ICONS[palette.icon] || BookOpen;
 
   return (
     <SafeAreaView className="flex-1" style={{ backgroundColor: palette.background }}>
@@ -21,7 +30,7 @@ export default function AdventureScreen() {
             className="w-10 h-10 rounded-full items-center justify-center"
             style={{ backgroundColor: avatarColor }}
           >
-            <Text className="font-fredoka-bold text-white text-lg">A</Text>
+            <IconComponent size={20} color="#FFFFFF" strokeWidth={2.5} />
           </View>
           <View>
             <Text
