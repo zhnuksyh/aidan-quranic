@@ -4,6 +4,7 @@ import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud 
 
 interface ProgressContextValue {
   progress: UserProgress;
+  isReady: boolean;
   completeLesson: (lessonId: string, verseKey: string) => void;
   isLessonCompleted: (lessonId: string) => boolean;
   resetProgress: () => void;
@@ -47,6 +48,7 @@ const ProgressContext = createContext<ProgressContextValue | undefined>(undefine
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<UserProgress>(DEFAULT_PROGRESS);
+  const [isReady, setIsReady] = useState(false);
   const isLoaded = useRef(false);
 
   // Load from AsyncStorage on mount, then merge with cloud
@@ -54,6 +56,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
     loadProgress().then(async (local) => {
       setProgress(local);
       isLoaded.current = true;
+      setIsReady(true);
 
       // Attempt cloud merge in background
       try {
@@ -112,8 +115,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ progress, completeLesson, isLessonCompleted, resetProgress }),
-    [progress, completeLesson, isLessonCompleted, resetProgress]
+    () => ({ progress, isReady, completeLesson, isLessonCompleted, resetProgress }),
+    [progress, isReady, completeLesson, isLessonCompleted, resetProgress]
   );
 
   return (
