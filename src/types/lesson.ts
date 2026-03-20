@@ -31,6 +31,13 @@ export interface PuzzleItem {
   puzzleData: DragDropPuzzle | TrueFalsePuzzle | MultipleChoicePuzzle;
 }
 
+export interface TeachingCard {
+  title: string;
+  body: string;
+  icon: string;
+  lottieAsset?: string;
+}
+
 export interface LessonContent {
   verseKey: string;
   surahName: string;
@@ -39,6 +46,7 @@ export interface LessonContent {
   tafsirSourceName: string;
   arabicText: string;
   translationText: string;
+  teachingCards: TeachingCard[];
   puzzles: PuzzleItem[];
   audioUrl: string | null;
 }

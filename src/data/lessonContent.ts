@@ -11,6 +11,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
     translationText: "In the name of Allah, the Most Gracious, the Most Merciful.",
+    teachingCards: [
+      {
+        title: "The Power of Bismillah",
+        body: "The Basmalah opens the entire Quran and is recited before almost every action in a Muslim's life. It reminds us that all our deeds should begin with the consciousness of God.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "A Bond with the Creator",
+        body: "The scholars say the Basmalah establishes the relationship between the servant and the Lord. Everything we do is through His name, by His grace, and for His sake.",
+        icon: "heart-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "Grace and Mercy",
+        body: "By invoking 'the Most Gracious, the Most Merciful,' we acknowledge that Allah's mercy surrounds every action we take. This phrase sets the tone for the entire Quran.",
+        icon: "sunny-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -52,6 +71,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
     translationText: "All praise is due to Allah, Lord of all the worlds.",
+    teachingCards: [
+      {
+        title: "The Meaning of Rabb",
+        body: "Allah is the 'Rabb' — Lord, Sustainer, and Cherisher of all creation. This is not limited to humans; it extends to every world and dimension that exists.",
+        icon: "star-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "All the Worlds",
+        body: "The word 'Alamin' encompasses humans, jinn, angels, animals, and all of creation. It highlights the vast scope of Allah's care and sovereignty.",
+        icon: "globe-outline",
+        lottieAsset: "nature",
+      },
+      {
+        title: "Universal Sovereignty",
+        body: "Praising Allah as 'Rabb al-Alamin' means recognizing His sovereignty over everything in existence. Every being depends on Him for sustenance and care.",
+        icon: "shield-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -93,6 +131,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
     translationText: "The Most Gracious, the Most Merciful.",
+    teachingCards: [
+      {
+        title: "The Root of Mercy",
+        body: "Both Ar-Rahman and Ar-Raheem come from the root word 'Rahma,' meaning mercy. These two names together paint a complete picture of Allah's divine mercy.",
+        icon: "heart-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "Mercy for All Creation",
+        body: "Ar-Rahman refers to the vast, all-encompassing mercy of Allah that covers all of creation — believers and disbelievers alike. No one is excluded from this universal mercy.",
+        icon: "people-outline",
+      },
+      {
+        title: "Special Mercy for Believers",
+        body: "Ar-Raheem refers to the special mercy reserved for the believers in the Hereafter. While Ar-Rahman's mercy is universal, Ar-Raheem's mercy is a unique reward for those who believe.",
+        icon: "star-outline",
+        lottieAsset: "heart",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -134,6 +191,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "مَٰلِكِ يَوْمِ ٱلدِّينِ",
     translationText: "Master of the Day of Judgment.",
+    teachingCards: [
+      {
+        title: "The Day of Accountability",
+        body: "Allah is the sole Master of the Day of Judgment — the day when all souls will be held accountable for their deeds. No king or ruler will have any authority on that day.",
+        icon: "scale-outline",
+        lottieAsset: "scales",
+      },
+      {
+        title: "Perfect Justice",
+        body: "Only Allah will judge, and His judgment will be perfectly just. The oppressed will be vindicated and wrongdoers will be held accountable for every action.",
+        icon: "shield-outline",
+        lottieAsset: "scales",
+      },
+      {
+        title: "Hope and Accountability",
+        body: "This awareness is meant to instill both hope and accountability in our hearts. It gives hope to the wronged and reminds us all to live with purpose and integrity.",
+        icon: "sunny-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -174,6 +250,20 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
     translationText: "You alone we worship, and You alone we ask for help.",
+    teachingCards: [
+      {
+        title: "The Declaration of Tawheed",
+        body: "This pivotal verse is a declaration of Tawheed (monotheism) — 'You alone we worship, and You alone we ask for help.' It is a rejection of all false dependencies.",
+        icon: "compass-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "An Intimate Conversation",
+        body: "The shift from third person to second person ('You') creates an intimate, direct conversation between the worshiper and God. It is as if you are standing before Allah, speaking to Him directly.",
+        icon: "heart-outline",
+        lottieAsset: "heart",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -216,6 +306,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
     translationText: "Guide us to the straight path.",
+    teachingCards: [
+      {
+        title: "The Greatest Supplication",
+        body: "After declaring servitude and seeking help, the servant makes the most important supplication: 'Guide us to the straight path.' The Sirat al-Mustaqim is the path of truth and righteousness.",
+        icon: "compass-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "17 Times a Day",
+        body: "Every Muslim recites this prayer at least 17 times daily in their obligatory prayers. This makes it the most repeated supplication in a Muslim's life, showing how essential guidance is.",
+        icon: "flame-outline",
+      },
+      {
+        title: "Guidance Is Ongoing",
+        body: "We ask for guidance repeatedly because staying on the right path requires constant divine support. Guidance is not a one-time event but an ongoing need throughout life.",
+        icon: "leaf-outline",
+        lottieAsset: "nature",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -265,6 +374,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
     translationText:
       "The path of those You have blessed, not of those who earned Your anger, nor of those who went astray.",
+    teachingCards: [
+      {
+        title: "The Blessed Path",
+        body: "The straight path is the path of those whom Allah has blessed — the prophets, the truthful, the martyrs, and the righteous. These are the role models we are taught to follow.",
+        icon: "people-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "Two Paths to Avoid",
+        body: "The verse warns against two deviant paths: those who earned Allah's anger by knowingly rejecting truth, and those who went astray through ignorance. Knowledge and sincerity are both essential.",
+        icon: "shield-outline",
+      },
+      {
+        title: "The Company You Keep",
+        body: "This verse teaches us to seek good company and follow righteous examples. Surrounding yourself with people of faith and integrity helps you stay on the blessed path.",
+        icon: "people-outline",
+        lottieAsset: "heart",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -313,6 +441,20 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْمُبِينِ",
     translationText: "Alif, Lam, Ra. These are the verses of the clear Book.",
+    teachingCards: [
+      {
+        title: "The Mysterious Letters",
+        body: "Surah Yusuf begins with 'Alif Lam Ra' — disconnected letters that appear at the start of several Quranic chapters. They remind us that some aspects of the Quran remain known only to Allah.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "Mystery and Clarity Together",
+        body: "Despite the mystery of these letters, what follows is described as 'the clear Book.' The Quran balances depth beyond our understanding with a message made clear for those who reflect.",
+        icon: "eye-outline",
+        lottieAsset: "book",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -354,6 +496,19 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "إِنَّا أَنزَلْنَاهُ قُرْآنًا عَرَبِيًّا لَّعَلَّكُمْ تَعْقِلُونَ",
     translationText: "Indeed, We have sent it down as an Arabic Quran so that you may understand.",
+    teachingCards: [
+      {
+        title: "A Language of Depth",
+        body: "The choice of Arabic was not arbitrary. It was the language of the first recipients, and Arabic's rich vocabulary allows for layers of meaning in every verse.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "Meant to Be Understood",
+        body: "This verse emphasizes that the Quran is meant to be understood, pondered, and reflected upon — not merely recited without comprehension. Allah sent it so we may use our intellect.",
+        icon: "eye-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "multiple-choice",
@@ -401,6 +556,26 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     arabicText:
       "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ",
     translationText: "We relate to you the best of stories through this Quran which We reveal to you.",
+    teachingCards: [
+      {
+        title: "The Best of Stories",
+        body: "Allah Himself describes the story of Yusuf as 'the best of stories.' It is considered one of the most complete and beautiful narratives in the entire Quran.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "Themes of the Human Experience",
+        body: "The story of Yusuf covers the full range of human experience: jealousy, patience, temptation, forgiveness, and divine planning. Every person can find something relatable in it.",
+        icon: "people-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "Revealed Knowledge",
+        body: "Before this revelation, the Prophet Muhammad was unaware of these details. The story came through divine inspiration, confirming the Quran's miraculous origin.",
+        icon: "star-outline",
+        lottieAsset: "stars",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -444,6 +619,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "إِذْ قَالَ يُوسُفُ لِأَبِيهِ يَا أَبَتِ إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالشَّمْسَ وَالْقَمَرَ رَأَيْتُهُمْ لِي سَاجِدِينَ",
     translationText:
       "When Yusuf said to his father, 'O my father, indeed I saw eleven stars and the sun and the moon; I saw them prostrating to me.'",
+    teachingCards: [
+      {
+        title: "The Prophetic Dream",
+        body: "Young Yusuf saw eleven stars, the sun, and the moon all prostrating to him. This was not an ordinary dream — it was a prophecy of his future greatness, revealed through divine symbolism.",
+        icon: "moon-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "The Symbols Explained",
+        body: "The eleven stars represented Yusuf's brothers, and the sun and moon represented his parents. The prostration symbolized the honor and authority he would one day hold.",
+        icon: "star-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "A Father's Wisdom",
+        body: "Ya'qub immediately recognized the dream's significance and warned Yusuf not to share it with his brothers. His protective instinct showed his understanding of human jealousy.",
+        icon: "shield-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -493,6 +687,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "قَالَ يَا بُنَيَّ لَا تَقْصُصْ رُؤْيَاكَ عَلَىٰ إِخْوَتِكَ فَيَكِيدُوا لَكَ كَيْدًا",
     translationText:
       "He said, 'O my son, do not relate your vision to your brothers, lest they plan against you a plan.'",
+    teachingCards: [
+      {
+        title: "The Danger of Jealousy",
+        body: "Ya'qub warned Yusuf not to share his dream because his brothers would plot against him out of jealousy. Ya'qub understood that envy can drive even loved ones to harmful actions.",
+        icon: "shield-outline",
+      },
+      {
+        title: "The Origin of Envy",
+        body: "Ya'qub knew the destructive nature of jealousy — it was through envy that Iblis (Satan) refused to bow to Adam. Envy is among the oldest and most dangerous spiritual diseases.",
+        icon: "flame-outline",
+      },
+      {
+        title: "The Wisdom of Discretion",
+        body: "This verse teaches that not every blessing should be shared openly, as it may provoke envy even among loved ones. Discretion is a form of wisdom and self-protection.",
+        icon: "eye-outline",
+        lottieAsset: "book",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -535,6 +747,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     arabicText:
       "وَكَذَٰلِكَ يَجْتَبِيكَ رَبُّكَ وَيُعَلِّمُكَ مِن تَأْوِيلِ ٱلْأَحَادِيثِ",
     translationText: "And thus your Lord will choose you and teach you the interpretation of dreams.",
+    teachingCards: [
+      {
+        title: "Chosen by Allah",
+        body: "Ya'qub interpreted Yusuf's dream as a sign that Allah would choose him and teach him the interpretation of dreams. This special gift would define Yusuf's role in the years to come.",
+        icon: "star-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "A Prophetic Lineage",
+        body: "Allah's favor upon Yusuf continues the legacy of his forefathers Ibrahim (Abraham) and Ishaq (Isaac). This shows that Allah's guidance flows through generations of the faithful.",
+        icon: "people-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "Foreshadowing Greatness",
+        body: "This verse foreshadows Yusuf's future rise to power in Egypt. Despite the hardships ahead, Allah's plan for him was already set in motion from his youth.",
+        icon: "sunny-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -578,6 +809,26 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلرَّحْمَٰنُ",
     translationText: "The Most Gracious.",
+    teachingCards: [
+      {
+        title: "The Name Ar-Rahman",
+        body: "Surah Ar-Rahman opens with one of Allah's most beautiful names: 'Ar-Rahman' — the Most Gracious, the source of infinite mercy. This single-word verse is a powerful declaration.",
+        icon: "heart-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "Everything Flows from Mercy",
+        body: "Everything that follows in this Surah — the creation of humans, the teaching of the Quran, the balance of the universe — all flows from Allah's boundless mercy.",
+        icon: "sunny-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "Mercy Defines the Relationship",
+        body: "It is mercy that defines Allah's relationship with all of creation. Before mentioning power, knowledge, or judgment, He introduces Himself through His mercy.",
+        icon: "leaf-outline",
+        lottieAsset: "nature",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -619,6 +870,20 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "عَلَّمَ ٱلْقُرْآنَ",
     translationText: "He taught the Quran.",
+    teachingCards: [
+      {
+        title: "The Greatest Gift",
+        body: "Immediately after identifying Himself as Ar-Rahman, Allah mentions His first favor: teaching the Quran. Before creation, before the universe — guidance comes first.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "More Than a Book",
+        body: "The Quran is not just a book; it is the speech of Allah, a mercy that guides humanity through darkness to light. It is the most profound connection between Creator and creation.",
+        icon: "star-outline",
+        lottieAsset: "book",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -660,6 +925,20 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "خَلَقَ ٱلْإِنسَٰنَ",
     translationText: "He created humanity.",
+    teachingCards: [
+      {
+        title: "Purpose Before Existence",
+        body: "Guidance came before creation in this Surah's listing of blessings. This teaches us that our purpose — to be guided — is more fundamental than our existence itself.",
+        icon: "compass-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "The Meaning of Insan",
+        body: "The word 'Insan' (human) comes from 'uns' meaning intimacy. Humans were created to have a close, intimate relationship with their Creator.",
+        icon: "heart-outline",
+        lottieAsset: "heart",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -707,6 +986,25 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "عَلَّمَهُ ٱلْبَيَانَ",
     translationText: "He taught him speech and expression.",
+    teachingCards: [
+      {
+        title: "The Gift of Expression",
+        body: "Allah taught humanity 'al-bayan' — the ability to express, communicate, and articulate. This is one of the greatest gifts that distinguishes humans from other creation.",
+        icon: "people-outline",
+        lottieAsset: "heart",
+      },
+      {
+        title: "More Than Just Speech",
+        body: "Al-bayan encompasses speech, writing, understanding, and the ability to convey thoughts and emotions. It is the foundation of all human connection and knowledge.",
+        icon: "book-outline",
+        lottieAsset: "book",
+      },
+      {
+        title: "A Responsibility",
+        body: "Without this gift, no knowledge could be shared, no prayers could be uttered, and no relationships could be formed. The ability to express carries a responsibility to use it for truth and good.",
+        icon: "flame-outline",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
@@ -753,6 +1051,20 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلشَّمْسُ وَٱلْقَمَرُ بِحُسْبَانٍ",
     translationText: "The sun and the moon move by precise calculation.",
+    teachingCards: [
+      {
+        title: "Cosmic Precision",
+        body: "The sun and moon follow precise calculations. The word 'husban' means exact reckoning — every orbit, every eclipse, every season is perfectly computed by Allah.",
+        icon: "moon-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "Mercy in the Cosmos",
+        body: "This cosmic precision is itself a sign of Allah's mercy. It provides reliable cycles for agriculture, navigation, and timekeeping — essentials for human life on earth.",
+        icon: "sunny-outline",
+        lottieAsset: "nature",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "drag-drop",
@@ -794,6 +1106,26 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "وَٱلنَّجْمُ وَٱلشَّجَرُ يَسْجُدَانِ",
     translationText: "And the stars and the trees prostrate.",
+    teachingCards: [
+      {
+        title: "All Creation Prostrates",
+        body: "The stars and the trees prostrate to Allah. Whether celestial or terrestrial, all of creation submits to Allah's will and glorifies its Creator.",
+        icon: "leaf-outline",
+        lottieAsset: "nature",
+      },
+      {
+        title: "The Meaning of Najm",
+        body: "'Najm' here can mean stars or stemless plants that spread along the ground, and 'shajar' means trees. Both the heavens and the earth are united in submission to Allah.",
+        icon: "star-outline",
+        lottieAsset: "stars",
+      },
+      {
+        title: "Natural Submission",
+        body: "This prostration is not like human prayer — it is the natural submission of all creation to the laws and order Allah has established. Even nature glorifies its Creator.",
+        icon: "eye-outline",
+        lottieAsset: "nature",
+      },
+    ],
     puzzles: [
       {
         puzzleType: "true-false",
