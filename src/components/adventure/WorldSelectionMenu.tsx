@@ -22,7 +22,7 @@ export function WorldSelectionMenu({ visible, onClose }: Props) {
             className="font-fredoka-bold text-xl mb-4 text-center"
             style={{ color: palette.textOnBackground }}
           >
-            Choose a World
+            Choose a Surah
           </Text>
           {Object.values(WORLD_PALETTES).map((world) => (
             <Pressable
@@ -53,14 +53,17 @@ export function WorldSelectionMenu({ visible, onClose }: Props) {
                 >
                   {world.name}
                 </Text>
-                {world.id === currentWorldId && (
-                  <Text
-                    className="font-fredoka text-xs opacity-80"
-                    style={{ color: world.textOnAccent }}
-                  >
-                    Current
-                  </Text>
-                )}
+                <Text
+                  className="font-fredoka text-xs opacity-80"
+                  style={{
+                    color:
+                      world.id === currentWorldId
+                        ? world.textOnAccent
+                        : world.textOnBackground,
+                  }}
+                >
+                  {world.subtitle}{world.id === currentWorldId ? " · Current" : ""}
+                </Text>
               </View>
             </Pressable>
           ))}

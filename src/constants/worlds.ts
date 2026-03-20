@@ -5,7 +5,8 @@ export const AVATAR_COLOR = "#FB923C";
 export const WORLD_PALETTES: Record<string, WorldPalette> = {
   world1: {
     id: "world1",
-    name: "Indigo Meadows",
+    name: "Al-Fatihah",
+    subtitle: "The Opening",
     background: "#E0E7FF",
     accent: "#6366F1",
     accentLight: "#A5B4FC",
@@ -14,7 +15,8 @@ export const WORLD_PALETTES: Record<string, WorldPalette> = {
   },
   world2: {
     id: "world2",
-    name: "Amber Dunes",
+    name: "Yusuf",
+    subtitle: "Joseph",
     background: "#FFEDD5",
     accent: "#EA580C",
     accentLight: "#FDBA74",
@@ -23,7 +25,8 @@ export const WORLD_PALETTES: Record<string, WorldPalette> = {
   },
   world3: {
     id: "world3",
-    name: "Emerald Gardens",
+    name: "Ar-Rahman",
+    subtitle: "The Most Gracious",
     background: "#D1FAE5",
     accent: "#0284C7",
     accentLight: "#7DD3FC",

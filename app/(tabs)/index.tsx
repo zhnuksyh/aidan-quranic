@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../src/contexts/ThemeContext";
 import { WorldSwiper } from "../../src/components/adventure/WorldSwiper";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
@@ -22,24 +23,27 @@ export default function AdventureScreen() {
           >
             <Text className="font-fredoka-bold text-white text-lg">A</Text>
           </View>
-          <Text
-            className="font-fredoka-bold text-lg"
-            style={{ color: palette.textOnBackground }}
-          >
-            {palette.name}
-          </Text>
+          <View>
+            <Text
+              className="font-fredoka-bold text-lg"
+              style={{ color: palette.textOnBackground }}
+            >
+              {palette.name}
+            </Text>
+            <Text
+              className="font-fredoka text-xs opacity-60"
+              style={{ color: palette.textOnBackground }}
+            >
+              {palette.subtitle}
+            </Text>
+          </View>
         </View>
         <Pressable
           className="rounded-2xl px-4 py-2"
           style={{ backgroundColor: palette.accent }}
           onPress={() => setMenuVisible(true)}
         >
-          <Text
-            className="font-fredoka-semibold"
-            style={{ color: palette.textOnAccent }}
-          >
-            Worlds
-          </Text>
+          <Ionicons name="list" size={18} color={palette.textOnAccent} />
         </Pressable>
       </View>
 

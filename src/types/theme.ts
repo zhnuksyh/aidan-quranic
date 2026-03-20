@@ -1,6 +1,7 @@
 export interface WorldPalette {
   id: string;
   name: string;
+  subtitle: string;
   background: string;
   accent: string;
   accentLight: string;
