@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../src/contexts/ThemeContext";
 
@@ -6,6 +7,8 @@ export default function TabLayout() {
   const { palette } = useTheme();
 
   return (
+    <>
+    <StatusBar style="dark" />
     <Tabs
       screenOptions={{
         headerShown: false,
@@ -58,5 +61,6 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+    </>
   );
 }
