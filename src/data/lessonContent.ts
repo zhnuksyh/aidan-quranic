@@ -11,13 +11,31 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
     translationText: "In the name of Allah, the Most Gracious, the Most Merciful.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "The Basmalah teaches us to begin every action in the ___ of Allah.",
-      options: ["name", "power", "house", "light"],
-      correctAnswer: "name",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The Basmalah teaches us to begin every action in the ___ of Allah.",
+          options: ["name", "power", "house", "light"],
+          correctAnswer: "name",
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The Arabic word 'Bismillah' means 'In the ___ of Allah'.",
+          options: ["name", "glory", "mercy", "light"],
+          correctAnswer: "name",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The Basmalah reminds us that all deeds should begin with consciousness of God.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w1-l2": {
@@ -29,11 +47,30 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
     translationText: "All praise is due to Allah, Lord of all the worlds.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement: "The word 'Alamin' refers only to the human world.",
-      isTrue: false,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The word 'Alamin' refers only to the human world.",
+          isTrue: false,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The word 'Rabb' means Lord, Sustainer, and ___.",
+          options: ["Cherisher", "Destroyer", "Punisher", "Judge"],
+          correctAnswer: "Cherisher",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Al-Hamd (praise) in this verse is directed exclusively to Allah, not to any creation.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w1-l3": {
@@ -45,13 +82,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
     translationText: "The Most Gracious, the Most Merciful.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "Both Ar-Rahman and Ar-Raheem come from the root word ___, meaning mercy.",
-      options: ["Rahma", "Salaam", "Noor", "Ilm"],
-      correctAnswer: "Rahma",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Both Ar-Rahman and Ar-Raheem come from the root word ___, meaning mercy.",
+          options: ["Rahma", "Salaam", "Noor", "Ilm"],
+          correctAnswer: "Rahma",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Ar-Rahman's mercy is only for believers, while Ar-Raheem's mercy is for all creation.",
+          isTrue: false,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w1-l4": {
@@ -63,12 +110,30 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "مَٰلِكِ يَوْمِ ٱلدِّينِ",
     translationText: "Master of the Day of Judgment.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "On the Day of Judgment, Allah is the sole authority and judge.",
-      isTrue: true,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "On the Day of Judgment, Allah is the sole authority and judge.",
+          isTrue: true,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The word 'Maalik' in this verse means ___ or Owner.",
+          options: ["Master", "Teacher", "Helper", "Friend"],
+          correctAnswer: "Master",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "This verse is meant to instill only fear, without any hope.",
+          isTrue: false,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w1-l5": {
@@ -79,15 +144,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "This is the pivotal verse of Al-Fatiha where the servant directly addresses Allah: 'You alone we worship, and You alone we ask for help.' It is a declaration of Tawheed (monotheism) and a rejection of all false dependencies. The shift from third person to second person ('You') creates an intimate, direct conversation between the worshiper and God.",
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
-    translationText:
-      "You alone we worship, and You alone we ask for help.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "This verse is a declaration of ___, the oneness of God.",
-      options: ["Tawheed", "Shukr", "Sabr", "Dhikr"],
-      correctAnswer: "Tawheed",
-    },
+    translationText: "You alone we worship, and You alone we ask for help.",
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "This verse is a declaration of ___, the oneness of God.",
+          options: ["Tawheed", "Shukr", "Sabr", "Dhikr"],
+          correctAnswer: "Tawheed",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The shift from third person to second person ('You') creates an intimate conversation with Allah.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
 
@@ -100,13 +174,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
     translationText: "Guide us to the straight path.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "Muslims recite this supplication at least ___ times daily in prayers.",
-      options: ["17", "5", "10", "33"],
-      correctAnswer: "17",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Muslims recite this supplication at least ___ times daily in prayers.",
+          options: ["17", "5", "10", "33"],
+          correctAnswer: "17",
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "'Sirat al-Mustaqim' means the ___ path.",
+          options: ["straight", "hidden", "difficult", "ancient"],
+          correctAnswer: "straight",
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w1-l7": {
@@ -120,12 +205,30 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
     translationText:
       "The path of those You have blessed, not of those who earned Your anger, nor of those who went astray.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "The straight path refers to the path of prophets, truthful ones, martyrs, and the righteous.",
-      isTrue: true,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The straight path refers to the path of prophets, truthful ones, martyrs, and the righteous.",
+          isTrue: true,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "This verse teaches us to seek good ___ and follow righteous examples.",
+          options: ["company", "wealth", "fame", "power"],
+          correctAnswer: "company",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "'Those who went astray' refers to people who reject truth out of ignorance, not arrogance.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
 
@@ -138,14 +241,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "Surah Yusuf begins with the disconnected letters 'Alif Lam Ra' — mysterious letters that appear at the start of several Quranic chapters. These letters remind us that despite our deep study, there remain aspects of the Quran known only to Allah. What follows is described as verses of 'the clear Book', emphasizing that the Quran's message, despite its depths, is made clear for those who reflect.",
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "الر ۚ تِلْكَ آيَاتُ الْكِتَابِ الْمُبِينِ",
-    translationText:
-      "Alif, Lam, Ra. These are the verses of the clear Book.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "The disconnected letters at the start of some Surahs have a universally agreed-upon meaning among scholars.",
-      isTrue: false,
-    },
+    translationText: "Alif, Lam, Ra. These are the verses of the clear Book.",
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The disconnected letters at the start of some Surahs have a universally agreed-upon meaning among scholars.",
+          isTrue: false,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The Quran is described as 'al-Kitab al-Mubeen', meaning the ___ Book.",
+          options: ["clear", "hidden", "ancient", "sealed"],
+          correctAnswer: "clear",
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w2-l2": {
@@ -156,15 +269,32 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "Allah reveals that He sent down this Quran in Arabic so that the people may use their intellect to understand it. The choice of Arabic was not arbitrary — it was the language of the first recipients, and Arabic's rich vocabulary allows for layers of meaning. This verse emphasizes that the Quran is meant to be understood, pondered, and reflected upon — not merely recited without comprehension.",
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "إِنَّا أَنزَلْنَاهُ قُرْآنًا عَرَبِيًّا لَّعَلَّكُمْ تَعْقِلُونَ",
-    translationText:
-      "Indeed, We have sent it down as an Arabic Quran so that you may understand.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "The Quran was revealed in ___ so that people may understand it.",
-      options: ["Arabic", "Hebrew", "Aramaic", "Persian"],
-      correctAnswer: "Arabic",
-    },
+    translationText: "Indeed, We have sent it down as an Arabic Quran so that you may understand.",
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The Quran was revealed in ___ so that people may understand it.",
+          options: ["Arabic", "Hebrew", "Aramaic", "Persian"],
+          correctAnswer: "Arabic",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "This verse implies the Quran is meant to be pondered and reflected upon, not just recited.",
+          isTrue: true,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The phrase 'la'allakum ta'qiloon' means 'so that you may ___'.",
+          options: ["understand", "memorize", "fear", "celebrate"],
+          correctAnswer: "understand",
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w2-l3": {
@@ -176,15 +306,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText:
       "نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ بِمَا أَوْحَيْنَا إِلَيْكَ هَٰذَا الْقُرْآنَ",
-    translationText:
-      "We relate to you the best of stories through this Quran which We reveal to you.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "The story of Yusuf is described by Allah as the ___ of stories.",
-      options: ["best", "longest", "first", "last"],
-      correctAnswer: "best",
-    },
+    translationText: "We relate to you the best of stories through this Quran which We reveal to you.",
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The story of Yusuf is described by Allah as the ___ of stories.",
+          options: ["best", "longest", "first", "last"],
+          correctAnswer: "best",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The story of Yusuf covers themes of jealousy, patience, temptation, and forgiveness.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w2-l4": {
@@ -198,12 +337,30 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "إِذْ قَالَ يُوسُفُ لِأَبِيهِ يَا أَبَتِ إِنِّي رَأَيْتُ أَحَدَ عَشَرَ كَوْكَبًا وَالشَّمْسَ وَالْقَمَرَ رَأَيْتُهُمْ لِي سَاجِدِينَ",
     translationText:
       "When Yusuf said to his father, 'O my father, indeed I saw eleven stars and the sun and the moon; I saw them prostrating to me.'",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "In Yusuf's dream, the eleven stars represent the eleven prophets who came before him.",
-      isTrue: false,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "In Yusuf's dream, the eleven stars represent the eleven prophets who came before him.",
+          isTrue: false,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The sun and moon in Yusuf's dream represented his ___.",
+          options: ["parents", "teachers", "enemies", "friends"],
+          correctAnswer: "parents",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Ya'qub recognized the significance of the dream and warned Yusuf to keep it private.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
 
@@ -218,13 +375,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
       "قَالَ يَا بُنَيَّ لَا تَقْصُصْ رُؤْيَاكَ عَلَىٰ إِخْوَتِكَ فَيَكِيدُوا لَكَ كَيْدًا",
     translationText:
       "He said, 'O my son, do not relate your vision to your brothers, lest they plan against you a plan.'",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "Ya'qub warned Yusuf not to share his dream to avoid his brothers' ___.",
-      options: ["jealousy", "confusion", "laughter", "anger"],
-      correctAnswer: "jealousy",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Ya'qub warned Yusuf not to share his dream to avoid his brothers' ___.",
+          options: ["jealousy", "confusion", "laughter", "anger"],
+          correctAnswer: "jealousy",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "This verse teaches that every blessing should always be shared openly with everyone.",
+          isTrue: false,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w2-l6": {
@@ -236,14 +403,24 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText:
       "وَكَذَٰلِكَ يَجْتَبِيكَ رَبُّكَ وَيُعَلِّمُكَ مِن تَأْوِيلِ ٱلْأَحَادِيثِ",
-    translationText:
-      "And thus your Lord will choose you and teach you the interpretation of dreams.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "Ya'qub told Yusuf that Allah would teach him the interpretation of dreams.",
-      isTrue: true,
-    },
+    translationText: "And thus your Lord will choose you and teach you the interpretation of dreams.",
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Ya'qub told Yusuf that Allah would teach him the interpretation of dreams.",
+          isTrue: true,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Yusuf's forefathers include Ibrahim and ___, forming a great prophetic lineage.",
+          options: ["Ishaq", "Musa", "Dawud", "Nuh"],
+          correctAnswer: "Ishaq",
+        },
+      },
+    ],
     audioUrl: null,
   },
 
@@ -257,13 +434,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلرَّحْمَٰنُ",
     translationText: "The Most Gracious.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "Ar-Rahman means 'The Most ___', referring to Allah's infinite mercy.",
-      options: ["Gracious", "Powerful", "Knowing", "Wise"],
-      correctAnswer: "Gracious",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Ar-Rahman means 'The Most ___', referring to Allah's infinite mercy.",
+          options: ["Gracious", "Powerful", "Knowing", "Wise"],
+          correctAnswer: "Gracious",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Everything mentioned after this verse — creation, guidance, cosmic balance — all flows from Allah's mercy.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w3-l2": {
@@ -275,12 +462,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "عَلَّمَ ٱلْقُرْآنَ",
     translationText: "He taught the Quran.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "In Surah Ar-Rahman, the creation of humans is mentioned before the teaching of the Quran.",
-      isTrue: false,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "In Surah Ar-Rahman, the creation of humans is mentioned before the teaching of the Quran.",
+          isTrue: false,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Allah places the Quran first to signal that divine ___ is the greatest gift.",
+          options: ["guidance", "punishment", "creation", "wealth"],
+          correctAnswer: "guidance",
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w3-l3": {
@@ -292,13 +490,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "خَلَقَ ٱلْإِنسَٰنَ",
     translationText: "He created humanity.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "The word 'Insan' (human) is derived from 'uns', meaning ___.",
-      options: ["intimacy", "strength", "knowledge", "patience"],
-      correctAnswer: "intimacy",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The word 'Insan' (human) is derived from 'uns', meaning ___.",
+          options: ["intimacy", "strength", "knowledge", "patience"],
+          correctAnswer: "intimacy",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "In this Surah, guidance is listed before creation, teaching that our purpose is more fundamental than our existence.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w3-l4": {
@@ -310,12 +518,30 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "عَلَّمَهُ ٱلْبَيَانَ",
     translationText: "He taught him speech and expression.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "Al-bayan refers only to the ability of spoken language.",
-      isTrue: false,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Al-bayan refers only to the ability of spoken language.",
+          isTrue: false,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "Al-bayan encompasses speech, writing, understanding, and the ability to convey ___.",
+          options: ["thoughts", "commands", "warnings", "secrets"],
+          correctAnswer: "thoughts",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "Without the gift of al-bayan, no prayers could be uttered and no relationships formed.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w3-l5": {
@@ -327,13 +553,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "ٱلشَّمْسُ وَٱلْقَمَرُ بِحُسْبَانٍ",
     translationText: "The sun and the moon move by precise calculation.",
-    puzzleType: "drag-drop",
-    puzzleData: {
-      sentence:
-        "The word 'husban' means exact ___, referring to celestial precision.",
-      options: ["reckoning", "speed", "distance", "beauty"],
-      correctAnswer: "reckoning",
-    },
+    puzzles: [
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The word 'husban' means exact ___, referring to celestial precision.",
+          options: ["reckoning", "speed", "distance", "beauty"],
+          correctAnswer: "reckoning",
+        },
+      },
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "The cosmic precision of the sun and moon is itself a sign of Allah's mercy.",
+          isTrue: true,
+        },
+      },
+    ],
     audioUrl: null,
   },
   "w3-l6": {
@@ -345,12 +581,23 @@ export const LESSON_CONTENT: Record<string, LessonContent> = {
     tafsirSourceName: "Tafsir Ibn Kathir",
     arabicText: "وَٱلنَّجْمُ وَٱلشَّجَرُ يَسْجُدَانِ",
     translationText: "And the stars and the trees prostrate.",
-    puzzleType: "true-false",
-    puzzleData: {
-      statement:
-        "In this verse, prostration means the natural submission of creation to Allah's laws.",
-      isTrue: true,
-    },
+    puzzles: [
+      {
+        puzzleType: "true-false",
+        puzzleData: {
+          statement: "In this verse, prostration means the natural submission of creation to Allah's laws.",
+          isTrue: true,
+        },
+      },
+      {
+        puzzleType: "drag-drop",
+        puzzleData: {
+          sentence: "The word 'Najm' can mean stars or stemless ___ that spread along the ground.",
+          options: ["plants", "rivers", "stones", "creatures"],
+          correctAnswer: "plants",
+        },
+      },
+    ],
     audioUrl: null,
   },
 };

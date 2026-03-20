@@ -20,6 +20,11 @@ export interface TrueFalsePuzzle {
   isTrue: boolean;
 }
 
+export interface PuzzleItem {
+  puzzleType: PuzzleType;
+  puzzleData: DragDropPuzzle | TrueFalsePuzzle;
+}
+
 export interface LessonContent {
   verseKey: string;
   surahName: string;
@@ -28,7 +33,6 @@ export interface LessonContent {
   tafsirSourceName: string;
   arabicText: string;
   translationText: string;
-  puzzleType: PuzzleType;
-  puzzleData: DragDropPuzzle | TrueFalsePuzzle;
+  puzzles: PuzzleItem[];
   audioUrl: string | null;
 }
