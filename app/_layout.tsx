@@ -15,6 +15,7 @@ import { ThemeProvider } from "../src/contexts/ThemeContext";
 import { ProgressProvider } from "../src/contexts/ProgressContext";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { WelcomeScreen } from "../src/components/onboarding/WelcomeScreen";
+import { ErrorBoundary } from "../src/components/common/ErrorBoundary";
 import { hasSeenOnboarding, markOnboardingSeen } from "../src/services/storage";
 
 SplashScreen.preventAutoHideAsync();
@@ -49,11 +50,13 @@ export default function RootLayout() {
       <AuthProvider>
         <ThemeProvider>
           <ProgressProvider>
-            {showOnboarding ? (
-              <WelcomeScreen onComplete={handleOnboardingComplete} />
-            ) : (
-              <Stack screenOptions={{ headerShown: false }} />
-            )}
+            <ErrorBoundary>
+              {showOnboarding ? (
+                <WelcomeScreen onComplete={handleOnboardingComplete} />
+              ) : (
+                <Stack screenOptions={{ headerShown: false }} />
+              )}
+            </ErrorBoundary>
           </ProgressProvider>
         </ThemeProvider>
       </AuthProvider>
