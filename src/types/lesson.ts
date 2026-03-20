@@ -1,4 +1,4 @@
-export type PuzzleType = "drag-drop" | "true-false";
+export type PuzzleType = "drag-drop" | "true-false" | "multiple-choice";
 export type LessonPhase = "immersion" | "puzzle" | "reveal" | "audio" | "celebration";
 
 export interface LessonNode {
@@ -20,9 +20,15 @@ export interface TrueFalsePuzzle {
   isTrue: boolean;
 }
 
+export interface MultipleChoicePuzzle {
+  question: string;
+  options: string[];
+  correctIndex: number;
+}
+
 export interface PuzzleItem {
   puzzleType: PuzzleType;
-  puzzleData: DragDropPuzzle | TrueFalsePuzzle;
+  puzzleData: DragDropPuzzle | TrueFalsePuzzle | MultipleChoicePuzzle;
 }
 
 export interface LessonContent {

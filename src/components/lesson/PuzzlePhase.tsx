@@ -2,10 +2,12 @@ import { View, Text } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { DragDropPuzzle } from "./DragDropPuzzle";
 import { TrueFalsePuzzle } from "./TrueFalsePuzzle";
+import { MultipleChoicePuzzle } from "./MultipleChoicePuzzle";
 import type {
   PuzzleItem,
   DragDropPuzzle as DragDropPuzzleType,
   TrueFalsePuzzle as TrueFalsePuzzleType,
+  MultipleChoicePuzzle as MultipleChoicePuzzleType,
 } from "../../types/lesson";
 
 interface Props {
@@ -29,14 +31,21 @@ export function PuzzlePhase({ puzzleItem, quizNumber, totalQuizzes, onCorrect }:
         </Text>
       )}
 
-      {puzzleItem.puzzleType === "drag-drop" ? (
+      {puzzleItem.puzzleType === "drag-drop" && (
         <DragDropPuzzle
           puzzle={puzzleItem.puzzleData as DragDropPuzzleType}
           onCorrect={onCorrect}
         />
-      ) : (
+      )}
+      {puzzleItem.puzzleType === "true-false" && (
         <TrueFalsePuzzle
           puzzle={puzzleItem.puzzleData as TrueFalsePuzzleType}
+          onCorrect={onCorrect}
+        />
+      )}
+      {puzzleItem.puzzleType === "multiple-choice" && (
+        <MultipleChoicePuzzle
+          puzzle={puzzleItem.puzzleData as MultipleChoicePuzzleType}
           onCorrect={onCorrect}
         />
       )}
