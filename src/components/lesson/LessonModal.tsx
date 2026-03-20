@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Modal, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,7 +6,8 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { LESSON_CONTENT } from "../../data/lessonContent";
-import { LessonPhase } from "../../types/lesson";
+import { LessonPhase, LessonContent } from "../../types/lesson";
+import { getTafsir } from "../../services/api";
 import { PhaseIndicator } from "./PhaseIndicator";
 import { ImmersionPhase } from "./ImmersionPhase";
 import { PuzzlePhase } from "./PuzzlePhase";
@@ -27,7 +28,37 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
   const { completeLesson, progress } = useProgress();
   const [phase, setPhase] = useState<LessonPhase>("immersion");
 
-  const content = lessonId ? LESSON_CONTENT[lessonId] : null;
+  const baseContent = lessonId ? LESSON_CONTENT[lessonId] : null;
+  const [enrichedContent, setEnrichedContent] = useState<LessonContent | null>(null);
+
+  // Fetch live tafsir when lesson opens
+  useEffect(() => {
+    if (!baseContent || !visible) {
+      setEnrichedContent(null);
+      return;
+    }
+
+    let mounted = true;
+    getTafsir(baseContent.verseKey)
+      .then((tafsirs) => {
+        if (!mounted || !tafsirs.length) return;
+        const liveText = tafsirs[0].text.replace(/<[^>]*>/g, "");
+        if (liveText.length > 50) {
+          setEnrichedContent({
+            ...baseContent,
+            tafsirText: liveText,
+            tafsirSourceName: tafsirs[0].resource_name || baseContent.tafsirSourceName,
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback to hardcoded content
+      });
+
+    return () => { mounted = false; };
+  }, [lessonId, visible]);
+
+  const content = enrichedContent ?? baseContent;
 
   const advancePhase = () => {
     const idx = PHASE_ORDER.indexOf(phase);
@@ -46,6 +77,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
 
   const handleClose = () => {
     setPhase("immersion");
+    setEnrichedContent(null);
     onClose();
   };
 
