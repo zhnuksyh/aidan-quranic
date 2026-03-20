@@ -31,6 +31,24 @@ export async function getTranslation(
   return data.translations;
 }
 
+interface VersesResponse {
+  verses: QFVerse[];
+}
+
+export async function getVersesByChapter(
+  chapterId: number,
+  translationId = 131
+): Promise<{ verse_key: string; text_uthmani: string; translation: string }[]> {
+  const data = await qfFetch<VersesResponse>(
+    `/verses/by_chapter/${chapterId}?language=en&translations=${translationId}&fields=text_uthmani&per_page=286`
+  );
+  return data.verses.map((v) => ({
+    verse_key: v.verse_key,
+    text_uthmani: v.text_uthmani,
+    translation: v.translations?.[0]?.text ?? "",
+  }));
+}
+
 export async function getTafsir(
   verseKey: string,
   tafsirId = 169 // Ibn Kathir (English)

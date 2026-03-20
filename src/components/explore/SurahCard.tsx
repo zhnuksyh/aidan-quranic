@@ -1,16 +1,18 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { QFChapter } from "../../types/verse";
 
 interface Props {
   chapter: QFChapter;
+  onPress?: () => void;
 }
 
-export function SurahCard({ chapter }: Props) {
+export function SurahCard({ chapter, onPress }: Props) {
   const { palette } = useTheme();
 
   return (
-    <View
+    <Pressable
+      onPress={onPress}
       className="flex-row items-center rounded-2xl p-4 mb-3 mx-4"
       style={{ backgroundColor: palette.accentLight }}
     >
@@ -50,6 +52,6 @@ export function SurahCard({ chapter }: Props) {
       >
         {chapter.name_arabic}
       </Text>
-    </View>
+    </Pressable>
   );
 }
