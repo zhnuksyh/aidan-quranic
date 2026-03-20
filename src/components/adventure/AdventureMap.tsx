@@ -31,7 +31,11 @@ export function AdventureMap({ worldId, onLessonPress }: Props) {
             key={lesson.id}
             entering={FadeInUp.delay(index * 120).springify()}
           >
-            {index > 0 && <NodePath />}
+            {index > 0 && (
+              <NodePath
+                direction={index % 2 === 0 ? "right-to-left" : "left-to-right"}
+              />
+            )}
             <View style={{ alignSelf, marginHorizontal }}>
               <LessonNodeComponent
                 lesson={lesson}
