@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Text, Modal, FlatList, Pressable, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../contexts/ThemeContext";
 import { QFChapter } from "../../types/verse";
@@ -20,6 +20,7 @@ interface Props {
 
 export function VerseDetailModal({ chapter, visible, onClose }: Props) {
   const { palette } = useTheme();
+  const insets = useSafeAreaInsets();
   const [verses, setVerses] = useState<VerseItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -48,7 +49,7 @@ export function VerseDetailModal({ chapter, visible, onClose }: Props) {
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="fullScreen">
-      <SafeAreaView className="flex-1" style={{ backgroundColor: palette.background }}>
+      <View className="flex-1" style={{ backgroundColor: palette.background, paddingTop: insets.top }}>
         {/* Header */}
         <View className="flex-row items-center px-4 py-3 mb-2">
           <Pressable onPress={onClose} className="p-2 mr-3">
@@ -167,7 +168,7 @@ export function VerseDetailModal({ chapter, visible, onClose }: Props) {
             }}
           />
         )}
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { View, Modal, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Modal, Pressable, Platform } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -26,6 +26,7 @@ interface Props {
 export function LessonModal({ lessonId, visible, onClose }: Props) {
   const { palette } = useTheme();
   const { completeLesson, progress } = useProgress();
+  const insets = useSafeAreaInsets();
   const [phase, setPhase] = useState<LessonPhase>("immersion");
 
   const baseContent = lessonId ? LESSON_CONTENT[lessonId] : null;
@@ -85,7 +86,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="fullScreen">
-      <SafeAreaView className="flex-1" style={{ backgroundColor: palette.background }}>
+      <View className="flex-1" style={{ backgroundColor: palette.background, paddingTop: insets.top }}>
         {/* Header */}
         <View className="flex-row items-center justify-between px-4 py-2">
           <Pressable onPress={handleClose} className="p-2">
@@ -124,7 +125,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
             )}
           </Animated.View>
         </View>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 }
