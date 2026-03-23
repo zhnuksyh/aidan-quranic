@@ -6,6 +6,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { LESSON_METADATA } from "../../data/lessonContent";
+import { WORLD_LESSONS } from "../../data/lessons";
 import { LessonPhase } from "../../types/lesson";
 import { useLessonContent } from "../../hooks/useLessonContent";
 import { PhaseIndicator } from "./PhaseIndicator";
@@ -32,6 +33,8 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
   const [phase, setPhase] = useState<LessonPhase>("immersion");
   const [puzzleIndex, setPuzzleIndex] = useState(0);
 
+  const allLessons = Object.values(WORLD_LESSONS).flat();
+  const lessonTitle = lessonId ? allLessons.find((l) => l.id === lessonId)?.title : undefined;
   const metadata = lessonId ? LESSON_METADATA[lessonId] ?? null : null;
   const { content, isLoading, error, retry } = useLessonContent(metadata, visible);
 
@@ -112,6 +115,8 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
                 <CelebrationOverlay
                   xpGained={lessonId && isLessonCompleted(lessonId) ? 0 : 25}
                   totalXP={progress.currentXP}
+                  lessonTitle={lessonTitle}
+                  streakDays={progress.streakDays}
                   onContinue={advancePhase}
                 />
               )}

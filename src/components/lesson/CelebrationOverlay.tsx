@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Share } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInUp, ZoomIn } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
@@ -9,13 +9,27 @@ import { getLevelForXP, getXPProgress } from "../../constants/levels";
 interface Props {
   xpGained: number;
   totalXP: number;
+  lessonTitle?: string;
+  streakDays?: number;
   onContinue: () => void;
 }
 
-export function CelebrationOverlay({ xpGained, totalXP, onContinue }: Props) {
+export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays, onContinue }: Props) {
   const { palette } = useTheme();
   const level = getLevelForXP(totalXP);
   const progress = getXPProgress(totalXP);
+
+  const handleShare = async () => {
+    const titleStr = lessonTitle ? `"${lessonTitle}"` : "a Quranic lesson";
+    const streakStr = (streakDays ?? 0) > 0 ? ` | ${streakDays}-day streak` : "";
+    const xpStr = xpGained > 0 ? `\n+${xpGained} XP | Level ${level.level}: ${level.title}${streakStr}` : "";
+    const message = `Just completed ${titleStr} on Aidan!${xpStr}\n\nAidan — Your Quranic Companion`;
+    try {
+      await Share.share({ message });
+    } catch {
+      // User cancelled or platform error
+    }
+  };
 
   useEffect(() => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -91,6 +105,23 @@ export function CelebrationOverlay({ xpGained, totalXP, onContinue }: Props) {
         >
           {progress.current} / {progress.needed} XP to next level
         </Text>
+      </Animated.View>
+
+      {/* Share Button */}
+      <Animated.View entering={FadeInUp.duration(400).delay(800)} className="w-full px-8 mb-3">
+        <Pressable
+          className="rounded-2xl py-3 items-center flex-row justify-center gap-2"
+          style={{ backgroundColor: palette.accentLight }}
+          onPress={handleShare}
+        >
+          <Ionicons name="share-social-outline" size={18} color={palette.accent} />
+          <Text
+            className="font-fredoka-semibold text-base"
+            style={{ color: palette.accent }}
+          >
+            Share Achievement
+          </Text>
+        </Pressable>
       </Animated.View>
 
       {/* Continue Button */}
