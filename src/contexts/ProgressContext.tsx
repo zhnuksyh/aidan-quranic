@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { UserProgress } from "../types/progress";
 import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud } from "../services/storage";
+import { syncLessonCompletion } from "../services/api/qfUserApi";
 
 interface ProgressContextValue {
   progress: UserProgress;
@@ -93,6 +94,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         // Gap > 1 day or first activity
         newStreak = 1;
       }
+
+      // Sync to QF User API (fire-and-forget)
+      syncLessonCompletion(verseKey);
 
       return {
         ...prev,
