@@ -1,8 +1,10 @@
+import { useState, useEffect } from "react";
 import { View, Text, Pressable, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { resetAllData } from "../../services/storage";
+import { isQFConnected, loginWithQF, logoutQF } from "../../services/qfAuth";
 
 interface SettingsRowProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -33,6 +35,34 @@ function SettingsRow({ icon, label, onPress, accent, textColor }: SettingsRowPro
 export function SettingsSection() {
   const { palette } = useTheme();
   const { resetProgress } = useProgress();
+  const [qfConnected, setQfConnected] = useState(false);
+
+  useEffect(() => {
+    isQFConnected().then(setQfConnected);
+  }, []);
+
+  const handleQFConnect = async () => {
+    if (qfConnected) {
+      Alert.alert(
+        "Disconnect Quran.com",
+        "Your local progress will be kept, but syncing will stop.",
+        [
+          { text: "Cancel", style: "cancel" },
+          {
+            text: "Disconnect",
+            style: "destructive",
+            onPress: async () => {
+              await logoutQF();
+              setQfConnected(false);
+            },
+          },
+        ]
+      );
+    } else {
+      const success = await loginWithQF();
+      if (success) setQfConnected(true);
+    }
+  };
 
   const handleResetProgress = () => {
     Alert.alert(
@@ -70,6 +100,13 @@ export function SettingsSection() {
       >
         Settings
       </Text>
+      <SettingsRow
+        icon={qfConnected ? "checkmark-circle" : "globe-outline"}
+        label={qfConnected ? "Quran.com Connected" : "Connect to Quran.com"}
+        onPress={handleQFConnect}
+        accent={palette.accent}
+        textColor={palette.textOnBackground}
+      />
       <SettingsRow
         icon="refresh"
         label="Reset Progress"
