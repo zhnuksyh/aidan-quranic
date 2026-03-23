@@ -29,6 +29,7 @@ export interface MultipleChoicePuzzle {
 export interface PuzzleItem {
   puzzleType: PuzzleType;
   puzzleData: DragDropPuzzle | TrueFalsePuzzle | MultipleChoicePuzzle;
+  sourceNote: string;
 }
 
 export interface TafsirSegment {
