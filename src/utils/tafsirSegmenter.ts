@@ -70,22 +70,59 @@ function splitBySections(html: string): string[] {
 
 /**
  * Extract text content from <p> tags within an HTML section.
- * Returns array of stripped paragraph texts.
+ * For plain text (no HTML structure), splits by sentences instead.
  */
 function extractParagraphs(html: string): string[] {
   const matches = html.match(/<p[^>]*>([\s\S]*?)<\/p>/gi);
-  if (!matches) return [stripTags(html)].filter((t) => t.length > 10);
+  if (matches) {
+    return matches
+      .map((m) => stripTags(m))
+      .filter((t) => t.length > 0);
+  }
 
-  return matches
-    .map((m) => stripTags(m))
-    .filter((t) => t.length > 0);
+  // No <p> tags — plain text. Split into sentence-based paragraphs.
+  const plain = stripTags(html);
+  if (plain.length <= 10) return [];
+  return splitPlainTextToSentences(plain);
 }
 
 /**
- * Group paragraphs into semantic units, keeping Arabic verses
- * together with their explanations.
+ * Split plain text into sentences at boundaries:
+ * period/question mark/exclamation followed by space + uppercase letter.
+ * Avoids lookbehind regex for Hermes compatibility.
+ */
+function splitPlainTextToSentences(text: string): string[] {
+  const sentences: string[] = [];
+  let start = 0;
+
+  for (let i = 0; i < text.length - 2; i++) {
+    const ch = text[i];
+    if ((ch === "." || ch === "?" || ch === "!") && text[i + 1] === " ") {
+      const nextChar = text[i + 2];
+      // Split if next word starts with uppercase
+      if (nextChar >= "A" && nextChar <= "Z") {
+        sentences.push(text.slice(start, i + 1).trim());
+        start = i + 2;
+      }
+    }
+  }
+
+  // Push remaining text
+  if (start < text.length) {
+    sentences.push(text.slice(start).trim());
+  }
+
+  return sentences.filter((s) => s.length > 10);
+}
+
+/**
+ * Group paragraphs into semantic units, keeping related content together:
+ * - Arabic verses with their intro phrases and explanations
+ * - Hadith quotes with their attribution ("The Prophet said..." + quote)
+ * - Quranic verse references with their translations
  *
  * Pattern: "intro text" + "Arabic verse" + "(explanation)" → one unit
+ * Pattern: "Prophet said," + "quote text" → one unit
  */
 function groupSemanticUnits(paragraphs: string[]): string[] {
   const units: string[] = [];
@@ -110,8 +147,24 @@ function groupSemanticUnits(paragraphs: string[]): string[] {
       // Add the Arabic verse
       unit += current;
 
-      // Add the following explanation if it exists
+      // Add the following explanation/translation if it exists
       if (i + 1 < paragraphs.length && !isArabicText(paragraphs[i + 1])) {
+        unit += "\n" + paragraphs[i + 1];
+        i++;
+      }
+
+      units.push(unit.trim());
+    } else if (isHadithIntro(current) && i + 1 < paragraphs.length) {
+      // Hadith attribution: bond with the following quote paragraph
+      let unit = current;
+      const next = paragraphs[i + 1];
+
+      // Consume the next paragraph as the hadith text (Arabic or English quote)
+      unit += "\n" + next;
+      i++;
+
+      // If the quote was Arabic, also grab the following English translation
+      if (isArabicText(next) && i + 1 < paragraphs.length && !isArabicText(paragraphs[i + 1])) {
         unit += "\n" + paragraphs[i + 1];
         i++;
       }
@@ -175,7 +228,23 @@ function isIntroPhrase(text: string): boolean {
     lower.includes("also,") ||
     lower.includes("similarly,") ||
     lower.includes("he said") ||
-    lower.includes("prophet said")
+    lower.includes("prophet said") ||
+    lower.includes("messenger said") ||
+    lower.includes("narrated")
+  );
+}
+
+/** Check if a paragraph is a hadith attribution that should bond with its quote */
+function isHadithIntro(text: string): boolean {
+  const lower = text.toLowerCase();
+  return (
+    (lower.includes("prophet") && lower.includes("said")) ||
+    (lower.includes("messenger") && lower.includes("said")) ||
+    lower.includes("(saw) said") ||
+    lower.includes("(pbuh) said") ||
+    lower.includes("narrated that") ||
+    lower.includes("reported that") ||
+    lower.includes("\uFDFA") // ﷺ Unicode PBUH symbol
   );
 }
 

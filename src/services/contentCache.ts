@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CACHE_VERSION = 5; // Bump to invalidate old entries
+const CACHE_VERSION = 8; // Bump to invalidate old entries
 const CACHE_PREFIX = `@aidan_v${CACHE_VERSION}_verse_`;
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 

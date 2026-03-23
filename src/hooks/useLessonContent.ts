@@ -145,18 +145,16 @@ export function useLessonContent(
             )
           : [];
 
-        // Add Asbab al-Nuzul as a separate card if available
+        // Add Asbab al-Nuzul cards if available (up to 3)
         if (tafsirSegments.length > 1) {
           const asbab = tafsirSegments[1];
           const asbabCards = segmentTafsirToCards(
             asbab.text,
             asbab.sourceName,
             asbab.sourceId,
-            1
+            3
           );
-          if (asbabCards.length > 0) {
-            teachingCards.push(asbabCards[0]);
-          }
+          teachingCards.push(...asbabCards);
         }
 
         const audioUrl =
@@ -265,18 +263,16 @@ function buildContent(
       )
     : [];
 
-  // Add Asbab al-Nuzul card if cached
+  // Add Asbab al-Nuzul cards if cached (up to 3)
   if (tafsirSegments.length > 1) {
     const asbab = tafsirSegments[1];
     const asbabCards = segmentTafsirToCards(
       asbab.text,
       asbab.sourceName,
       asbab.sourceId,
-      1
+      3
     );
-    if (asbabCards.length > 0) {
-      teachingCards.push(asbabCards[0]);
-    }
+    teachingCards.push(...asbabCards);
   }
 
   return {
