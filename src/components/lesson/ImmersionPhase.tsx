@@ -57,9 +57,14 @@ export function ImmersionPhase({ content, onContinue }: Props) {
 
   const cards = content.teachingCards;
 
+  // Collect unique source names for bottom attribution
+  const sourceNames = [
+    ...new Set(cards.map((c) => c.sourceName).filter(Boolean)),
+  ];
+
   return (
     <View className="flex-1" style={{ backgroundColor: palette.background }}>
-      {/* Header Badges — same sizing */}
+      {/* Header Badges */}
       <View className="flex-row items-center justify-center flex-wrap gap-2 mb-4">
         <View
           className="rounded-2xl px-4 py-2"
@@ -90,30 +95,46 @@ export function ImmersionPhase({ content, onContinue }: Props) {
 
       <ScrollView className="flex-1 px-2" showsVerticalScrollIndicator={false}>
         {/* Verse Preview Card — at the TOP */}
-        <Animated.View
-          entering={FadeInUp.duration(500)}
-          className="rounded-2xl p-5 mb-4"
-          style={{ backgroundColor: palette.accentLight }}
-        >
-          <Text
-            className="text-2xl text-center leading-[48px] mb-3"
-            style={{ color: palette.textOnBackground, writingDirection: "rtl" }}
+        {(content.arabicText || content.translationText) && (
+          <Animated.View
+            entering={FadeInUp.duration(500)}
+            className="rounded-2xl p-5 mb-4"
+            style={{ backgroundColor: palette.accentLight }}
           >
-            {content.arabicText}
-          </Text>
-          <View
-            className="h-px mx-8 mb-3"
-            style={{ backgroundColor: palette.accent, opacity: 0.2 }}
-          />
-          <Text
-            className="font-fredoka text-sm text-center leading-6"
-            style={{ color: palette.textOnBackground, opacity: 0.8 }}
-          >
-            {content.translationText}
-          </Text>
-        </Animated.View>
+            {content.arabicText && (
+              <Text
+                className="text-2xl text-center leading-[48px] mb-3"
+                style={{ color: palette.textOnBackground, writingDirection: "rtl" }}
+              >
+                {content.arabicText}
+              </Text>
+            )}
+            {content.arabicText && content.translationText && (
+              <View
+                className="h-px mx-8 mb-3"
+                style={{ backgroundColor: palette.accent, opacity: 0.2 }}
+              />
+            )}
+            {content.translationText && (
+              <Text
+                className="font-fredoka text-sm text-center leading-6"
+                style={{ color: palette.textOnBackground, opacity: 0.8 }}
+              >
+                {content.translationText}
+              </Text>
+            )}
+            {content.translationSource && (
+              <Text
+                className="font-fredoka text-xs text-center mt-2"
+                style={{ color: palette.textOnBackground, opacity: 0.4 }}
+              >
+                Translation: {content.translationSource}
+              </Text>
+            )}
+          </Animated.View>
+        )}
 
-        {/* Teaching Cards */}
+        {/* Teaching Cards (verbatim tafsir excerpts) */}
         {cards.map((card, index) => {
           const IconComponent = ICON_MAP[card.icon] || BookOpen;
           return (
@@ -123,7 +144,7 @@ export function ImmersionPhase({ content, onContinue }: Props) {
               className="rounded-2xl p-5 mb-4"
               style={{ backgroundColor: palette.accent, opacity: 0.92 }}
             >
-              {/* Lucide Icon */}
+              {/* Icon */}
               <View className="items-center mb-3">
                 <IconComponent
                   size={28}
@@ -140,30 +161,42 @@ export function ImmersionPhase({ content, onContinue }: Props) {
                 {card.title}
               </Text>
 
-              {/* Card Body */}
+              {/* Card Body (verbatim excerpt) */}
               <Text
                 className="font-fredoka text-sm leading-6 text-center"
                 style={{ color: palette.textOnAccent, opacity: 0.9 }}
               >
                 {card.body}
               </Text>
+
+              {/* Per-card source attribution */}
+              {card.sourceName && (
+                <Text
+                  className="font-fredoka text-xs text-center mt-3"
+                  style={{ color: palette.textOnAccent, opacity: 0.5 }}
+                >
+                  — {card.sourceName}
+                </Text>
+              )}
             </Animated.View>
           );
         })}
 
         {/* Source Attribution */}
-        <Animated.View
-          entering={FadeInUp.duration(400).delay((cards.length + 1) * 200)}
-          className="items-center mb-6"
-        >
-          <Text
-            className="font-fredoka text-xs text-center"
-            style={{ color: palette.textOnBackground, opacity: 0.5 }}
+        {sourceNames.length > 0 && (
+          <Animated.View
+            entering={FadeInUp.duration(400).delay((cards.length + 1) * 200)}
+            className="items-center mb-6"
           >
-            Source: {content.tafsirSourceName} — Surah {content.surahName}, Ayah{" "}
-            {content.ayahNumber}
-          </Text>
-        </Animated.View>
+            <Text
+              className="font-fredoka text-xs text-center"
+              style={{ color: palette.textOnBackground, opacity: 0.5 }}
+            >
+              Sources: {sourceNames.join(" · ")} — Surah {content.surahName},
+              Ayah {content.ayahNumber}
+            </Text>
+          </Animated.View>
+        )}
       </ScrollView>
 
       {/* Continue Button */}
@@ -177,7 +210,7 @@ export function ImmersionPhase({ content, onContinue }: Props) {
             className="font-fredoka-bold text-base"
             style={{ color: palette.textOnAccent }}
           >
-            Continue to Quiz
+            Continue
           </Text>
         </Pressable>
       </View>
