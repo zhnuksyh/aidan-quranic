@@ -93,25 +93,23 @@ export function useLessonContent(
         const tafsirSegments: TafsirSegment[] = [];
         const now = Date.now();
 
-        if (tafsirResult.status === "fulfilled" && tafsirResult.value.length > 0) {
+        if (tafsirResult.status === "fulfilled" && tafsirResult.value?.length > 0) {
           const raw = tafsirResult.value[0];
-          const cleanText = stripHtml(raw.text);
-          if (cleanText.length > 30) {
+          if (stripHtml(raw.text).length > 30) {
             tafsirSegments.push({
               sourceId: "qf-169",
               sourceName: raw.resource_name || "Tafsir Ibn Kathir",
-              text: cleanText,
+              text: raw.text, // Store raw HTML — segmenter strips internally
             });
           }
         }
 
         if (asbabResult.status === "fulfilled" && asbabResult.value) {
-          const cleanText = stripHtml(asbabResult.value.text);
-          if (cleanText.length > 30) {
+          if (stripHtml(asbabResult.value.text).length > 30) {
             tafsirSegments.push({
               sourceId: "spa5k-asbab",
               sourceName: asbabResult.value.sourceName,
-              text: cleanText,
+              text: asbabResult.value.text, // Raw text (spa5k has minimal HTML)
             });
           }
         }
@@ -227,13 +225,24 @@ async function fetchAudio(verseKey: string): Promise<string | null> {
 
 function stripHtml(text: string): string {
   return text
+    // Remove footnote superscripts entirely (tag + content)
+    .replace(/<sup[^>]*>.*?<\/sup>/gi, "")
+    // Block-level closing tags → sentence break
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/(p|h[1-6]|div|li|blockquote|tr)>/gi, ". ")
+    // Strip remaining tags
     .replace(/<[^>]*>/g, "")
+    // Decode HTML entities
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    // Clean up punctuation artifacts (e.g. ",." or ".." from tag stripping)
+    .replace(/,\.\s/g, ", ")
+    .replace(/\.\s*\./g, ".")
+    .replace(/\s+/g, " ")
     .trim();
 }
 
