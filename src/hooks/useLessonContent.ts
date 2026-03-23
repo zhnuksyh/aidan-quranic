@@ -50,7 +50,8 @@ export function useLessonContent(
         // 1. Check cache
         const cached = await getCachedContent(verseKey);
         if (cached && mounted) {
-          const built = buildContent(cached, metadata);
+          const meta: LessonMetadata = { verseKey, surahName, ayahNumber };
+          const built = buildContent(cached, meta);
           setContent(built);
           setIsLoading(false);
           // Fetch audio in background (not cached)
