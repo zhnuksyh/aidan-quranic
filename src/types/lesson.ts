@@ -31,21 +31,34 @@ export interface PuzzleItem {
   puzzleData: DragDropPuzzle | TrueFalsePuzzle | MultipleChoicePuzzle;
 }
 
+export interface TafsirSegment {
+  sourceId: string;
+  sourceName: string;
+  text: string;
+}
+
 export interface TeachingCard {
   title: string;
   body: string;
   icon: string;
-  lottieAsset?: string;
+  sourceId: string;
+  sourceName: string;
+}
+
+export interface LessonMetadata {
+  verseKey: string;
+  surahName: string;
+  ayahNumber: number;
 }
 
 export interface LessonContent {
   verseKey: string;
   surahName: string;
   ayahNumber: number;
-  tafsirText: string;
-  tafsirSourceName: string;
-  arabicText: string;
-  translationText: string;
+  arabicText: string | null;
+  translationText: string | null;
+  translationSource: string | null;
+  tafsirSegments: TafsirSegment[];
   teachingCards: TeachingCard[];
   puzzles: PuzzleItem[];
   audioUrl: string | null;
