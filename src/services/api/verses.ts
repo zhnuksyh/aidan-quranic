@@ -9,13 +9,17 @@ interface TranslationsResponse {
   translations: QFTranslation[];
 }
 
-interface TafsirsResponse {
-  tafsirs: QFTafsir[];
+interface TafsirResponse {
+  tafsir: {
+    resource_id: number;
+    resource_name: string;
+    text: string;
+  };
 }
 
 export async function getVerseByKey(verseKey: string): Promise<QFVerse> {
   const data = await qfFetch<VerseResponse>(
-    `/verses/by_key/${verseKey}?language=en&words=true&word_fields=text_uthmani`
+    `/verses/by_key/${verseKey}?language=en&fields=text_uthmani`
   );
   return data.verse;
 }
@@ -53,8 +57,17 @@ export async function getTafsir(
   verseKey: string,
   tafsirId = 169 // Ibn Kathir (English)
 ): Promise<QFTafsir[]> {
-  const data = await qfFetch<TafsirsResponse>(
+  const data = await qfFetch<TafsirResponse>(
     `/tafsirs/${tafsirId}/by_ayah/${verseKey}`
   );
-  return data.tafsirs;
+  const t = data.tafsir;
+  if (!t?.text) return [];
+  return [
+    {
+      tafsir_id: t.resource_id,
+      text: t.text,
+      resource_name: t.resource_name,
+      verse_key: verseKey,
+    },
+  ];
 }
