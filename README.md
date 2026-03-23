@@ -92,7 +92,20 @@ Source attribution is visible throughout the app:
 - **Nur (Streak)** — Track consecutive days of Quranic engagement. The name "Nur" (light) reflects the Quranic theme of consistency and illumination
 - **Verse Collection** — Every completed lesson permanently unlocks its verse in the Gallery
 - **Progressive Locking** — Lessons unlock sequentially within each world, encouraging thorough study rather than skipping ahead
-- **Visual Feedback** — Completed nodes show checkmarks, active nodes pulse, and locked nodes display a lock icon
+- **Visual Feedback** — Completed nodes show checkmarks, the current node has a bouncing map pin, and locked nodes display a lock icon
+- **Ayah Badges** — Each lesson node displays its verse number in a small badge
+
+---
+
+## Adventure Map
+
+Each world features a themed decorative background with SVG illustrations:
+
+- **Indigo Meadows** — Round trees and sparkle stars
+- **Amber Dunes** — Palm trees and sand dune silhouettes
+- **Emerald Gardens** — Leafy trees and flowers
+
+Lesson nodes zigzag down the map connected by dashed paths. The current unlocked node features a bouncing map pin icon to guide the player.
 
 ---
 
@@ -119,6 +132,19 @@ Currently includes **19 lessons** across 3 Surahs:
 - **Ar-Rahman** — 6 verses (opening passage)
 
 Each lesson covers one verse with live-fetched Tafsir, translation, Arabic text, audio, and 3 curated puzzles.
+
+---
+
+## Recent Updates (March 23, 2026)
+
+- **Asbab al-Nuzul multi-card splitting** — Long "Reasons of Revelation" content now spans up to 3 cards instead of being crammed into one
+- **Hadith quote protection** — Hadith attributions ("The Prophet said...") stay bonded with their quotes across card boundaries
+- **Plain text sentence segmentation** — Tafsir sources without HTML structure (spa5k API) now properly split at sentence boundaries
+- **Card body paragraph rendering** — Each paragraph renders as a separate layout block, preventing text clipping on long cards
+- **Bouncing MapPin on current node** — The active lesson node shows an animated map pin instead of a number
+- **Ayah number badges** — Small verse number badges on each lesson node
+- **Per-world decorative backgrounds** — Themed SVG illustrations (trees, palms, flowers) behind the adventure map
+- **Cache version 8** — Stale entries invalidated for all content pipeline improvements
 
 ---
 
