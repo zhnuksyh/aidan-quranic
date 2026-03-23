@@ -1,5 +1,14 @@
+import { useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
+import { MapPin } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
 import { LessonNode as LessonNodeType } from "../../types/lesson";
 
@@ -13,7 +22,26 @@ interface Props {
 export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: Props) {
   const { palette } = useTheme();
   const isAccessible = !isLocked;
+  const isCurrent = !isCompleted && !isLocked;
   const ayahNumber = lesson.verseKey.split(":")[1];
+
+  const bounce = useSharedValue(0);
+
+  useEffect(() => {
+    if (isCurrent) {
+      bounce.value = withRepeat(
+        withTiming(-6, { duration: 800, easing: Easing.inOut(Easing.ease) }),
+        -1,
+        true
+      );
+    } else {
+      bounce.value = 0;
+    }
+  }, [isCurrent]);
+
+  const bounceStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: bounce.value }],
+  }));
 
   return (
     <Pressable
@@ -21,7 +49,7 @@ export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: 
       className="items-center my-3"
       style={{ opacity: isAccessible ? 1 : 0.4 }}
     >
-      <View>
+      <View style={{ overflow: "visible" }}>
         {/* Main node circle */}
         <View
           className="w-16 h-16 rounded-full items-center justify-center"
@@ -29,6 +57,7 @@ export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: 
             backgroundColor: isCompleted ? palette.accentLight : palette.accent,
             borderWidth: 3,
             borderColor: palette.background,
+            overflow: "visible",
           }}
         >
           {isCompleted ? (
@@ -36,12 +65,9 @@ export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: 
           ) : isLocked ? (
             <Ionicons name="lock-closed" size={20} color={palette.textOnAccent} />
           ) : (
-            <Text
-              className="font-fredoka-bold text-lg"
-              style={{ color: palette.textOnAccent }}
-            >
-              {lesson.order}
-            </Text>
+            <Animated.View style={bounceStyle}>
+              <MapPin size={26} color={palette.textOnAccent} strokeWidth={2.5} />
+            </Animated.View>
           )}
         </View>
 
