@@ -1,9 +1,11 @@
 import { View, ScrollView } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
+import { useTheme } from "../../contexts/ThemeContext";
 import { useProgress } from "../../contexts/ProgressContext";
 import { WORLD_LESSONS } from "../../data/lessons";
 import { LessonNodeComponent } from "./LessonNode";
 import { NodePath } from "./NodePath";
+import { MapBackground } from "./MapBackground";
 
 interface Props {
   worldId: string;
@@ -11,12 +13,17 @@ interface Props {
 }
 
 export function AdventureMap({ worldId, onLessonPress }: Props) {
+  const { palette } = useTheme();
   const { isLessonCompleted } = useProgress();
 
   const lessons = WORLD_LESSONS[worldId] ?? [];
 
+  // Estimate scroll content height for background (~140px per node)
+  const estimatedHeight = Math.max(lessons.length * 140, 600);
+
   return (
     <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 32, paddingTop: 16 }}>
+      <MapBackground worldId={worldId} palette={palette} height={estimatedHeight} />
       {lessons.map((lesson, index) => {
         const completed = isLessonCompleted(lesson.id);
         // A lesson is locked if the previous one isn't completed (except first)
