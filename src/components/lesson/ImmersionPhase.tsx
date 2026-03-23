@@ -210,7 +210,7 @@ export function ImmersionPhase({ content, onContinue }: Props) {
             className="font-fredoka-bold text-base"
             style={{ color: palette.textOnAccent }}
           >
-            Continue
+            Continue to Quiz
           </Text>
         </Pressable>
       </View>

@@ -10,6 +10,7 @@ import {
   CachedVerseContent,
 } from "../services/contentCache";
 import { segmentTafsirToCards } from "../utils/tafsirSegmenter";
+import { CURATED_PUZZLES } from "../data/curatedPuzzles";
 
 interface UseLessonContentResult {
   content: LessonContent | null;
@@ -172,7 +173,7 @@ export function useLessonContent(
           translationSource,
           tafsirSegments,
           teachingCards,
-          puzzles: [], // Puzzles paused — will be curated later
+          puzzles: CURATED_PUZZLES[verseKey] ?? [],
           audioUrl,
         });
         setIsLoading(false);
@@ -278,7 +279,7 @@ function buildContent(
     translationSource: cached.translationSource,
     tafsirSegments,
     teachingCards,
-    puzzles: [], // Puzzles paused
+    puzzles: CURATED_PUZZLES[metadata.verseKey] ?? [],
     audioUrl: null, // Audio fetched separately (not cached)
   };
 }

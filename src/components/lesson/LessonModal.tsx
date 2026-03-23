@@ -10,14 +10,14 @@ import { LessonPhase } from "../../types/lesson";
 import { useLessonContent } from "../../hooks/useLessonContent";
 import { PhaseIndicator } from "./PhaseIndicator";
 import { ImmersionPhase } from "./ImmersionPhase";
+import { PuzzlePhase } from "./PuzzlePhase";
 import { RevealPhase } from "./RevealPhase";
 import { AudioPhase } from "./AudioPhase";
 import { CelebrationOverlay } from "./CelebrationOverlay";
 import { LessonLoadingSkeleton } from "./LessonLoadingSkeleton";
 import { ContentErrorState } from "./ContentErrorState";
 
-// TODO: Re-enable "puzzle" phase after curated puzzles are ready
-const PHASE_ORDER: LessonPhase[] = ["immersion", "reveal", "audio", "celebration"];
+const PHASE_ORDER: LessonPhase[] = ["immersion", "puzzle", "reveal", "audio", "celebration"];
 
 interface Props {
   lessonId: string | null;
@@ -30,11 +30,20 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
   const { completeLesson, isLessonCompleted, progress } = useProgress();
   const insets = useSafeAreaInsets();
   const [phase, setPhase] = useState<LessonPhase>("immersion");
+  const [puzzleIndex, setPuzzleIndex] = useState(0);
 
   const metadata = lessonId ? LESSON_METADATA[lessonId] ?? null : null;
   const { content, isLoading, error, retry } = useLessonContent(metadata, visible);
 
+  const totalPuzzles = content?.puzzles?.length ?? 0;
+
   const advancePhase = () => {
+    // If in puzzle phase and more puzzles remain, advance puzzle index
+    if (phase === "puzzle" && puzzleIndex < totalPuzzles - 1) {
+      setPuzzleIndex((prev) => prev + 1);
+      return;
+    }
+
     const idx = PHASE_ORDER.indexOf(phase);
     if (idx < PHASE_ORDER.length - 1) {
       const nextPhase = PHASE_ORDER[idx + 1];
@@ -49,8 +58,11 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
 
   const handleClose = () => {
     setPhase("immersion");
+    setPuzzleIndex(0);
     onClose();
   };
+
+  const currentPuzzle = content?.puzzles?.[puzzleIndex];
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="fullScreen">
@@ -74,13 +86,21 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
 
           {content && !isLoading && !error && (
             <Animated.View
-              key={phase}
+              key={`${phase}-${puzzleIndex}`}
               entering={FadeIn.duration(300)}
               exiting={FadeOut.duration(200)}
               className="flex-1"
             >
               {phase === "immersion" && (
                 <ImmersionPhase content={content} onContinue={advancePhase} />
+              )}
+              {phase === "puzzle" && currentPuzzle && (
+                <PuzzlePhase
+                  puzzleItem={currentPuzzle}
+                  quizNumber={puzzleIndex + 1}
+                  totalQuizzes={totalPuzzles}
+                  onCorrect={advancePhase}
+                />
               )}
               {phase === "reveal" && (
                 <RevealPhase content={content} onContinue={advancePhase} />
