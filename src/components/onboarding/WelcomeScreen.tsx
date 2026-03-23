@@ -11,7 +11,7 @@ interface Props {
 
 const FEATURES = [
   { icon: "map-outline" as const, text: "Explore Tafsir stories" },
-  { icon: "puzzle-outline" as const, text: "Solve interactive puzzles" },
+  { icon: "extension-puzzle-outline" as const, text: "Solve interactive puzzles" },
   { icon: "headset-outline" as const, text: "Listen to Quran recitation" },
 ];
 
