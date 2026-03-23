@@ -22,7 +22,7 @@ export async function getVerseByKey(verseKey: string): Promise<QFVerse> {
 
 export async function getTranslation(
   verseKey: string,
-  translationId = 131 // Sahih International
+  translationId = 20 // Sahih International
 ): Promise<QFTranslation[]> {
   const [chapter, verse] = verseKey.split(":");
   const data = await qfFetch<TranslationsResponse>(
@@ -37,7 +37,7 @@ interface VersesResponse {
 
 export async function getVersesByChapter(
   chapterId: number,
-  translationId = 131
+  translationId = 20
 ): Promise<{ verse_key: string; text_uthmani: string; translation: string }[]> {
   const data = await qfFetch<VersesResponse>(
     `/verses/by_chapter/${chapterId}?language=en&translations=${translationId}&fields=text_uthmani&per_page=286`
