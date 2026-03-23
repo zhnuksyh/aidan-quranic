@@ -191,7 +191,6 @@ export function ImmersionPhase({ content, onContinue }: Props) {
         {/* Teaching Cards (verbatim tafsir excerpts) */}
         {cards.map((card, index) => {
           const IconComponent = ICON_MAP[card.icon] || BookOpen;
-          const segments = splitByLanguage(card.body);
           return (
             <Animated.View
               key={index}
@@ -216,25 +215,32 @@ export function ImmersionPhase({ content, onContinue }: Props) {
                 {card.title}
               </Text>
 
-              {/* Card Body (split by language for proper RTL/LTR) */}
-              <View className="gap-1">
-                {segments.map((seg, sIdx) => (
-                  <Text
-                    key={sIdx}
-                    className={`text-center ${
-                      seg.isArabic
-                        ? "text-base leading-10"
-                        : "font-fredoka text-sm leading-6"
-                    }`}
-                    style={{
-                      color: palette.textOnAccent,
-                      opacity: 0.9,
-                      writingDirection: seg.isArabic ? "rtl" : "ltr",
-                    }}
-                  >
-                    {seg.text}
-                  </Text>
-                ))}
+              {/* Card Body — split paragraphs first, then by language */}
+              <View className="gap-3">
+                {card.body.split("\n\n").map((paragraph, pIdx) => {
+                  const segs = splitByLanguage(paragraph);
+                  return (
+                    <View key={pIdx} className="gap-1">
+                      {segs.map((seg, sIdx) => (
+                        <Text
+                          key={sIdx}
+                          className={`text-center ${
+                            seg.isArabic
+                              ? "text-base leading-10"
+                              : "font-fredoka text-sm leading-6"
+                          }`}
+                          style={{
+                            color: palette.textOnAccent,
+                            opacity: 0.9,
+                            writingDirection: seg.isArabic ? "rtl" : "ltr",
+                          }}
+                        >
+                          {seg.text}
+                        </Text>
+                      ))}
+                    </View>
+                  );
+                })}
               </View>
 
               {/* Per-card source attribution */}
