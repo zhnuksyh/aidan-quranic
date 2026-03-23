@@ -14,6 +14,62 @@ Quran Foundation Hackathon — help users maintain their Quran connection after 
 - Atomic commits (one logical change per commit)
 - Always work on feature branches, never commit to main
 
+## NON-NEGOTIABLE: Content Authenticity & Sources
+ALL Quranic content MUST come from authenticated, scholar-approved sources. ZERO AI-generated or paraphrased Quranic content is permitted. Every piece of text shown to the user about the Quran must be traceable to a real scholarly source. This is the highest priority constraint in the entire project.
+
+### Approved Sources Only
+
+**Arabic Text:**
+- Quran Foundation API `text_uthmani` — fetched live, never hardcoded
+
+**Translations (QF API `/verses/` endpoints):**
+| ID | Translation | Author |
+|---|---|---|
+| 20 | Saheeh International (default) | Saheeh International |
+| 85 | M.A.S. Abdel Haleem | Abdul Haleem |
+| 84 | T. Usmani | Mufti Taqi Usmani |
+| 95 | Tafhim al-Quran | Sayyid Abul Ala Maududi |
+| 22 | A. Yusuf Ali | Abdullah Yusuf Ali |
+| 19 | M. Pickthall | Marmaduke Pickthall |
+| 203 | Al-Hilali & Khan | Al-Hilali & Muhsin Khan |
+| 149 | Bridges' Translation | Fadel Soliman |
+
+**Tafsir — Quran Foundation API (`/tafsirs/{id}/by_ayah/{key}`):**
+| ID | Tafsir | Author |
+|---|---|---|
+| 169 | Tafsir Ibn Kathir (Abridged) | Hafiz Ibn Kathir |
+| 168 | Ma'arif al-Qur'an | Mufti Muhammad Shafi |
+| 817 | Tazkirul Quran | Maulana Wahiduddin Khan |
+
+**Tafsir — spa5k Tafsir API (free, no auth, no rate limits):**
+| Slug | Tafsir | Scholar |
+|---|---|---|
+| `en-tafisr-ibn-kathir` | Ibn Kathir (Abridged) | Hafiz Ibn Kathir |
+| `en-tafsir-maarif-ul-quran` | Ma'ariful Quran | Mufti Muhammad Shafi |
+| `en-al-jalalayn` | Tafsir al-Jalalayn | Al-Mahalli & As-Suyuti |
+| `en-tafsir-ibn-abbas` | Tanwir al-Miqbas | Attributed to Ibn Abbas |
+| `en-tafsir-al-tustari` | Tafsir al-Tustari | Sahl al-Tustari |
+| `en-kashani-tafsir` | Kashani Tafsir | Abd al-Razzaq al-Kashani |
+| `en-al-qushairi-tafsir` | Al-Qushairi Tafsir | Al-Qushairi |
+| `en-kashf-al-asrar-tafsir` | Kashf al-Asrar | Rashid al-Din Maybudi |
+| `en-asbab-al-nuzul-by-al-wahidi` | Asbab al-Nuzul (reasons of revelation) | Al-Wahidi |
+| `en-tazkirul-quran` | Tazkirul Quran | Maulana Wahiduddin Khan |
+
+**Chapter Metadata — QF API `/chapters/{id}`:**
+- revelation_place (Makki/Madani), revelation_order, verses_count, name_arabic
+
+**Additional Data Sources:**
+- QUL (Quranic Universal Library by Tarteel AI) — downloadable SQLite/JSON datasets
+- ITQAN (Quran Technologies Community) — API with tafsir links, tadabbur, verse timings
+
+### Content Rules
+- NEVER write, paraphrase, or AI-generate tafsir, tadabbur, or Quranic explanations
+- NEVER hardcode Arabic text or translations — always fetch from API
+- Every displayed source must show real attribution (tafsir name + author)
+- Teaching cards / immersion content must be direct excerpts from approved tafsir sources
+- Quiz questions must be derived from facts stated in the fetched tafsir content
+- If a source is unavailable at runtime, show nothing rather than fabricated content
+
 ## Tech Stack
 - **Framework**: React Native + Expo (SDK 52+)
 - **Routing**: Expo Router (file-based, built on React Navigation v7)
