@@ -96,7 +96,7 @@ export function AudioPhase({ content, onFinish }: Props) {
           className="text-3xl text-center leading-[56px]"
           style={{ color: palette.textOnBackground, writingDirection: "rtl" }}
         >
-          {content.arabicText}
+          {content.arabicText ?? ""}
         </Text>
       </Animated.View>
 

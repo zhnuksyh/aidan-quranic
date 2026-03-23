@@ -38,7 +38,7 @@ export function RevealPhase({ content, onContinue }: Props) {
           className="text-3xl text-center leading-[56px]"
           style={{ color: palette.textOnBackground, writingDirection: "rtl" }}
         >
-          {content.arabicText}
+          {content.arabicText ?? ""}
         </Text>
       </Animated.View>
 
@@ -53,7 +53,7 @@ export function RevealPhase({ content, onContinue }: Props) {
               className="font-fredoka text-base text-center leading-7"
               style={{ color: palette.textOnBackground }}
             >
-              {content.translationText}
+              {content.translationText ?? ""}
             </Text>
           </View>
           <Text
@@ -62,6 +62,14 @@ export function RevealPhase({ content, onContinue }: Props) {
           >
             Surah {content.surahName}, Ayah {content.ayahNumber}
           </Text>
+          {content.translationSource && (
+            <Text
+              className="font-fredoka-light text-xs mt-1 opacity-40"
+              style={{ color: palette.textOnBackground }}
+            >
+              Translation: {content.translationSource}
+            </Text>
+          )}
         </Animated.View>
       )}
 
