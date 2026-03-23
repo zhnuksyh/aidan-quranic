@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Share } from "react-native";
 import * as Haptics from "expo-haptics";
+import { Ionicons } from "@expo/vector-icons";
 import Animated, { FadeInUp } from "react-native-reanimated";
 import { useTheme } from "../../contexts/ThemeContext";
 import { LessonContent } from "../../types/lesson";
@@ -13,6 +14,21 @@ interface Props {
 export function RevealPhase({ content, onContinue }: Props) {
   const { palette } = useTheme();
   const [showReflection, setShowReflection] = useState(false);
+
+  const handleShare = async () => {
+    if (!content.translationText && !content.arabicText) return;
+    const source = content.translationSource ? ` (${content.translationSource})` : "";
+    const parts = [
+      content.translationText ? `"${content.translationText}"\n— Surah ${content.surahName}, Ayah ${content.ayahNumber}${source}` : null,
+      content.arabicText ? `\n${content.arabicText}` : null,
+      "\nStudied on Aidan — Quranic Learning",
+    ].filter(Boolean);
+    try {
+      await Share.share({ message: parts.join("\n") });
+    } catch {
+      // User cancelled or platform error
+    }
+  };
 
   useEffect(() => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -70,6 +86,22 @@ export function RevealPhase({ content, onContinue }: Props) {
               Translation: {content.translationSource}
             </Text>
           )}
+        </Animated.View>
+      )}
+
+      {/* Share Button */}
+      {showReflection && (content.arabicText || content.translationText) && (
+        <Animated.View entering={FadeInUp.duration(400).delay(300)} className="items-center mb-3">
+          <Pressable
+            className="flex-row items-center gap-2 py-2 px-4 rounded-full"
+            style={{ backgroundColor: palette.accentLight }}
+            onPress={handleShare}
+          >
+            <Ionicons name="share-social-outline" size={16} color={palette.accent} />
+            <Text className="font-fredoka-medium text-sm" style={{ color: palette.accent }}>
+              Share this verse
+            </Text>
+          </Pressable>
         </Animated.View>
       )}
 
