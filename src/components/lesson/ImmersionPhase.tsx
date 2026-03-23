@@ -36,6 +36,60 @@ const ICON_MAP: Record<string, any> = {
   "moon-outline": Moon,
 };
 
+// Arabic Unicode ranges for detection
+const ARABIC_RE =
+  /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+// Match a run of Arabic text (including diacritics, spaces, punctuation between Arabic words)
+const ARABIC_RUN_RE =
+  /([\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF][\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\u064B-\u065F\s\u060C\u061B\u061F\u0640«»\-]*[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\u064B-\u065F])/g;
+
+interface TextSegment {
+  text: string;
+  isArabic: boolean;
+}
+
+/**
+ * Split text into alternating Arabic and non-Arabic segments.
+ * Arabic runs are detected by Unicode ranges, not by \n delimiters.
+ */
+function splitByLanguage(text: string): TextSegment[] {
+  if (!ARABIC_RE.test(text)) {
+    return [{ text, isArabic: false }];
+  }
+
+  const parts: TextSegment[] = [];
+  let lastIndex = 0;
+
+  // Reset regex state
+  ARABIC_RUN_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = ARABIC_RUN_RE.exec(text)) !== null) {
+    // English text before this Arabic block
+    if (match.index > lastIndex) {
+      const english = cleanSegment(text.slice(lastIndex, match.index));
+      if (english) parts.push({ text: english, isArabic: false });
+    }
+    // Arabic block
+    const arabic = cleanSegment(match[0]);
+    if (arabic) parts.push({ text: arabic, isArabic: true });
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Remaining non-Arabic text
+  if (lastIndex < text.length) {
+    const remaining = cleanSegment(text.slice(lastIndex));
+    if (remaining) parts.push({ text: remaining, isArabic: false });
+  }
+
+  return parts.length > 0 ? parts : [{ text, isArabic: false }];
+}
+
+/** Remove stray leading/trailing periods and whitespace from a segment */
+function cleanSegment(s: string): string {
+  return s.replace(/^[\s.,:;]+/, "").replace(/[\s.]+$/, "").trim();
+}
+
 interface Props {
   content: LessonContent;
   onContinue: () => void;
@@ -137,6 +191,7 @@ export function ImmersionPhase({ content, onContinue }: Props) {
         {/* Teaching Cards (verbatim tafsir excerpts) */}
         {cards.map((card, index) => {
           const IconComponent = ICON_MAP[card.icon] || BookOpen;
+          const segments = splitByLanguage(card.body);
           return (
             <Animated.View
               key={index}
@@ -161,13 +216,26 @@ export function ImmersionPhase({ content, onContinue }: Props) {
                 {card.title}
               </Text>
 
-              {/* Card Body (verbatim excerpt) */}
-              <Text
-                className="font-fredoka text-sm leading-6 text-center"
-                style={{ color: palette.textOnAccent, opacity: 0.9 }}
-              >
-                {card.body}
-              </Text>
+              {/* Card Body (split by language for proper RTL/LTR) */}
+              <View className="gap-1">
+                {segments.map((seg, sIdx) => (
+                  <Text
+                    key={sIdx}
+                    className={`text-center ${
+                      seg.isArabic
+                        ? "text-base leading-10"
+                        : "font-fredoka text-sm leading-6"
+                    }`}
+                    style={{
+                      color: palette.textOnAccent,
+                      opacity: 0.9,
+                      writingDirection: seg.isArabic ? "rtl" : "ltr",
+                    }}
+                  >
+                    {seg.text}
+                  </Text>
+                ))}
+              </View>
 
               {/* Per-card source attribution */}
               {card.sourceName && (
