@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from "react";
-import { UserProgress } from "../types/progress";
+import { UserProgress, DEFAULT_PROGRESS } from "../types/progress";
 import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud } from "../services/storage";
 import { syncLessonCompletion } from "../services/api/qfUserApi";
 
@@ -10,14 +10,6 @@ interface ProgressContextValue {
   isLessonCompleted: (lessonId: string) => boolean;
   resetProgress: () => void;
 }
-
-const DEFAULT_PROGRESS: UserProgress = {
-  completedLessons: [],
-  currentXP: 0,
-  streakDays: 0,
-  unlockedVerses: [],
-  lastActiveDate: null,
-};
 
 function getToday(): string {
   return new Date().toISOString().split("T")[0];

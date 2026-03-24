@@ -1,17 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserProgress } from "../types/progress";
+import { UserProgress, DEFAULT_PROGRESS } from "../types/progress";
 import { supabase } from "./supabase";
 
 const PROGRESS_KEY = "@aidan_progress";
 const ONBOARDING_KEY = "@aidan_onboarding_seen";
-
-const DEFAULT_PROGRESS: UserProgress = {
-  completedLessons: [],
-  currentXP: 0,
-  streakDays: 0,
-  unlockedVerses: [],
-  lastActiveDate: null,
-};
 
 export async function loadProgress(): Promise<UserProgress> {
   try {

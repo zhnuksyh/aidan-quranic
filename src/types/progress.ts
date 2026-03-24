@@ -5,3 +5,11 @@ export interface UserProgress {
   unlockedVerses: string[];
   lastActiveDate: string | null;
 }
+
+export const DEFAULT_PROGRESS: UserProgress = {
+  completedLessons: [],
+  currentXP: 0,
+  streakDays: 0,
+  unlockedVerses: [],
+  lastActiveDate: null,
+};
