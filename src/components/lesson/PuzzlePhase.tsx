@@ -3,11 +3,15 @@ import { useTheme } from "../../contexts/ThemeContext";
 import { DragDropPuzzle } from "./DragDropPuzzle";
 import { TrueFalsePuzzle } from "./TrueFalsePuzzle";
 import { MultipleChoicePuzzle } from "./MultipleChoicePuzzle";
+import { ContextDetectivePuzzle } from "./ContextDetectivePuzzle";
+import { CauseEffectPuzzle } from "./CauseEffectPuzzle";
 import type {
   PuzzleItem,
   DragDropPuzzle as DragDropPuzzleType,
   TrueFalsePuzzle as TrueFalsePuzzleType,
   MultipleChoicePuzzle as MultipleChoicePuzzleType,
+  ContextDetectivePuzzle as ContextDetectivePuzzleType,
+  CauseEffectPuzzle as CauseEffectPuzzleType,
 } from "../../types/lesson";
 
 interface Props {
@@ -46,6 +50,18 @@ export function PuzzlePhase({ puzzleItem, quizNumber, totalQuizzes, onCorrect }:
       {puzzleItem.puzzleType === "multiple-choice" && (
         <MultipleChoicePuzzle
           puzzle={puzzleItem.puzzleData as MultipleChoicePuzzleType}
+          onCorrect={onCorrect}
+        />
+      )}
+      {puzzleItem.puzzleType === "context-detective" && (
+        <ContextDetectivePuzzle
+          puzzle={puzzleItem.puzzleData as ContextDetectivePuzzleType}
+          onCorrect={onCorrect}
+        />
+      )}
+      {puzzleItem.puzzleType === "cause-effect" && (
+        <CauseEffectPuzzle
+          puzzle={puzzleItem.puzzleData as CauseEffectPuzzleType}
           onCorrect={onCorrect}
         />
       )}
