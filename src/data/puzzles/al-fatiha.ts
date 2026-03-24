@@ -44,6 +44,19 @@ export const AL_FATIHA_PUZZLES: Record<string, PuzzleItem[]> = {
       sourceNote:
         'Ibn Kathir: "Al-Fatihah contains seven Ayat, twenty-five words, and one hundred and thirteen letters."',
     },
+    {
+      puzzleType: "context-detective",
+      puzzleData: {
+        prompt: "Why is Al-Fatihah considered the greatest Surah in the Quran?",
+        scenarios: [
+          { text: "The Prophet said it is the greatest Surah because it contains the essence of the entire Quran's message — praise, lordship, mercy, the Day of Judgment, worship, and guidance — all in seven verses.", isCorrect: true },
+          { text: "It was the last Surah revealed, serving as a farewell summary of the Quran's teachings to the Muslim community.", isCorrect: false },
+          { text: "It was specifically designated by the angel Jibril as the opening prayer for the five daily prayers only.", isCorrect: false },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir: "The Prophet said to Abu Sa\'id bin Al-Mu\'alla: I will teach you the greatest Surah in the Quran before you leave the Masjid — it is Al-Fatihah, the seven oft-repeated verses."',
+    },
   ],
 
   "1:2": [
@@ -203,6 +216,18 @@ export const AL_FATIHA_PUZZLES: Record<string, PuzzleItem[]> = {
       },
       sourceNote:
         'Ibn Kathir: "Worship is the ultimate objective and purpose of creation, while seeking help is the means to achieve that purpose."',
+    },
+    {
+      puzzleType: "cause-effect",
+      puzzleData: {
+        pairs: [
+          { cause: "Worship (Ibadah) is mentioned first in the verse", effect: "Because worship is the ultimate goal and purpose of creation" },
+          { cause: "Seeking help (Isti'anah) is mentioned second", effect: "Because seeking help is the means to achieve the goal of worship" },
+          { cause: "Early scholars called this verse 'the secret of Al-Fatihah'", effect: "Because it captures the entire relationship between servant and Lord" },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir: "Some scholars called this verse the secret of Al-Fatihah. Worship is the objective, seeking help is the means. One should care about the objectives above the means."',
     },
   ],
 

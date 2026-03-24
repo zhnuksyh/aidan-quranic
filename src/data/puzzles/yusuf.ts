@@ -119,6 +119,30 @@ export const YUSUF_PUZZLES: Record<string, PuzzleItem[]> = {
       sourceNote:
         "Ibn Kathir: Surah Yusuf is considered one of the most detailed and continuous narratives in the Quran — the story from beginning to end within a single Surah.",
     },
+    {
+      puzzleType: "context-detective",
+      puzzleData: {
+        prompt: "What prompted the revelation of this verse about 'the best of stories'?",
+        scenarios: [
+          { text: "The Companions said: 'O Messenger of Allah, why do you not tell us stories?' — and Allah revealed this verse about the best of stories, narrating the complete story of Yusuf.", isCorrect: true },
+          { text: "The Quraysh challenged the Prophet to produce a story as eloquent as their poets, so this Surah was revealed as a literary response.", isCorrect: false },
+          { text: "Umar ibn Al-Khattab requested a historical account of the Prophets, and this verse was revealed in direct response to his request.", isCorrect: false },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir via Ibn Abbas: "The companions said: O Messenger of Allah, why do you not tell us stories? — and this verse was then revealed."',
+    },
+    {
+      puzzleType: "cause-effect",
+      puzzleData: {
+        pairs: [
+          { cause: "The Companions requested stories from the Prophet", effect: "Allah revealed Surah Yusuf — the best of stories" },
+          { cause: "Umar brought a book from the People of the Book", effect: "The Prophet became angry and said: 'I brought it to you white and pure'" },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir via Ibn Abbas: The Companions\' request led to the revelation of Surah Yusuf. Separately, when Umar brought outside scriptures, the Prophet rebuked this, affirming the Quran\'s sufficiency.',
+    },
   ],
 
   "12:4": [

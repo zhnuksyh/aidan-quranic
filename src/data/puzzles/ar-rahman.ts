@@ -44,6 +44,30 @@ export const AR_RAHMAN_PUZZLES: Record<string, PuzzleItem[]> = {
       sourceNote:
         "Ibn Kathir: Abdullah bin Mas'ud considered Surah Ar-Rahman to be the beginning of the Mufassal section of the Quran.",
     },
+    {
+      puzzleType: "context-detective",
+      puzzleData: {
+        prompt: "What happened when the Prophet recited Surah Ar-Rahman to different audiences?",
+        scenarios: [
+          { text: "The Companions remained completely silent during the recitation. Later, the Jinn responded better — every time the Prophet reached the refrain 'Which blessings will you deny?', they replied: 'None of Your favors do we deny, our Lord!'", isCorrect: true },
+          { text: "Both the Companions and the Jinn wept uncontrollably when hearing the Surah for the first time, moved by its descriptions of Paradise.", isCorrect: false },
+          { text: "The Companions immediately memorized the Surah upon first hearing and began teaching it to the people of Madinah.", isCorrect: false },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir: "The Prophet said: I recited it to the Jinn on the night of the Jinn, and their response was better than yours! Every time I reached the refrain, they said: None of Your favors do we deny, our Lord!"',
+    },
+    {
+      puzzleType: "cause-effect",
+      puzzleData: {
+        pairs: [
+          { cause: "The Prophet recited Ar-Rahman to the Companions", effect: "They remained completely silent throughout" },
+          { cause: "The Prophet recited Ar-Rahman to the Jinn", effect: "They responded at every refrain: 'None of Your favors do we deny!'" },
+        ],
+      },
+      sourceNote:
+        'Ibn Kathir: The Prophet rebuked the Companions\' silence by telling them the Jinn had responded better. This hadith highlights the expected response to hearing about Allah\'s blessings.',
+    },
   ],
 
   "55:2": [
