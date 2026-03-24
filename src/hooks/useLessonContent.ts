@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LessonContent, LessonMetadata, TafsirSegment } from "../types/lesson";
+import { LessonContent, LessonMetadata, TafsirSegment, TeachingCard } from "../types/lesson";
 import { getVerseByKey, getTafsir } from "../services/api";
 import { getSpa5kTafsir, SPA5K_EDITIONS } from "../services/api/tafsirSpa5k";
 import { getAudioUrl } from "../services/api/audio";
@@ -9,8 +9,8 @@ import {
   setCachedContent,
   CachedVerseContent,
 } from "../services/contentCache";
-import { segmentTafsirToCards } from "../utils/tafsirSegmenter";
-import { CURATED_PUZZLES } from "../data/curatedPuzzles";
+import { segmentTafsirToCards, stripTags } from "../utils/tafsirSegmenter";
+import { CURATED_PUZZLES } from "../data/puzzles";
 
 interface UseLessonContentResult {
   content: LessonContent | null;
@@ -95,7 +95,7 @@ export function useLessonContent(
 
         if (tafsirResult.status === "fulfilled" && tafsirResult.value?.length > 0) {
           const raw = tafsirResult.value[0];
-          if (stripHtml(raw.text).length > 30) {
+          if (stripTags(raw.text).length > 30) {
             tafsirSegments.push({
               sourceId: "qf-169",
               sourceName: raw.resource_name || "Tafsir Ibn Kathir",
@@ -105,7 +105,7 @@ export function useLessonContent(
         }
 
         if (asbabResult.status === "fulfilled" && asbabResult.value) {
-          if (stripHtml(asbabResult.value.text).length > 30) {
+          if (stripTags(asbabResult.value.text).length > 30) {
             tafsirSegments.push({
               sourceId: "spa5k-asbab",
               sourceName: asbabResult.value.sourceName,
@@ -135,27 +135,7 @@ export function useLessonContent(
           setCachedContent(verseKey, cacheData);
         }
 
-        // Build teaching cards from best available tafsir
-        const primaryTafsir = tafsirSegments[0];
-        const teachingCards = primaryTafsir
-          ? segmentTafsirToCards(
-              primaryTafsir.text,
-              primaryTafsir.sourceName,
-              primaryTafsir.sourceId
-            )
-          : [];
-
-        // Add Asbab al-Nuzul cards if available (up to 3)
-        if (tafsirSegments.length > 1) {
-          const asbab = tafsirSegments[1];
-          const asbabCards = segmentTafsirToCards(
-            asbab.text,
-            asbab.sourceName,
-            asbab.sourceId,
-            3
-          );
-          teachingCards.push(...asbabCards);
-        }
+        const teachingCards = buildTeachingCards(tafsirSegments);
 
         const audioUrl =
           audioResult.status === "fulfilled" ? audioResult.value : null;
@@ -205,7 +185,7 @@ async function fetchTranslation(
     const translation = data.verse?.translations?.[0];
     if (!translation) return null;
     return {
-      text: stripHtml(translation.text),
+      text: stripTags(translation.text),
       source: translation.resource_name || "Sahih International",
     };
   } catch {
@@ -221,29 +201,6 @@ async function fetchAudio(verseKey: string): Promise<string | null> {
   }
 }
 
-function stripHtml(text: string): string {
-  return text
-    // Remove footnote superscripts entirely (tag + content)
-    .replace(/<sup[^>]*>.*?<\/sup>/gi, "")
-    // Block-level closing tags → sentence break
-    .replace(/<br\s*\/?>/gi, " ")
-    .replace(/<\/(p|h[1-6]|div|li|blockquote|tr)>/gi, ". ")
-    // Strip remaining tags
-    .replace(/<[^>]*>/g, "")
-    // Decode HTML entities
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    // Clean up punctuation artifacts (e.g. ",." or ".." from tag stripping)
-    .replace(/,\.\s/g, ", ")
-    .replace(/\.\s*\./g, ".")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
 function buildContent(
   cached: CachedVerseContent,
   metadata: LessonMetadata
@@ -254,26 +211,7 @@ function buildContent(
     text: t.text,
   }));
 
-  const primaryTafsir = tafsirSegments[0];
-  const teachingCards = primaryTafsir
-    ? segmentTafsirToCards(
-        primaryTafsir.text,
-        primaryTafsir.sourceName,
-        primaryTafsir.sourceId
-      )
-    : [];
-
-  // Add Asbab al-Nuzul cards if cached (up to 3)
-  if (tafsirSegments.length > 1) {
-    const asbab = tafsirSegments[1];
-    const asbabCards = segmentTafsirToCards(
-      asbab.text,
-      asbab.sourceName,
-      asbab.sourceId,
-      3
-    );
-    teachingCards.push(...asbabCards);
-  }
+  const teachingCards = buildTeachingCards(tafsirSegments);
 
   return {
     verseKey: metadata.verseKey,
@@ -287,4 +225,25 @@ function buildContent(
     puzzles: CURATED_PUZZLES[metadata.verseKey] ?? [],
     audioUrl: null, // Audio fetched separately (not cached)
   };
+}
+
+/** Build teaching cards from primary tafsir + optional Asbab al-Nuzul */
+function buildTeachingCards(tafsirSegments: TafsirSegment[]): TeachingCard[] {
+  const primary = tafsirSegments[0];
+  const cards = primary
+    ? segmentTafsirToCards(primary.text, primary.sourceName, primary.sourceId)
+    : [];
+
+  if (tafsirSegments.length > 1) {
+    const asbab = tafsirSegments[1];
+    const asbabCards = segmentTafsirToCards(
+      asbab.text,
+      asbab.sourceName,
+      asbab.sourceId,
+      3
+    );
+    cards.push(...asbabCards);
+  }
+
+  return cards;
 }

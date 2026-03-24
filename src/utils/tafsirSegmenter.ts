@@ -249,16 +249,23 @@ function isHadithIntro(text: string): boolean {
 }
 
 /** Strip HTML tags and decode common entities */
-function stripTags(html: string): string {
+export function stripTags(html: string): string {
   return html
+    // Remove footnote superscripts entirely (tag + content)
     .replace(/<sup[^>]*>.*?<\/sup>/gi, "")
+    // Block-level closing tags → sentence break
+    .replace(/<br\s*\/?>/gi, " ")
+    .replace(/<\/(p|h[1-6]|div|li|blockquote|tr)>/gi, ". ")
+    // Strip remaining tags
     .replace(/<[^>]*>/g, "")
+    // Decode HTML entities
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    // Clean up punctuation artifacts
     .replace(/,\.\s/g, ", ")
     .replace(/\.\s*\./g, ".")
     .replace(/\s+/g, " ")
