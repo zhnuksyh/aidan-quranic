@@ -11,6 +11,7 @@ import {
 } from "../services/contentCache";
 import { segmentTafsirToCards, stripTags } from "../utils/tafsirSegmenter";
 import { CURATED_PUZZLES } from "../data/puzzles";
+import { getRootWordData } from "../data/roots";
 
 interface UseLessonContentResult {
   content: LessonContent | null;
@@ -135,7 +136,8 @@ export function useLessonContent(
           setCachedContent(verseKey, cacheData);
         }
 
-        const teachingCards = buildTeachingCards(tafsirSegments);
+        const { all, tafsir, asbab } = buildTeachingCards(tafsirSegments);
+        const rootWordData = getRootWordData(verseKey);
 
         const audioUrl =
           audioResult.status === "fulfilled" ? audioResult.value : null;
@@ -148,7 +150,10 @@ export function useLessonContent(
           translationText,
           translationSource,
           tafsirSegments,
-          teachingCards,
+          teachingCards: all,
+          tafsirCards: tafsir,
+          asbabCards: asbab,
+          rootWordData,
           puzzles: CURATED_PUZZLES[verseKey] ?? [],
           audioUrl,
         });
@@ -211,7 +216,8 @@ function buildContent(
     text: t.text,
   }));
 
-  const teachingCards = buildTeachingCards(tafsirSegments);
+  const { all, tafsir, asbab } = buildTeachingCards(tafsirSegments);
+  const rootWordData = getRootWordData(metadata.verseKey);
 
   return {
     verseKey: metadata.verseKey,
@@ -221,29 +227,34 @@ function buildContent(
     translationText: cached.translationText,
     translationSource: cached.translationSource,
     tafsirSegments,
-    teachingCards,
+    teachingCards: all,
+    tafsirCards: tafsir,
+    asbabCards: asbab,
+    rootWordData,
     puzzles: CURATED_PUZZLES[metadata.verseKey] ?? [],
     audioUrl: null, // Audio fetched separately (not cached)
   };
 }
 
 /** Build teaching cards from primary tafsir + optional Asbab al-Nuzul */
-function buildTeachingCards(tafsirSegments: TafsirSegment[]): TeachingCard[] {
-  const primary = tafsirSegments[0];
-  const cards = primary
-    ? segmentTafsirToCards(primary.text, primary.sourceName, primary.sourceId)
+function buildTeachingCards(tafsirSegments: TafsirSegment[]): {
+  all: TeachingCard[];
+  tafsir: TeachingCard[];
+  asbab: TeachingCard[];
+} {
+  const primary = tafsirSegments.find((s) => s.sourceId === "qf-169");
+  const tafsirCards = primary
+    ? segmentTafsirToCards(primary.text, primary.sourceName, primary.sourceId, 3, "tafsir")
     : [];
 
-  if (tafsirSegments.length > 1) {
-    const asbab = tafsirSegments[1];
-    const asbabCards = segmentTafsirToCards(
-      asbab.text,
-      asbab.sourceName,
-      asbab.sourceId,
-      3
-    );
-    cards.push(...asbabCards);
-  }
+  const asbabSeg = tafsirSegments.find((s) => s.sourceId === "spa5k-asbab");
+  const asbabCards = asbabSeg
+    ? segmentTafsirToCards(asbabSeg.text, asbabSeg.sourceName, asbabSeg.sourceId, 3, "asbab")
+    : [];
 
-  return cards;
+  return {
+    all: [...tafsirCards, ...asbabCards],
+    tafsir: tafsirCards,
+    asbab: asbabCards,
+  };
 }

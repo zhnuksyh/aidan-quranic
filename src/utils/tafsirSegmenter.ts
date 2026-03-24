@@ -1,4 +1,4 @@
-import { TeachingCard } from "../types/lesson";
+import { TeachingCard, TeachingCardCategory } from "../types/lesson";
 
 const ICON_POOL = [
   "book-outline",
@@ -29,7 +29,8 @@ export function segmentTafsirToCards(
   tafsirHtml: string,
   sourceName: string,
   sourceId: string,
-  maxCards = 3
+  maxCards = 3,
+  category: TeachingCardCategory = "tafsir"
 ): TeachingCard[] {
   if (!tafsirHtml || tafsirHtml.trim().length === 0) return [];
 
@@ -55,6 +56,7 @@ export function segmentTafsirToCards(
     icon: ICON_POOL[index % ICON_POOL.length],
     sourceId,
     sourceName,
+    category,
   }));
 }
 
