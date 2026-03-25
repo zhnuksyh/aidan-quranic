@@ -23,7 +23,7 @@ export function DailyChallengeCard({ onPress }: Props) {
         {/* Icon */}
         <View
           className="w-11 h-11 rounded-full items-center justify-center mr-3"
-          style={{ backgroundColor: palette.textOnAccent, opacity: 0.2 }}
+          style={{ backgroundColor: `${palette.textOnAccent}33` }}
         >
           <Ionicons
             name={isCompleted ? "checkmark-circle" : "today"}
@@ -54,7 +54,7 @@ export function DailyChallengeCard({ onPress }: Props) {
         {!isCompleted && (
           <View
             className="rounded-full px-3 py-1"
-            style={{ backgroundColor: palette.textOnAccent, opacity: 0.2 }}
+            style={{ backgroundColor: `${palette.textOnAccent}33` }}
           >
             <Text
               className="font-fredoka-bold text-xs"

@@ -22,10 +22,10 @@ export function TafsirPage({ content }: Props) {
       >
         <BookOpen size={20} color={palette.accent} strokeWidth={2} />
         <Text
-          className="font-fredoka-bold text-lg"
+          className="font-fredoka-semibold text-base"
           style={{ color: palette.accent }}
         >
-          Understanding the Verse
+          Let's begin with understanding the verse
         </Text>
       </Animated.View>
 

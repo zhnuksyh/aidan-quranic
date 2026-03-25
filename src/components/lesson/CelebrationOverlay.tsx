@@ -41,7 +41,7 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
     <View className="flex-1 justify-center items-center">
       {/* Checkmark */}
       <Animated.View
-        entering={ZoomIn.springify().damping(20).stiffness(150)}
+        entering={ZoomIn.duration(300)}
         className="w-24 h-24 rounded-full items-center justify-center mb-6"
         style={{ backgroundColor: palette.accent }}
       >
@@ -125,7 +125,7 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
             {newBadges.map((badge) => (
               <Animated.View
                 key={badge.id}
-                entering={ZoomIn.springify().damping(15).stiffness(120).delay(1000)}
+                entering={ZoomIn.duration(250).delay(900)}
                 className="rounded-2xl p-3 items-center"
                 style={{ backgroundColor: palette.accent, width: 90 }}
               >
@@ -148,7 +148,7 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
       )}
 
       {/* Share Button */}
-      <Animated.View entering={FadeInUp.duration(400).delay(newBadges && newBadges.length > 0 ? 1200 : 800)} className="w-full px-8 mb-3">
+      <Animated.View entering={FadeInUp.duration(300).delay(newBadges && newBadges.length > 0 ? 1050 : 800)} className="w-full px-8 mb-3">
         <Pressable
           className="rounded-2xl py-3 items-center flex-row justify-center gap-2"
           style={{ backgroundColor: palette.accentLight }}
@@ -165,7 +165,7 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
       </Animated.View>
 
       {/* Continue Button */}
-      <Animated.View entering={FadeInUp.duration(400).delay(newBadges && newBadges.length > 0 ? 1300 : 900)} className="w-full px-8">
+      <Animated.View entering={FadeInUp.duration(300).delay(newBadges && newBadges.length > 0 ? 1150 : 900)} className="w-full px-8">
         <Pressable
           className="rounded-2xl py-4 items-center"
           style={{ backgroundColor: palette.accent }}

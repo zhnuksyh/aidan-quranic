@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import Animated, {
   FadeInUp,
@@ -44,14 +44,12 @@ export function CauseEffectPuzzle({ puzzle, onCorrect }: Props) {
 
   const handleCausePress = (causeIdx: number) => {
     if (allMatched || wrongPair) return;
-    // If already matched, ignore
     if (matches.has(causeIdx)) return;
     setSelectedCause(causeIdx === selectedCause ? null : causeIdx);
   };
 
   const handleEffectPress = (effectIdx: number) => {
     if (selectedCause === null || allMatched || wrongPair) return;
-    // If this effect is already matched, ignore
     for (const [, v] of matches) {
       if (v === effectIdx) return;
     }
@@ -60,7 +58,6 @@ export function CauseEffectPuzzle({ puzzle, onCorrect }: Props) {
   };
 
   const handleCheck = async () => {
-    // Validate all matches
     let allCorrect = true;
     for (const [causeIdx, effectIdx] of matches) {
       if (effectIdx !== causeIdx) {
@@ -90,16 +87,13 @@ export function CauseEffectPuzzle({ puzzle, onCorrect }: Props) {
     }
   };
 
-  // Get the color for a matched pair
   const getMatchColor = (causeIdx: number): string | null => {
     if (!matches.has(causeIdx)) return null;
-    // Color index based on order matched
     const matchedKeys = [...matches.keys()];
     const order = matchedKeys.indexOf(causeIdx);
     return PAIR_COLORS[order % PAIR_COLORS.length];
   };
 
-  // Check if an effect index is matched to any cause
   const getEffectMatchColor = (effectIdx: number): string | null => {
     for (const [causeIdx, matchedEffectIdx] of matches) {
       if (matchedEffectIdx === effectIdx) {
@@ -110,11 +104,11 @@ export function CauseEffectPuzzle({ puzzle, onCorrect }: Props) {
   };
 
   return (
-    <View className="flex-1">
+    <View className="flex-1 justify-center">
       {/* Header */}
       <Animated.View
         entering={FadeInUp.duration(500)}
-        className="rounded-2xl p-4 mx-2 mb-4"
+        className="rounded-2xl p-5 mx-2 mb-6"
         style={{ backgroundColor: palette.accent }}
       >
         <View className="flex-row items-center justify-center gap-2 mb-1">
@@ -134,110 +128,96 @@ export function CauseEffectPuzzle({ puzzle, onCorrect }: Props) {
         </Text>
       </Animated.View>
 
-      <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-        <Animated.View style={shakeStyle} className="mx-2">
-          {/* Causes & Effects side by side */}
-          <View className="flex-row gap-2">
-            {/* Causes Column */}
-            <View className="flex-1 gap-2">
-              <Text
-                className="font-fredoka-semibold text-xs text-center mb-1"
-                style={{ color: palette.accent }}
-              >
-                CAUSE
-              </Text>
-              {puzzle.pairs.map((pair, causeIdx) => {
-                const matchColor = getMatchColor(causeIdx);
-                const isSelected = selectedCause === causeIdx;
+      <Animated.View style={shakeStyle} className="mx-2">
+        {/* Causes & Effects side by side */}
+        <View className="flex-row gap-2">
+          {/* Causes Column */}
+          <View className="flex-1 gap-2">
+            <Text
+              className="font-fredoka-semibold text-xs text-center mb-1"
+              style={{ color: palette.accent }}
+            >
+              CAUSE
+            </Text>
+            {puzzle.pairs.map((pair, causeIdx) => {
+              const matchColor = getMatchColor(causeIdx);
+              const isSelected = selectedCause === causeIdx;
 
-                return (
-                  <Animated.View
-                    key={causeIdx}
-                    entering={FadeInUp.duration(400).delay(200 + causeIdx * 100)}
+              return (
+                <Animated.View
+                  key={causeIdx}
+                  entering={FadeInUp.duration(400).delay(200 + causeIdx * 100)}
+                >
+                  <Pressable
+                    className="rounded-2xl px-3 py-3"
+                    style={{
+                      backgroundColor: matchColor || (isSelected ? palette.accent : palette.accentLight),
+                      borderWidth: isSelected ? 2 : 0,
+                      borderColor: palette.accent,
+                    }}
+                    onPress={() => handleCausePress(causeIdx)}
                   >
-                    <Pressable
-                      className="rounded-2xl px-3 py-3"
+                    <Text
+                      className="font-fredoka text-xs leading-5"
                       style={{
-                        backgroundColor: matchColor || (isSelected ? palette.accent : palette.accentLight),
-                        borderWidth: isSelected ? 2 : 0,
-                        borderColor: palette.accent,
+                        color: matchColor || isSelected
+                          ? "#FFFFFF"
+                          : palette.textOnBackground,
                       }}
-                      onPress={() => handleCausePress(causeIdx)}
                     >
-                      {matchColor && (
-                        <View
-                          className="w-4 h-4 rounded-full mb-1"
-                          style={{ backgroundColor: matchColor }}
-                        />
-                      )}
-                      <Text
-                        className="font-fredoka text-xs leading-5"
-                        style={{
-                          color: matchColor || isSelected
-                            ? "#FFFFFF"
-                            : palette.textOnBackground,
-                        }}
-                      >
-                        {pair.cause}
-                      </Text>
-                    </Pressable>
-                  </Animated.View>
-                );
-              })}
-            </View>
-
-            {/* Effects Column */}
-            <View className="flex-1 gap-2">
-              <Text
-                className="font-fredoka-semibold text-xs text-center mb-1"
-                style={{ color: palette.accent }}
-              >
-                EFFECT
-              </Text>
-              {shuffledEffectIndices.map((effectIdx, displayIdx) => {
-                const matchColor = getEffectMatchColor(effectIdx);
-
-                return (
-                  <Animated.View
-                    key={effectIdx}
-                    entering={FadeInUp.duration(400).delay(300 + displayIdx * 100)}
-                  >
-                    <Pressable
-                      className="rounded-2xl px-3 py-3"
-                      style={{
-                        backgroundColor: matchColor || palette.accentLight,
-                        borderWidth: selectedCause !== null && !matchColor ? 1 : 0,
-                        borderColor: palette.accent,
-                        borderStyle: "dashed",
-                      }}
-                      onPress={() => handleEffectPress(effectIdx)}
-                    >
-                      {matchColor && (
-                        <View
-                          className="w-4 h-4 rounded-full mb-1"
-                          style={{ backgroundColor: matchColor }}
-                        />
-                      )}
-                      <Text
-                        className="font-fredoka text-xs leading-5"
-                        style={{
-                          color: matchColor ? "#FFFFFF" : palette.textOnBackground,
-                        }}
-                      >
-                        {puzzle.pairs[effectIdx].effect}
-                      </Text>
-                    </Pressable>
-                  </Animated.View>
-                );
-              })}
-            </View>
+                      {pair.cause}
+                    </Text>
+                  </Pressable>
+                </Animated.View>
+              );
+            })}
           </View>
-        </Animated.View>
-      </ScrollView>
+
+          {/* Effects Column */}
+          <View className="flex-1 gap-2">
+            <Text
+              className="font-fredoka-semibold text-xs text-center mb-1"
+              style={{ color: palette.accent }}
+            >
+              EFFECT
+            </Text>
+            {shuffledEffectIndices.map((effectIdx, displayIdx) => {
+              const matchColor = getEffectMatchColor(effectIdx);
+
+              return (
+                <Animated.View
+                  key={effectIdx}
+                  entering={FadeInUp.duration(400).delay(300 + displayIdx * 100)}
+                >
+                  <Pressable
+                    className="rounded-2xl px-3 py-3"
+                    style={{
+                      backgroundColor: matchColor || palette.accentLight,
+                      borderWidth: selectedCause !== null && !matchColor ? 1 : 0,
+                      borderColor: palette.accent,
+                      borderStyle: "dashed",
+                    }}
+                    onPress={() => handleEffectPress(effectIdx)}
+                  >
+                    <Text
+                      className="font-fredoka text-xs leading-5"
+                      style={{
+                        color: matchColor ? "#FFFFFF" : palette.textOnBackground,
+                      }}
+                    >
+                      {puzzle.pairs[effectIdx].effect}
+                    </Text>
+                  </Pressable>
+                </Animated.View>
+              );
+            })}
+          </View>
+        </View>
+      </Animated.View>
 
       {/* Check Button — appears when all matched */}
       {allMatched && (
-        <Animated.View entering={FadeInUp.duration(300)} className="px-2 pb-4 pt-2">
+        <Animated.View entering={FadeInUp.duration(300)} className="px-2 pt-6">
           <Pressable
             className="rounded-2xl py-4 items-center"
             style={{ backgroundColor: palette.accent }}

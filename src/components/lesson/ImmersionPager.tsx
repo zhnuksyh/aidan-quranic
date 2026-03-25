@@ -127,32 +127,18 @@ export function ImmersionPager({ content, onContinue }: Props) {
 
       {/* Sub-page Dots */}
       {pages.length > 1 && (
-        <View className="flex-row items-center justify-center gap-2 mb-3">
-          {pages.map((page, index) => (
-            <Pressable
-              key={page.key}
-              onPress={() =>
-                flatListRef.current?.scrollToIndex({ index, animated: true })
-              }
-              className="flex-row items-center gap-1 px-3 py-1 rounded-full"
+        <View className="flex-row items-center justify-center gap-1.5 mb-3">
+          {pages.map((_, index) => (
+            <View
+              key={index}
+              className="rounded-full"
               style={{
-                backgroundColor:
-                  index === currentPage ? palette.accent : palette.accentLight,
+                width: index === currentPage ? 20 : 6,
+                height: 6,
+                backgroundColor: palette.accent,
+                opacity: index === currentPage ? 1 : 0.25,
               }}
-            >
-              <Text
-                className="font-fredoka-medium text-xs"
-                style={{
-                  color:
-                    index === currentPage
-                      ? palette.textOnAccent
-                      : palette.textOnBackground,
-                  opacity: index === currentPage ? 1 : 0.6,
-                }}
-              >
-                {page.label}
-              </Text>
-            </Pressable>
+            />
           ))}
         </View>
       )}
