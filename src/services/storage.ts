@@ -91,6 +91,7 @@ export async function loadProgressFromCloud(): Promise<UserProgress | null> {
       streakDays: data.streak_days ?? 0,
       unlockedVerses: data.unlocked_verses ?? [],
       lastActiveDate: data.last_active_date ?? null,
+      earnedBadges: data.earned_badges ?? [],
     };
   } catch {
     return null;

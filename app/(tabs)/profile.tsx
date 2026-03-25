@@ -4,6 +4,7 @@ import { useTheme } from "../../src/contexts/ThemeContext";
 import { useProgress } from "../../src/contexts/ProgressContext";
 import { AvatarDisplay } from "../../src/components/profile/AvatarDisplay";
 import { StatCard } from "../../src/components/profile/StatCard";
+import { BadgeGrid } from "../../src/components/profile/BadgeGrid";
 import { SettingsSection } from "../../src/components/profile/SettingsSection";
 import { WORLD_PALETTES } from "../../src/constants/worlds";
 
@@ -66,6 +67,8 @@ export default function ProfileScreen() {
             {progress.unlockedVerses.length} verse{progress.unlockedVerses.length !== 1 ? "s" : ""} unlocked
           </Text>
         </View>
+
+        <BadgeGrid />
 
         <SettingsSection />
       </ScrollView>

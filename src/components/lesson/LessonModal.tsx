@@ -28,7 +28,7 @@ interface Props {
 
 export function LessonModal({ lessonId, visible, onClose }: Props) {
   const { palette } = useTheme();
-  const { completeLesson, isLessonCompleted, progress } = useProgress();
+  const { completeLesson, isLessonCompleted, progress, newlyEarnedBadges, clearNewBadges } = useProgress();
   const insets = useSafeAreaInsets();
   const [phase, setPhase] = useState<LessonPhase>("immersion");
   const [puzzleIndex, setPuzzleIndex] = useState(0);
@@ -62,6 +62,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
   const handleClose = () => {
     setPhase("immersion");
     setPuzzleIndex(0);
+    clearNewBadges();
     onClose();
   };
 
@@ -117,6 +118,7 @@ export function LessonModal({ lessonId, visible, onClose }: Props) {
                   totalXP={progress.currentXP}
                   lessonTitle={lessonTitle}
                   streakDays={progress.streakDays}
+                  newBadges={newlyEarnedBadges}
                   onContinue={advancePhase}
                 />
               )}

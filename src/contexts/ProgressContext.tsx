@@ -1,14 +1,18 @@
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { UserProgress, DEFAULT_PROGRESS } from "../types/progress";
+import { Badge } from "../types/badges";
+import { getNewlyEarnedBadges, getEarnedBadgeIds } from "../constants/badges";
 import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud } from "../services/storage";
 import { syncLessonCompletion } from "../services/api/qfUserApi";
 
 interface ProgressContextValue {
   progress: UserProgress;
   isReady: boolean;
+  newlyEarnedBadges: Badge[];
   completeLesson: (lessonId: string, verseKey: string) => void;
   isLessonCompleted: (lessonId: string) => boolean;
   resetProgress: () => void;
+  clearNewBadges: () => void;
 }
 
 function getToday(): string {
@@ -34,6 +38,7 @@ function mergeProgress(local: UserProgress, cloud: UserProgress): UserProgress {
           ? local.lastActiveDate
           : cloud.lastActiveDate
         : local.lastActiveDate ?? cloud.lastActiveDate,
+    earnedBadges: [...new Set([...local.earnedBadges, ...cloud.earnedBadges])],
   };
 }
 
@@ -42,6 +47,7 @@ const ProgressContext = createContext<ProgressContextValue | undefined>(undefine
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<UserProgress>(DEFAULT_PROGRESS);
   const [isReady, setIsReady] = useState(false);
+  const [newlyEarnedBadges, setNewlyEarnedBadges] = useState<Badge[]>([]);
   const isLoaded = useRef(false);
 
   // Load from AsyncStorage on mount, then merge with cloud
@@ -90,19 +96,35 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       // Sync to QF User API (fire-and-forget)
       syncLessonCompletion(verseKey);
 
-      return {
+      const updated: UserProgress = {
         ...prev,
         completedLessons: [...prev.completedLessons, lessonId],
         currentXP: prev.currentXP + 25,
         unlockedVerses: [...new Set([...prev.unlockedVerses, verseKey])],
         streakDays: newStreak,
         lastActiveDate: today,
+        earnedBadges: prev.earnedBadges,
       };
+
+      // Check for newly earned badges
+      const newBadges = getNewlyEarnedBadges(prev.earnedBadges, updated);
+      if (newBadges.length > 0) {
+        updated.earnedBadges = getEarnedBadgeIds(updated);
+        // Schedule badge notification (can't call setState inside setState)
+        setTimeout(() => setNewlyEarnedBadges(newBadges), 0);
+      }
+
+      return updated;
     });
+  }, []);
+
+  const clearNewBadges = useCallback(() => {
+    setNewlyEarnedBadges([]);
   }, []);
 
   const resetProgress = useCallback(() => {
     setProgress(DEFAULT_PROGRESS);
+    setNewlyEarnedBadges([]);
   }, []);
 
   const isLessonCompleted = useCallback(
@@ -111,8 +133,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ progress, isReady, completeLesson, isLessonCompleted, resetProgress }),
-    [progress, isReady, completeLesson, isLessonCompleted, resetProgress]
+    () => ({
+      progress,
+      isReady,
+      newlyEarnedBadges,
+      completeLesson,
+      isLessonCompleted,
+      resetProgress,
+      clearNewBadges,
+    }),
+    [progress, isReady, newlyEarnedBadges, completeLesson, isLessonCompleted, resetProgress, clearNewBadges]
   );
 
   return (

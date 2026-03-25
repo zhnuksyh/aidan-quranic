@@ -5,16 +5,18 @@ import * as Haptics from "expo-haptics";
 import { useEffect } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { getLevelForXP, getXPProgress } from "../../constants/levels";
+import { Badge } from "../../types/badges";
 
 interface Props {
   xpGained: number;
   totalXP: number;
   lessonTitle?: string;
   streakDays?: number;
+  newBadges?: Badge[];
   onContinue: () => void;
 }
 
-export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays, onContinue }: Props) {
+export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays, newBadges, onContinue }: Props) {
   const { palette } = useTheme();
   const level = getLevelForXP(totalXP);
   const progress = getXPProgress(totalXP);
@@ -107,8 +109,46 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
         </Text>
       </Animated.View>
 
+      {/* New Badges */}
+      {newBadges && newBadges.length > 0 && (
+        <Animated.View
+          entering={FadeInUp.duration(500).delay(800)}
+          className="w-full px-8 mb-6"
+        >
+          <Text
+            className="font-fredoka-semibold text-sm text-center mb-3"
+            style={{ color: palette.textOnBackground, opacity: 0.7 }}
+          >
+            {newBadges.length === 1 ? "New Badge Earned!" : "New Badges Earned!"}
+          </Text>
+          <View className="flex-row justify-center gap-4">
+            {newBadges.map((badge) => (
+              <Animated.View
+                key={badge.id}
+                entering={ZoomIn.springify().damping(15).stiffness(120).delay(1000)}
+                className="rounded-2xl p-3 items-center"
+                style={{ backgroundColor: palette.accent, width: 90 }}
+              >
+                <Ionicons
+                  name={badge.icon.replace("-outline", "") as any}
+                  size={24}
+                  color={palette.textOnAccent}
+                />
+                <Text
+                  className="font-fredoka-semibold text-xs text-center mt-1"
+                  style={{ color: palette.textOnAccent }}
+                  numberOfLines={2}
+                >
+                  {badge.title}
+                </Text>
+              </Animated.View>
+            ))}
+          </View>
+        </Animated.View>
+      )}
+
       {/* Share Button */}
-      <Animated.View entering={FadeInUp.duration(400).delay(800)} className="w-full px-8 mb-3">
+      <Animated.View entering={FadeInUp.duration(400).delay(newBadges && newBadges.length > 0 ? 1200 : 800)} className="w-full px-8 mb-3">
         <Pressable
           className="rounded-2xl py-3 items-center flex-row justify-center gap-2"
           style={{ backgroundColor: palette.accentLight }}
@@ -125,7 +165,7 @@ export function CelebrationOverlay({ xpGained, totalXP, lessonTitle, streakDays,
       </Animated.View>
 
       {/* Continue Button */}
-      <Animated.View entering={FadeInUp.duration(400).delay(900)} className="w-full px-8">
+      <Animated.View entering={FadeInUp.duration(400).delay(newBadges && newBadges.length > 0 ? 1300 : 900)} className="w-full px-8">
         <Pressable
           className="rounded-2xl py-4 items-center"
           style={{ backgroundColor: palette.accent }}

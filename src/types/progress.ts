@@ -4,6 +4,7 @@ export interface UserProgress {
   streakDays: number;
   unlockedVerses: string[];
   lastActiveDate: string | null;
+  earnedBadges: string[];
 }
 
 export const DEFAULT_PROGRESS: UserProgress = {
@@ -12,4 +13,5 @@ export const DEFAULT_PROGRESS: UserProgress = {
   streakDays: 0,
   unlockedVerses: [],
   lastActiveDate: null,
+  earnedBadges: [],
 };
