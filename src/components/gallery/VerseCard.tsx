@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { View, Text, Pressable, Share } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useProgress } from "../../contexts/ProgressContext";
 import { addBookmark, removeBookmark, getBookmarks } from "../../services/api/qfUserApi";
+import { MasteryStars } from "../shared/MasteryStars";
 
 interface Props {
   verseKey: string;
@@ -14,7 +16,9 @@ interface Props {
 
 export function VerseCard({ verseKey, arabicText, translationText, surahName, ayahNumber }: Props) {
   const { palette } = useTheme();
+  const { getMasteryStars } = useProgress();
   const [bookmarked, setBookmarked] = useState(false);
+  const masteryStars = getMasteryStars(verseKey);
 
   useEffect(() => {
     getBookmarks().then((bm) => setBookmarked(bm.includes(verseKey)));
@@ -87,12 +91,22 @@ export function VerseCard({ verseKey, arabicText, translationText, surahName, ay
       >
         {translationText}
       </Text>
-      <Text
-        className="font-fredoka-light text-[10px] text-center opacity-50"
-        style={{ color: palette.textOnBackground }}
-      >
-        {surahName} {ayahNumber}
-      </Text>
+      <View className="flex-row items-center justify-center gap-1 mt-1">
+        <Text
+          className="font-fredoka-light text-[10px] text-center opacity-50"
+          style={{ color: palette.textOnBackground }}
+        >
+          {surahName} {ayahNumber}
+        </Text>
+        {masteryStars > 0 && (
+          <MasteryStars
+            stars={masteryStars}
+            size={8}
+            activeColor={palette.accent}
+            inactiveColor={palette.textOnBackground}
+          />
+        )}
+      </View>
     </View>
   );
 }

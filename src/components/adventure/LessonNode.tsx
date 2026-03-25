@@ -10,7 +10,9 @@ import Animated, {
 import { Ionicons } from "@expo/vector-icons";
 import { MapPin } from "lucide-react-native";
 import { useTheme } from "../../contexts/ThemeContext";
+import { useProgress } from "../../contexts/ProgressContext";
 import { LessonNode as LessonNodeType } from "../../types/lesson";
+import { MasteryStars } from "../shared/MasteryStars";
 
 interface Props {
   lesson: LessonNodeType;
@@ -21,7 +23,9 @@ interface Props {
 
 export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: Props) {
   const { palette } = useTheme();
+  const { getMasteryStars } = useProgress();
   const isAccessible = !isLocked;
+  const masteryStars = isCompleted ? getMasteryStars(lesson.verseKey) : 0;
   const isCurrent = !isCompleted && !isLocked;
   const ayahNumber = lesson.verseKey.split(":")[1];
 
@@ -97,6 +101,14 @@ export function LessonNodeComponent({ lesson, isCompleted, isLocked, onPress }: 
       >
         {lesson.title}
       </Text>
+      {isCompleted && masteryStars > 0 && (
+        <MasteryStars
+          stars={masteryStars}
+          size={10}
+          activeColor={palette.accent}
+          inactiveColor={palette.textOnBackground}
+        />
+      )}
     </Pressable>
   );
 }

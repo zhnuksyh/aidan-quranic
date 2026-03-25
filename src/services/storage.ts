@@ -95,6 +95,7 @@ export async function loadProgressFromCloud(): Promise<UserProgress | null> {
       dailyChallengeDate: data.daily_challenge_date ?? null,
       dailyChallengeId: data.daily_challenge_id ?? null,
       dailyChallengeCompleted: data.daily_challenge_completed ?? false,
+      masteryData: data.mastery_data ?? {},
     };
   } catch {
     return null;

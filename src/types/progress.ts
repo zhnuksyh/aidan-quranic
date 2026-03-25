@@ -1,3 +1,9 @@
+export interface MasteryEntry {
+  stars: number;
+  lastPracticed: string;
+  completionDates: string[];
+}
+
 export interface UserProgress {
   completedLessons: string[];
   currentXP: number;
@@ -8,6 +14,7 @@ export interface UserProgress {
   dailyChallengeDate: string | null;
   dailyChallengeId: string | null;
   dailyChallengeCompleted: boolean;
+  masteryData: Record<string, MasteryEntry>;
 }
 
 export const DEFAULT_PROGRESS: UserProgress = {
@@ -20,4 +27,5 @@ export const DEFAULT_PROGRESS: UserProgress = {
   dailyChallengeDate: null,
   dailyChallengeId: null,
   dailyChallengeCompleted: false,
+  masteryData: {},
 };

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useMemo, useCallback, useEffect, useRef } from "react";
-import { UserProgress, DEFAULT_PROGRESS } from "../types/progress";
+import { UserProgress, MasteryEntry, DEFAULT_PROGRESS } from "../types/progress";
 import { Badge } from "../types/badges";
 import { getNewlyEarnedBadges, getEarnedBadgeIds } from "../constants/badges";
 import { loadProgress, saveProgress, syncProgressToCloud, loadProgressFromCloud } from "../services/storage";
@@ -14,6 +14,8 @@ interface ProgressContextValue {
   resetProgress: () => void;
   clearNewBadges: () => void;
   setDailyChallenge: (lessonId: string) => void;
+  replayLesson: (lessonId: string, verseKey: string) => void;
+  getMasteryStars: (verseKey: string) => number;
 }
 
 function getToday(): string {
@@ -24,6 +26,42 @@ function getYesterday(): string {
   const d = new Date();
   d.setDate(d.getDate() - 1);
   return d.toISOString().split("T")[0];
+}
+
+/** Compute mastery stars from completion dates */
+function computeStars(dates: string[]): number {
+  if (dates.length === 0) return 0;
+  if (dates.length === 1) return 1;
+  // Sort dates
+  const sorted = [...dates].sort();
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  const daysBetween = (new Date(last).getTime() - new Date(first).getTime()) / (1000 * 60 * 60 * 24);
+  if (daysBetween >= 3) return 3;
+  if (daysBetween >= 1) return 2;
+  return 1;
+}
+
+function mergeMastery(
+  a: Record<string, MasteryEntry>,
+  b: Record<string, MasteryEntry>
+): Record<string, MasteryEntry> {
+  const result = { ...a };
+  for (const key of Object.keys(b)) {
+    if (!result[key]) {
+      result[key] = b[key];
+    } else {
+      const allDates = [...new Set([...result[key].completionDates, ...b[key].completionDates])];
+      result[key] = {
+        completionDates: allDates,
+        stars: computeStars(allDates),
+        lastPracticed: result[key].lastPracticed > b[key].lastPracticed
+          ? result[key].lastPracticed
+          : b[key].lastPracticed,
+      };
+    }
+  }
+  return result;
 }
 
 /** Merge local + cloud: union of arrays, max of numbers */
@@ -55,6 +93,7 @@ function mergeProgress(local: UserProgress, cloud: UserProgress): UserProgress {
         ? local.dailyChallengeCompleted
         : cloud.dailyChallengeCompleted)
       : local.dailyChallengeCompleted || cloud.dailyChallengeCompleted,
+    masteryData: mergeMastery(local.masteryData, cloud.masteryData),
   };
 }
 
@@ -119,6 +158,15 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         !prev.dailyChallengeCompleted;
       const xpGain = 25 + (isDailyChallenge ? 10 : 0);
 
+      // Initialize mastery for this verse
+      const prevMastery = prev.masteryData[verseKey];
+      const completionDates = [today];
+      const newMastery: MasteryEntry = {
+        stars: 1,
+        lastPracticed: today,
+        completionDates,
+      };
+
       const updated: UserProgress = {
         ...prev,
         completedLessons: [...prev.completedLessons, lessonId],
@@ -130,6 +178,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         dailyChallengeDate: prev.dailyChallengeDate,
         dailyChallengeId: prev.dailyChallengeId,
         dailyChallengeCompleted: isDailyChallenge ? true : prev.dailyChallengeCompleted,
+        masteryData: { ...prev.masteryData, [verseKey]: prevMastery ?? newMastery },
       };
 
       // Check for newly earned badges
@@ -147,6 +196,30 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const clearNewBadges = useCallback(() => {
     setNewlyEarnedBadges([]);
   }, []);
+
+  const replayLesson = useCallback((lessonId: string, verseKey: string) => {
+    setProgress((prev) => {
+      const today = getToday();
+      const existing = prev.masteryData[verseKey];
+      const allDates = existing
+        ? [...new Set([...existing.completionDates, today])]
+        : [today];
+      const stars = computeStars(allDates);
+
+      return {
+        ...prev,
+        masteryData: {
+          ...prev.masteryData,
+          [verseKey]: { stars, lastPracticed: today, completionDates: allDates },
+        },
+      };
+    });
+  }, []);
+
+  const getMasteryStars = useCallback(
+    (verseKey: string) => progress.masteryData[verseKey]?.stars ?? 0,
+    [progress.masteryData]
+  );
 
   const setDailyChallenge = useCallback((lessonId: string) => {
     const today = getToday();
@@ -178,8 +251,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       resetProgress,
       clearNewBadges,
       setDailyChallenge,
+      replayLesson,
+      getMasteryStars,
     }),
-    [progress, isReady, newlyEarnedBadges, completeLesson, isLessonCompleted, resetProgress, clearNewBadges, setDailyChallenge]
+    [progress, isReady, newlyEarnedBadges, completeLesson, isLessonCompleted, resetProgress, clearNewBadges, setDailyChallenge, replayLesson, getMasteryStars]
   );
 
   return (
