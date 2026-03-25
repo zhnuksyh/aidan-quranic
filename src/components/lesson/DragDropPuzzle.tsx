@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -48,6 +48,16 @@ export function DragDropPuzzle({ puzzle, onCorrect }: Props) {
     }
   };
 
+  // Shuffle options once on mount
+  const shuffledOptions = useMemo(() => {
+    const opts = [...puzzle.options];
+    for (let i = opts.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [opts[i], opts[j]] = [opts[j], opts[i]];
+    }
+    return opts;
+  }, [puzzle.options]);
+
   // Split sentence around the blank
   const parts = puzzle.sentence.split("___");
 
@@ -85,7 +95,7 @@ export function DragDropPuzzle({ puzzle, onCorrect }: Props) {
 
       {/* Word Options */}
       <View className="flex-row flex-wrap justify-center gap-3 mx-2">
-        {puzzle.options.map((word) => {
+        {shuffledOptions.map((word) => {
           const isSelected = selectedWord === word;
           return (
             <Pressable

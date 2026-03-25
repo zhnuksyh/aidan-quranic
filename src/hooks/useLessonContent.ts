@@ -10,7 +10,7 @@ import {
   CachedVerseContent,
 } from "../services/contentCache";
 import { segmentTafsirToCards, stripTags } from "../utils/tafsirSegmenter";
-import { CURATED_PUZZLES } from "../data/puzzles";
+import { getPuzzlesForVerse } from "../data/puzzles";
 import { getRootWordData } from "../data/roots";
 
 interface UseLessonContentResult {
@@ -154,7 +154,7 @@ export function useLessonContent(
           tafsirCards: tafsir,
           asbabCards: asbab,
           rootWordData,
-          puzzles: CURATED_PUZZLES[verseKey] ?? [],
+          puzzles: getPuzzlesForVerse(verseKey),
           audioUrl,
         });
         setIsLoading(false);
@@ -231,7 +231,7 @@ function buildContent(
     tafsirCards: tafsir,
     asbabCards: asbab,
     rootWordData,
-    puzzles: CURATED_PUZZLES[metadata.verseKey] ?? [],
+    puzzles: getPuzzlesForVerse(metadata.verseKey),
     audioUrl: null, // Audio fetched separately (not cached)
   };
 }

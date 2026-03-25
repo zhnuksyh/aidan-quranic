@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -23,15 +23,26 @@ export function ContextDetectivePuzzle({ puzzle, onCorrect }: Props) {
   const [isWrong, setIsWrong] = useState(false);
   const shakeX = useSharedValue(0);
 
+  // Shuffle scenarios once on mount
+  const shuffledIndices = useMemo(() => {
+    const indices = puzzle.scenarios.map((_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices;
+  }, [puzzle]);
+
   const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: shakeX.value }],
   }));
 
-  const handleSelect = async (index: number) => {
+  const handleSelect = async (displayIndex: number) => {
     if (selectedIndex !== null) return;
-    setSelectedIndex(index);
+    setSelectedIndex(displayIndex);
 
-    if (puzzle.scenarios[index].isCorrect) {
+    const originalIndex = shuffledIndices[displayIndex];
+    if (puzzle.scenarios[originalIndex].isCorrect) {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setTimeout(onCorrect, 600);
     } else {
@@ -78,8 +89,9 @@ export function ContextDetectivePuzzle({ puzzle, onCorrect }: Props) {
 
       {/* Scenario Cards */}
       <Animated.View style={shakeStyle} className="mx-2 gap-3">
-        {puzzle.scenarios.map((scenario, index) => {
-          const isSelected = selectedIndex === index;
+        {shuffledIndices.map((originalIndex, displayIndex) => {
+          const scenario = puzzle.scenarios[originalIndex];
+          const isSelected = selectedIndex === displayIndex;
           const isCorrectAnswer = isSelected && scenario.isCorrect;
           const isWrongAnswer = isSelected && isWrong;
 
@@ -93,8 +105,8 @@ export function ContextDetectivePuzzle({ puzzle, onCorrect }: Props) {
 
           return (
             <Animated.View
-              key={index}
-              entering={FadeInUp.duration(400).delay(200 + index * 150)}
+              key={originalIndex}
+              entering={FadeInUp.duration(400).delay(200 + displayIndex * 150)}
             >
               <Pressable
                 className="rounded-2xl px-5 py-4"
@@ -102,7 +114,7 @@ export function ContextDetectivePuzzle({ puzzle, onCorrect }: Props) {
                   backgroundColor: bgColor,
                   opacity: selectedIndex !== null && !isSelected ? 0.4 : 1,
                 }}
-                onPress={() => handleSelect(index)}
+                onPress={() => handleSelect(displayIndex)}
                 disabled={selectedIndex !== null}
               >
                 <Text

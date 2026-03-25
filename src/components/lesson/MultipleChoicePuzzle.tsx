@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { View, Text, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import Animated, {
@@ -21,6 +21,19 @@ export function MultipleChoicePuzzle({ puzzle, onCorrect }: Props) {
   const [isWrong, setIsWrong] = useState(false);
   const shakeX = useSharedValue(0);
 
+  // Shuffle options once on mount, track which shuffled index is correct
+  const { shuffledOptions, correctShuffledIndex } = useMemo(() => {
+    const indices = puzzle.options.map((_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return {
+      shuffledOptions: indices.map((i) => puzzle.options[i]),
+      correctShuffledIndex: indices.indexOf(puzzle.correctIndex),
+    };
+  }, [puzzle]);
+
   const shakeStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: shakeX.value }],
   }));
@@ -28,7 +41,7 @@ export function MultipleChoicePuzzle({ puzzle, onCorrect }: Props) {
   const handleSelect = async (index: number) => {
     setSelectedIndex(index);
 
-    if (index === puzzle.correctIndex) {
+    if (index === correctShuffledIndex) {
       await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setTimeout(onCorrect, 600);
     } else {
@@ -65,9 +78,9 @@ export function MultipleChoicePuzzle({ puzzle, onCorrect }: Props) {
 
       {/* Options */}
       <View className="mx-2 gap-3">
-        {puzzle.options.map((option, index) => {
+        {shuffledOptions.map((option, index) => {
           const isSelected = selectedIndex === index;
-          const isCorrectAnswer = isSelected && index === puzzle.correctIndex;
+          const isCorrectAnswer = isSelected && index === correctShuffledIndex;
           const isWrongAnswer = isSelected && isWrong;
 
           let bgColor = palette.accentLight;
