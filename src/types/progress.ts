@@ -5,6 +5,9 @@ export interface UserProgress {
   unlockedVerses: string[];
   lastActiveDate: string | null;
   earnedBadges: string[];
+  dailyChallengeDate: string | null;
+  dailyChallengeId: string | null;
+  dailyChallengeCompleted: boolean;
 }
 
 export const DEFAULT_PROGRESS: UserProgress = {
@@ -14,4 +17,7 @@ export const DEFAULT_PROGRESS: UserProgress = {
   unlockedVerses: [],
   lastActiveDate: null,
   earnedBadges: [],
+  dailyChallengeDate: null,
+  dailyChallengeId: null,
+  dailyChallengeCompleted: false,
 };

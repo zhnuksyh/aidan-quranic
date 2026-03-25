@@ -7,6 +7,7 @@ import { useTheme } from "../../src/contexts/ThemeContext";
 import { useProgress } from "../../src/contexts/ProgressContext";
 import { WorldSwiper } from "../../src/components/adventure/WorldSwiper";
 import { WorldSelectionMenu } from "../../src/components/adventure/WorldSelectionMenu";
+import { DailyChallengeCard } from "../../src/components/adventure/DailyChallengeCard";
 import { LessonModal } from "../../src/components/lesson/LessonModal";
 
 const LUCIDE_ICONS: Record<string, any> = {
@@ -87,6 +88,9 @@ export default function AdventureScreen() {
           </Pressable>
         </View>
       </View>
+
+      {/* Daily Challenge */}
+      <DailyChallengeCard onPress={setSelectedLessonId} />
 
       {/* Lesson Node Map — swipe L/R between worlds */}
       <WorldSwiper onLessonPress={setSelectedLessonId} />

@@ -13,6 +13,7 @@ interface ProgressContextValue {
   isLessonCompleted: (lessonId: string) => boolean;
   resetProgress: () => void;
   clearNewBadges: () => void;
+  setDailyChallenge: (lessonId: string) => void;
 }
 
 function getToday(): string {
@@ -39,6 +40,21 @@ function mergeProgress(local: UserProgress, cloud: UserProgress): UserProgress {
           : cloud.lastActiveDate
         : local.lastActiveDate ?? cloud.lastActiveDate,
     earnedBadges: [...new Set([...local.earnedBadges, ...cloud.earnedBadges])],
+    dailyChallengeDate: local.dailyChallengeDate && cloud.dailyChallengeDate
+      ? local.dailyChallengeDate > cloud.dailyChallengeDate
+        ? local.dailyChallengeDate
+        : cloud.dailyChallengeDate
+      : local.dailyChallengeDate ?? cloud.dailyChallengeDate,
+    dailyChallengeId: local.dailyChallengeDate && cloud.dailyChallengeDate
+      ? (local.dailyChallengeDate >= cloud.dailyChallengeDate
+        ? local.dailyChallengeId
+        : cloud.dailyChallengeId)
+      : local.dailyChallengeId ?? cloud.dailyChallengeId,
+    dailyChallengeCompleted: local.dailyChallengeDate && cloud.dailyChallengeDate
+      ? (local.dailyChallengeDate >= cloud.dailyChallengeDate
+        ? local.dailyChallengeCompleted
+        : cloud.dailyChallengeCompleted)
+      : local.dailyChallengeCompleted || cloud.dailyChallengeCompleted,
   };
 }
 
@@ -96,14 +112,24 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       // Sync to QF User API (fire-and-forget)
       syncLessonCompletion(verseKey);
 
+      // Daily challenge bonus: +10 XP if this lesson is today's challenge
+      const isDailyChallenge =
+        prev.dailyChallengeDate === today &&
+        prev.dailyChallengeId === lessonId &&
+        !prev.dailyChallengeCompleted;
+      const xpGain = 25 + (isDailyChallenge ? 10 : 0);
+
       const updated: UserProgress = {
         ...prev,
         completedLessons: [...prev.completedLessons, lessonId],
-        currentXP: prev.currentXP + 25,
+        currentXP: prev.currentXP + xpGain,
         unlockedVerses: [...new Set([...prev.unlockedVerses, verseKey])],
         streakDays: newStreak,
         lastActiveDate: today,
         earnedBadges: prev.earnedBadges,
+        dailyChallengeDate: prev.dailyChallengeDate,
+        dailyChallengeId: prev.dailyChallengeId,
+        dailyChallengeCompleted: isDailyChallenge ? true : prev.dailyChallengeCompleted,
       };
 
       // Check for newly earned badges
@@ -120,6 +146,16 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
 
   const clearNewBadges = useCallback(() => {
     setNewlyEarnedBadges([]);
+  }, []);
+
+  const setDailyChallenge = useCallback((lessonId: string) => {
+    const today = getToday();
+    setProgress((prev) => {
+      if (prev.dailyChallengeDate === today && prev.dailyChallengeId === lessonId) {
+        return prev; // Already set for today
+      }
+      return { ...prev, dailyChallengeDate: today, dailyChallengeId: lessonId, dailyChallengeCompleted: false };
+    });
   }, []);
 
   const resetProgress = useCallback(() => {
@@ -141,8 +177,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       isLessonCompleted,
       resetProgress,
       clearNewBadges,
+      setDailyChallenge,
     }),
-    [progress, isReady, newlyEarnedBadges, completeLesson, isLessonCompleted, resetProgress, clearNewBadges]
+    [progress, isReady, newlyEarnedBadges, completeLesson, isLessonCompleted, resetProgress, clearNewBadges, setDailyChallenge]
   );
 
   return (

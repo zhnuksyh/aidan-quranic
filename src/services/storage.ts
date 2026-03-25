@@ -92,6 +92,9 @@ export async function loadProgressFromCloud(): Promise<UserProgress | null> {
       unlockedVerses: data.unlocked_verses ?? [],
       lastActiveDate: data.last_active_date ?? null,
       earnedBadges: data.earned_badges ?? [],
+      dailyChallengeDate: data.daily_challenge_date ?? null,
+      dailyChallengeId: data.daily_challenge_id ?? null,
+      dailyChallengeCompleted: data.daily_challenge_completed ?? false,
     };
   } catch {
     return null;
